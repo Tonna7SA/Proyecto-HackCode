@@ -15,5 +15,6 @@ public class Ventas {
     private Entradas entrada;
     private Compradores comprador;
     
+    
 
 }

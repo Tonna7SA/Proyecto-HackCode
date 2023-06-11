@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.AccessLevel;
@@ -37,5 +38,8 @@ public class Empleados extends Usuarios {
 
     @Enumerated(EnumType.STRING)
     private Turno turnos;
+    
+    @OneToOne
+    private Juegos juego;
 
 }
