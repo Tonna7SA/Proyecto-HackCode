@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.AccessLevel;
@@ -40,6 +41,15 @@ public class Entradas {
     private Integer cantidadDePersonas;
     private Integer precioJuego;
     private Integer precioTotal;
+    
+    @OneToOne
+    private Empleados empleado;
+    @OneToOne
+    private Juegos juego;
+    @OneToOne
+    private Compradores comprador;
+    
+    
     
 
 }

@@ -41,5 +41,7 @@ public class Empleados extends Usuarios {
     
     @OneToOne
     private Juegos juego;
+    
+    
 
 }
