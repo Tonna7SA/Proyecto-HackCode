@@ -1,6 +1,7 @@
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -43,6 +44,6 @@ public class Juegos {
     private Integer precioDelJuego;
     
     @OneToMany
-    private Empleados empleado;
+    private List <Empleados> empleado;
 
 }
