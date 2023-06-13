@@ -1,7 +1,9 @@
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
+import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Juegos;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.JuegosRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,11 +19,13 @@ public class JuegosServicio {
 
     @Autowired
     private JuegosRepositorio juegosRepositorio;
+    @Autowired
+    private EmpleadosRepositorio empleadoRepositorio;
 
-    public void crearJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
+    public void crearJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, String idEmpleado) throws MiException {
 
-       validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
-
+       validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
+        Empleados empleado= empleadoRepositorio.findById(idEmpleado).get();
         Juegos juego = new Juegos();
         
         juego.setNombreDelJuego(nombreDelJuego);
@@ -30,6 +34,7 @@ public class JuegosServicio {
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
+        juego.setEmpleado(empleado);
         
         juegosRepositorio.save(juego);
 
@@ -37,21 +42,29 @@ public class JuegosServicio {
     }
 
     @Transactional
-    public void modificarJuego(String id, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
+    public void modificarJuego(String id, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, String idEmpleado) throws MiException {
 
-        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
+        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
 
-        Optional<Juegos> respuesta = juegosRepositorio.findById(id);
-        if (respuesta.isPresent()) {
+        Optional<Juegos> respuestaJuego = juegosRepositorio.findById(id);
+        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(idEmpleado);
+        Empleados empleado= new Empleados();
+        if (respuestaEmpleado.isPresent()) {
+            
+            empleado=empleadoRepositorio.findById(idEmpleado).get();
+        }
+        
+        
+        if (respuestaJuego.isPresent()) {
 
-            Juegos juego = respuesta.get();
+            Juegos juego = respuestaJuego.get();
 
         juego.setNombreDelJuego(nombreDelJuego);
         juego.setCapacidadMaxima(capacidadMaxima);
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
-        
+        juego.setEmpleado(empleado);
         juegosRepositorio.save(juego);
 
         }
@@ -64,11 +77,11 @@ public class JuegosServicio {
 
     public List<Juegos> listarJuegos() {
 
-        List<Juegos> comprador = new ArrayList();
+        List<Juegos> juego = new ArrayList();
 
-        comprador = juegosRepositorio.findAll();
+        juego = juegosRepositorio.findAll();
 
-        return comprador;
+        return juego;
     }
 
     public void eliminarJuego(String id) throws MiException {
@@ -84,7 +97,7 @@ public class JuegosServicio {
         }
     }
 
-    private void validarJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
+    private void validarJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, String idEmpleado) throws MiException {
 
         if (nombreDelJuego.isEmpty() || nombreDelJuego == null || nombreDelJuego.length() < 3) {
             throw new MiException("Debe ingresar un nombre");
@@ -101,6 +114,10 @@ public class JuegosServicio {
 
         if (precioDelJuego == null || precioDelJuego < 1) {
             throw new MiException("Debe ingresar un email valido");
+        }
+        if (idEmpleado==null) {
+            throw new MiException("El id del empleado no puede ser nulo");
+            
         }
     }
 }
