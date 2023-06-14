@@ -31,7 +31,7 @@ public class EmpleadosServicio {
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         Empleados empleado = new Empleados();
 
-        empleado.setActivo(activo);
+        empleado.setActivo(true);
         empleado.setDni(dni);
         empleado.setEdad(edad);
         empleado.setEmail(email);
