@@ -45,10 +45,6 @@ public class Juegos {
     private Integer precioDelJuego;
     
     @OneToMany
-<<<<<<< HEAD
     private List<Empleados> empleado;
-=======
-    private List <Empleados> empleado;
->>>>>>> e61338a4127bb0a67e673e9ea11ff7d034266c70
 
 }
