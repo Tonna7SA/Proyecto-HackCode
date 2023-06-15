@@ -40,7 +40,11 @@ public class Ventas {
     private Empleados empleado;
     
     @OneToMany
+<<<<<<< HEAD
+    private List<Entradas> entrada;
+=======
     private List <Entradas> entrada;
+>>>>>>> e61338a4127bb0a67e673e9ea11ff7d034266c70
     
     @OneToOne
     private Compradores comprador;
