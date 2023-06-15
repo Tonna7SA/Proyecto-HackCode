@@ -39,9 +39,10 @@ public class EntradasServicio {
 
         validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
         Juegos juego = juegosRepositorio.findById(idJuego).get();
-        Compradores comprador = compradorRepositorio.findById(idJuego).get();
-        Empleados empleado = empleadoRepositorio.findById(idJuego).get();
+        Compradores comprador = compradorRepositorio.findById(idComprador).get();
+        Empleados empleado = empleadoRepositorio.findById(idEmpleado).get();
         Entradas entrada = new Entradas();
+        // chequear cantidad de personas 
         entrada.setCantidadDePersonas(cantidadDePersonas);
         entrada.setFechaTicket(fechaTicket);
         entrada.setNumeroTicket(numeroTicket);
@@ -56,7 +57,7 @@ public class EntradasServicio {
     }
 
     @Transactional
-    public void modificarEmpleado(String id, Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
+    public void modificarEntrada(String id, Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
 
         validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
         Optional<Entradas> respuestaEntrada = entradaRepositorio.findById(id);
@@ -112,7 +113,7 @@ public class EntradasServicio {
         return entrada;
     }
 
-    public void eliminarEntradas(String id) throws MiException {
+    public void eliminarEntrada(String id) throws MiException {
 
         Optional<Entradas> respuesta = entradaRepositorio.findById(id);
 

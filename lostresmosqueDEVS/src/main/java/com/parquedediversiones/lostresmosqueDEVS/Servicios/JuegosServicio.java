@@ -34,7 +34,7 @@ public class JuegosServicio {
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
-        juego.setEmpleado(empleado);
+        juego.setEmpleado((List<Empleados>) empleado);
         
         juegosRepositorio.save(juego);
 
@@ -64,7 +64,7 @@ public class JuegosServicio {
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
-        juego.setEmpleado(empleado);
+        juego.setEmpleado((List<Empleados>) empleado);
         juegosRepositorio.save(juego);
 
         }
