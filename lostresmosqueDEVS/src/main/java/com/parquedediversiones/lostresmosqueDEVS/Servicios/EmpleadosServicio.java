@@ -31,11 +31,11 @@ public class EmpleadosServicio {
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         Empleados empleado = new Empleados();
 
-        empleado.setActivo(activo);
+        empleado.setActivo(true);
         empleado.setDni(dni);
         empleado.setEdad(edad);
         empleado.setEmail(email);
-        empleado.setFechaDeAlta(fechaDeAlta);
+        empleado.setFechaDeAlta(new Date());
         empleado.setId(id);
         empleado.setNombreUsuario(nombreUsuario);
         empleado.setPassword(password);
