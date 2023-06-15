@@ -2,6 +2,7 @@
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Ventas {
     @OneToOne
     private Empleados empleado;
     @OneToMany
-    private Entradas entrada;
+    private List<Entradas> entrada;
     
     @OneToOne
     private Compradores comprador;
