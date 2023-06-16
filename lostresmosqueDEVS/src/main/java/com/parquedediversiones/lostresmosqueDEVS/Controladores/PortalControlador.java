@@ -41,18 +41,18 @@ public class PortalControlador {
 
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
-
+        System.out.println("hola");
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
 
             redirectAttributes.addFlashAttribute("exito", "El usuario fue cargado correctamente!");
-
+            System.out.println("chau");
             return "redirect:/";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-
+            System.out.println("zzz");
             return "registro.html";
         }
 

@@ -47,6 +47,8 @@ public class UsuariosServicio implements UserDetailsService{
         
         usuario.setRoles(Rol.EMP);
         
+        System.out.println(usuario.toString());
+        
         usuarioRepositorio.save(usuario);
     
 }

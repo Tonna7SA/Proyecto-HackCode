@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -77,12 +78,12 @@
 
     <div class="contenedorregistro">
 
-        <form class="form">
+        <form class="form" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
             <span class="signup">Registrate</span>
-            <input type="text" placeholder="Nombre" class="form--input">
-            <input type="email" placeholder="Correo electrónico" class="form--input">
-            <input type="password" placeholder="Contraseña" class="form--input">
-            <input type="password" placeholder="Confirmar Contraseña" class="form--input">
+            <input type="text" placeholder="Nombre" class="form--input" name="nombre" th:value="${nombre}">
+            <input type="email" placeholder="Correo electrónico" class="form--input" name="email" th:value="${email}">
+            <input type="password" placeholder="Contraseña" class="form--input" name="password" th:value="${password}">
+            <input type="password" placeholder="Confirmar Contraseña" class="form--input" name="password2" th:value="${password2}">
 
             <div class="subirimagen">
                 <span class="subirimagen-title">Cargá tú imagen</span>
@@ -94,10 +95,10 @@
                         <img style="width: 150px; border-radius: 20px;" id="image-preview" src=""
                             alt="Vista previa de la imagen">
                     </div>
-                    <input type="file" accept="image/*" required="" id="file-input">
+                    <input type="file" accept="image/*" required="" id="file-input" name="archivo">
                 </label>
             </div>
-            <button class="form--submit">
+            <button type="submit"class="form--submit">
                 Registrar
             </button>
         </form>
