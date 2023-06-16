@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Tonna/SA FR34K
  */
 /**/
+// Controladora para las entradas y sus acciones
 @Controller
 @RequestMapping("/entradas")
 public class EntradasControlador {
@@ -37,6 +38,7 @@ public class EntradasControlador {
     private CompradoresServicio compradorServicio;
     @Autowired
     private EntradasServicio entradaServicio;
+    // Vista para registrar una entrada 
 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
@@ -52,9 +54,11 @@ public class EntradasControlador {
 
     }
 
+    // Luego de pasar los datos por parametro llamamos al servicio entrada y lo utilizamos  para registrar una entrada
     @PostMapping("/registro")
     public String registro(@RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
             @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) throws MiException {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             entradaServicio.crearEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
             modelo.put("Exito", "La entrada se obtuvo exitosamente");
@@ -76,36 +80,43 @@ public class EntradasControlador {
         }
 
         return "index.html";
-        
+
     }
-        @GetMapping("/listar")
+
+    //Llamamos al servicio entrada para listar las entradas
+    @GetMapping("/listar")
     public String listar(ModelMap modelo) {
         List<Entradas> entradas = entradaServicio.listarEntradas();
         modelo.put("entradas", entradas);
 
         return "listar_entradas.html";
     }
-       @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id,@RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
+
+    // Luego de pasar los datos por parametro llamamos al servicio entrada para pasar los datos al PostMapping y hacer uso del metodo modificar
+    @GetMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, @RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
             @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
 
         modelo.put("entradas", entradaServicio.getOne(id));
 
-            List<Empleados> empleados = empleadoServicio.listarEmpleados();
-            List<Juegos> juegos = juegoServicio.listarJuegos();
-            List<Compradores> compradores = compradorServicio.listarCompradores();
+        List<Empleados> empleados = empleadoServicio.listarEmpleados();
+        List<Juegos> juegos = juegoServicio.listarJuegos();
+        List<Compradores> compradores = compradorServicio.listarCompradores();
 
-            modelo.addAttribute("juegos", juegos);
-            modelo.addAttribute("compradores", compradores);
-            modelo.addAttribute("empleados", empleados);
+        modelo.addAttribute("juegos", juegos);
+        modelo.addAttribute("compradores", compradores);
+        modelo.addAttribute("empleados", empleados);
 
         return "entradas_modificar.html";
     }
-       @PostMapping("/modificar/{id}")
-    public String modificarEntrada(@PathVariable String id,@RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
+
+    // Luego de pasar los datos por parametro llamamos al servicio entrada y lo utilizamos para modificar una entrada
+    @PostMapping("/modificar/{id}")
+    public String modificarEntrada(@PathVariable String id, @RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
             @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
-              List<Empleados> empleados = empleadoServicio.listarEmpleados();
+            List<Empleados> empleados = empleadoServicio.listarEmpleados();
             List<Juegos> juegos = juegoServicio.listarJuegos();
             List<Compradores> compradores = compradorServicio.listarCompradores();
 
@@ -118,7 +129,7 @@ public class EntradasControlador {
             return "redirect:../listar";
 
         } catch (MiException ex) {
-          List<Empleados> empleados = empleadoServicio.listarEmpleados();
+            List<Empleados> empleados = empleadoServicio.listarEmpleados();
             List<Juegos> juegos = juegoServicio.listarJuegos();
             List<Compradores> compradores = compradorServicio.listarCompradores();
 
@@ -128,18 +139,19 @@ public class EntradasControlador {
 
             modelo.put("error", ex.getMessage());
 
-          
-
-             return "entradas_modificar.html";
+            return "entradas_modificar.html";
         }
 
     }
-  @GetMapping("/eliminar/{id}")
+
+    // LLamamos al servicio entrada para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
+    @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("entradas", entradaServicio.getOne(id));
 
         return "entradas_eliminar.html";
     }
+//Llamamos al servicio entrada con los datos del GetMapping para eliminar efectivamente una entrada 
 
     @PostMapping("/eliminar/{id}")
     public String eliminarEntrada(@PathVariable String id, ModelMap modelo) {

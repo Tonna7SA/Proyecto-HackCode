@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author Pergo
  */
+// Controladora para las ventas y sus acciones
 @Controller
 @RequestMapping("/ventas")
 public class VentasControlador {
@@ -46,7 +47,7 @@ public class VentasControlador {
     private EntradasServicio entradaServicio;
     @Autowired
     private VentasServicio ventaServicio;
-    
+     // Vista para registrar una venta
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
@@ -60,10 +61,11 @@ public class VentasControlador {
         return "registro_ventas_form.html";
         
     }
-    
+     // Luego de pasar los datos por parametro llamamos al servicio ventas y lo utilizamos  para registrar una venta
     @PostMapping("/registro")
     public String registro(@RequestParam Integer totalVenta, @RequestParam Date fechaVenta, @RequestParam String idEmpleado,
             @RequestParam String idEntrada, @RequestParam String idComprador, ModelMap modelo) throws MiException {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             ventaServicio.crearVenta(totalVenta, fechaVenta, idEmpleado, idEntrada, idComprador);
             modelo.put("Exito", "La venta se registro correctamente");
@@ -87,7 +89,7 @@ public class VentasControlador {
         return "index.html";
         
     }
-    
+     //Llamamos al servicio venta para listar las ventas
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
         List<Ventas> ventas = ventaServicio.listarVentas();
@@ -95,7 +97,7 @@ public class VentasControlador {
         
         return "listar_ventas.html";
     }
-    
+    // Luego de pasar los datos por parametro llamamos al servicio ventas para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, @RequestParam Integer totalVenta, @RequestParam Date fechaVenta, @RequestParam String idEmpleado,
             @RequestParam String idEntrada, @RequestParam String idComprador, ModelMap modelo) {
@@ -111,10 +113,11 @@ public class VentasControlador {
         
         return "ventas_modificar.html";
     }
-    
+     // Luego de pasar los datos por parametro llamamos al servicio ventas y lo utilizamos  para modificar una venta
     @PostMapping("/modificar/{id}")
     public String modificarVenta(@PathVariable String id, @RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
             @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
+       // Metodo try and catch para asegurarnos de captar errores 
         try {
             List<Empleados> empleados = empleadoServicio.listarEmpleados();
             List<Entradas> entradas = entradaServicio.listarEntradas();
@@ -143,15 +146,17 @@ public class VentasControlador {
         }
         
     }
+    // LLamamos al servicio ventas para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("ventas", ventaServicio.getOne(id));
 
         return "ventas_eliminar.html";
     }
-
+    //Llamamos al servicio ventas con los datos del GetMapping para eliminar efectivamente una venta
     @PostMapping("/eliminar/{id}")
     public String eliminarVenta(@PathVariable String id, ModelMap modelo) {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             ventaServicio.eliminarVenta(id);
             modelo.put("Exito", "Se elimino la venta exitosamente");

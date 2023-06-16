@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Tonna/SA FR34K
  */
 /**/
+// Controladora para los juegos y sus acciones
 @Controller
 @RequestMapping("/juegos")
 public class JuegosControlador {
@@ -28,7 +29,7 @@ public class JuegosControlador {
     private JuegosServicio juegoServicio;
     @Autowired
     private EmpleadosServicio empleadoServicio;
-
+ // Vista para registrar un juego 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
@@ -37,10 +38,11 @@ public class JuegosControlador {
         return "registro_juegos_form.html";
 
     }
-
+    // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para registrar un juego
     @PostMapping("/registro")
     public String registro(@RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
             @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam String idEmpleado, ModelMap modelo) throws MiException {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             juegoServicio.crearJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
             modelo.put("Exito", "El juego se registro exitosamente");
@@ -58,7 +60,7 @@ public class JuegosControlador {
 
         return "index.html";
     }
-
+     //Llamamos al servicio juego para listar los juegos
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
         List<Juegos> juegos = juegoServicio.listarJuegos();
@@ -66,7 +68,7 @@ public class JuegosControlador {
 
         return "listar_juegos.html";
     }
-
+     // Luego de pasar los datos por parametro llamamos al servicio juego para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, @RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
             @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam String idEmpleado, ModelMap modelo) {
@@ -79,10 +81,11 @@ public class JuegosControlador {
 
         return "juegos_modificar.html";
     }
-
+     // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para modificar un juego
     @PostMapping("/modificar/{id}")
     public String modificarJuego(@PathVariable String id, @RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
             @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam String idEmpleado, ModelMap modelo) {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             List<Empleados> empleados = empleadoServicio.listarEmpleados();
 
@@ -101,16 +104,17 @@ public class JuegosControlador {
         }
 
     }
-
+     // LLamamos al servicio juego para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("usuario", juegoServicio.getOne(id));
 
         return "juego_eliminar.html";
     }
-
+    //Llamamos al servicio juego con los datos del GetMapping para eliminar efectivamente un juego
     @PostMapping("/eliminar/{id}")
     public String eliminarJuego(@PathVariable String id, ModelMap modelo) {
+       // Metodo try and catch para asegurarnos de captar errores 
         try {
             juegoServicio.eliminarJuego(id);
 

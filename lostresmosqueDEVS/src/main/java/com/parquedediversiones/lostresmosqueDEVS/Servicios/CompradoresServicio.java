@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 /**/
 @Service
 public class CompradoresServicio {
-
+    //Servicio para comtrolar el AMBL de compradores
     @Autowired
     private CompradoresRepositorio compradorRepositorio;
-
+    //Creamos un metodo para crear un comprador pasandole los parametros necesarios para eso 
     public void crearComprador(String nombre, String apellido, Integer dni, Integer edad, Date fechaDeaALta, Boolean activo, String email) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarComprador(nombre, apellido, dni, email);
 
         Compradores comprador = new Compradores();
@@ -34,15 +34,15 @@ public class CompradoresServicio {
         comprador.setFechaDeAlta(new Date());
         comprador.setActivo(true);
         comprador.setEmail(email);
-
+        //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
         compradorRepositorio.save(comprador);
 
     }
-
+    //Creamos un metodo para modificar un comprador pasandole los parametros necesarios para eso 
     public void modificarComprador(String id, String nombre, String apellido, Integer dni, Integer edad, Boolean activo, String email) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarComprador(email, apellido, dni, email);
-
+         //Usamos un optional para asegurarnos que el comprador este presente 
         Optional<Compradores> respuesta = compradorRepositorio.findById(id);
         if (respuesta.isPresent()) {
 
@@ -54,15 +54,15 @@ public class CompradoresServicio {
             comprador.setEdad(edad);
             comprador.setActivo(true);
             comprador.setEmail(email);
-
+             //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
             compradorRepositorio.save(comprador);
         }
     }
-
+    //Usamos el repositorio comprador para buscar uno
     public Compradores getOne(String id) {
         return compradorRepositorio.getOne(id);
     }
-
+    //Usamos el repositorio comprador para buscar los registros y hacer una lista
     public List<Compradores> listarCompradores() {
 
         List<Compradores> comprador = new ArrayList();
@@ -71,9 +71,9 @@ public class CompradoresServicio {
 
         return comprador;
     }
-
+    //Usamos el repositorio comprador para eliminar uno luego de buscarlo 
     public void eliminarComprador(String id) throws MiException {
-
+        //Optional para asegurarnos que el comprador buscado esta presente
         Optional<Compradores> respuesta = compradorRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
@@ -84,7 +84,7 @@ public class CompradoresServicio {
 
         }
     }
-
+    //Metodo para validar que los datos necesarios sean correctos y esten presentes
     private void validarComprador(String nombre, String apellido, Integer dni, String email) throws MiException {
 
         if (nombre.isEmpty() || nombre == null || nombre.length() < 3) {

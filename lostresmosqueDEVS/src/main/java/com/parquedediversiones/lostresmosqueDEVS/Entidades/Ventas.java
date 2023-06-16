@@ -29,13 +29,14 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Ventas {
+     //Declaramos el Id como autoGenerable y los demas atributos de la entidad
      @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private Integer totalVenta;
     private Date fechaVenta;
-     
+     //Relaciones
     @OneToOne
     private Empleados empleado;
     

@@ -21,27 +21,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Tonna/SA FR34K
  */
 /**/
+// Controladora para el portal y sus acciones
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
 
     @Autowired
     private UsuariosServicio usuarioServicio;
-
+   //Llevamos la vista al index
     @GetMapping("/")
     public String index() {
 
         return "index.html";
     }
-
+    //llamamos al metodo registrar
     @GetMapping("/registrar")
     public String registrar() {
         return "registro.html";
     }
-
+    // Luego de pasar los datos por parametro utilizamos el servicio usuario para registrar uno
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
         System.out.println("hola");
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
 
@@ -57,7 +59,7 @@ public class PortalControlador {
         }
 
     }
-
+    //Llamamos al login para poder ingresar como un usuario
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
 
@@ -67,7 +69,7 @@ public class PortalControlador {
 
         return "login.html";
     }
-
+    //Llevamos al usuario al inicio correspondiente en caso de ser admin o empleado
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session) {
@@ -80,7 +82,7 @@ public class PortalControlador {
 
         return "inicio.html";
     }
-
+    //llevamos al usuario a la vista de modificacion en caso de ser admin o empleado
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
@@ -90,12 +92,13 @@ public class PortalControlador {
 
         return "usuario_modificar.html";
     }
-
+    //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @PostMapping("/perfil/{id}")
     public String actualizar(@PathVariable String id, @RequestParam String nombre,
             @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
+       // Metodo try and catch para asegurarnos de captar errores 
         try {
             usuarioServicio.actualizar(id, nombre, email, password, password2);
 
@@ -112,7 +115,7 @@ public class PortalControlador {
             return "usuario_modificar.html";
         }
     }
-
+    //Llamamos al servicio usuario para listar
     @GetMapping("/lista")
     public String listar(ModelMap modelo) {
         List<Usuarios> usuarios = usuarioServicio.listarUsuarios();

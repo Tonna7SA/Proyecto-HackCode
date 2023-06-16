@@ -29,7 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 
 public class Compradores {
-
+    //Declaramos el Id como autoGenerable y los demas atributos de la entidad
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")

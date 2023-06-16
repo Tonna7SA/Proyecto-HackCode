@@ -28,7 +28,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 
 public class Empleados extends Usuarios {
-
+     //Declaramos atributos de la entidad el id sera heredado de usuarios asi como los demas atributos 
     private String dni;
     private Integer edad;
     private Boolean activo;
@@ -38,7 +38,7 @@ public class Empleados extends Usuarios {
 
     @Enumerated(EnumType.STRING)
     private Turno turnos;
-    
+    //Relaciones
     @OneToOne
     private Juegos juego;
     

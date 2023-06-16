@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VentasServicio {
-
+    //Servicio para comtrolar el AMBL de ventas
     @Autowired
     private EntradasRepositorio entradaRepositorio;
     @Autowired
@@ -40,13 +40,17 @@ public class VentasServicio {
     private CompradoresRepositorio compradorRepositorio;
     @Autowired
     private VentasRepositorio ventaRepositorio;
-
+     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
     public void crearVenta(Integer totalVenta, Date fechaVenta, String idEmpleado, String idEntrada, String idComprador) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarVenta(totalVenta, fechaVenta, idEmpleado, idEntrada, idComprador);
+         //Usamos el compradores repositorio para buscar que haya uno presente por la relacion entre estos
         Compradores comprador = compradorRepositorio.findById(idComprador).get();
+        //Usamos el repositorio entrada para para buscar que haya uno presente por la relacion entre estos
         Entradas entrada = entradaRepositorio.findById(idEntrada).get();
+        //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
         Empleados empleado = empleadoRepositorio.findById(idEmpleado).get();
+        
         Ventas venta = new Ventas();
 
         // chequear cantidad de personas 
@@ -55,35 +59,39 @@ public class VentasServicio {
         venta.setComprador(comprador);
         venta.setEntrada((List<Entradas>) entrada);
         venta.setEmpleado(empleado);
-
+          //Usamos el repositorio venta para guardar la entrada y registrarla correctamente
         ventaRepositorio.save(venta);
 
     }
-
+    //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso 
     @Transactional
     public void modificarVenta(String id, Integer totalVenta, Date fechaVenta, String idEmpleado, String idEntrada, String idComprador) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarVenta(totalVenta, fechaVenta, idEmpleado, idEntrada, idComprador);
+        
         Optional<Ventas> respuestaVenta = ventaRepositorio.findById(id);
+         //Usamos un optional para asegurarnos que la entrada este presente 
         Optional<Entradas> respuestaEntrada = entradaRepositorio.findById(idEntrada);
+         //Usamos un optional para asegurarnos que el comprador este presente 
         Optional<Compradores> respuestaComprador = compradorRepositorio.findById(idComprador);
+         //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(idEmpleado);
 
         Entradas entrada = new Entradas();
         Compradores comprador = new Compradores();
         Empleados empleado = new Empleados();
         if (respuestaEmpleado.isPresent()) {
-
+             //Asignamos el empleado encontrado al empleado para luego guardarlo
             empleado = empleadoRepositorio.findById(idEmpleado).get();
         }
 
         if (respuestaEntrada.isPresent()) {
-
+           //Asignamos la entrada encontrada a la entrada para luego guardarlo
             entrada = entradaRepositorio.findById(idEntrada).get();
         }
 
         if (respuestaComprador.isPresent()) {
-
+               //Asignamos el comprador encontrado al comprador para luego guardarlo
             comprador = compradorRepositorio.findById(idComprador).get();
         }
 
@@ -96,15 +104,16 @@ public class VentasServicio {
             venta.setComprador(comprador);
             venta.setEntrada((List<Entradas>) entrada);
             venta.setEmpleado(empleado);
-
+            //Usamos el repositorio venta para guardar la entrada y registrarla correctamente
             ventaRepositorio.save(venta);
 
         }
     }
+    //Usamos el repositorio venta para buscar uno
      public Ventas getOne(String id) {
         return ventaRepositorio.getOne(id);
     }
-
+     //Usamos el repositorio venta para buscar los registros y hacer una lista
     public List<Ventas> listarVentas() {
 
         List<Ventas> venta = new ArrayList();
@@ -113,7 +122,7 @@ public class VentasServicio {
 
         return venta;
     }
-
+    //Usamos el repositorio venta para eliminar uno luego de buscarlo 
     public void eliminarVenta(String id) throws MiException {
 
         Optional<Ventas> respuesta = ventaRepositorio.findById(id);
@@ -126,7 +135,7 @@ public class VentasServicio {
 
         }
     }
-
+    //Metodo para validar que los datos necesarios sean correctos y esten presentes
     public void validarVenta(Integer totalVenta, Date fechaVenta, String idEmpleado, String idEntrada, String idComprador) throws MiException {
 
         if (totalVenta == null || totalVenta <= 0) {

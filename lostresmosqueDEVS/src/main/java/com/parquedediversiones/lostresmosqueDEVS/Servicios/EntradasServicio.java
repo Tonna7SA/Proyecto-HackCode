@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 /**/
 @Service
 public class EntradasServicio {
-
+    //Servicio para comtrolar el AMBL de entradas
     @Autowired
     private JuegosRepositorio juegosRepositorio;
     @Autowired
@@ -34,12 +34,15 @@ public class EntradasServicio {
     private CompradoresRepositorio compradorRepositorio;
     @Autowired
     private EntradasRepositorio entradaRepositorio;
-
+    //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
     public void crearEntrada(Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
+        //Usamos el juego repositorio para buscar que haya uno presente por la relacion entre estos
         Juegos juego = juegosRepositorio.findById(idJuego).get();
+        //Usamos el compradores repositorio para buscar que haya uno presente por la relacion entre estos
         Compradores comprador = compradorRepositorio.findById(idComprador).get();
+        //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
         Empleados empleado = empleadoRepositorio.findById(idEmpleado).get();
         Entradas entrada = new Entradas();
         // chequear cantidad de personas 
@@ -51,34 +54,38 @@ public class EntradasServicio {
         entrada.setJuego(juego);
         entrada.setComprador(comprador);
         entrada.setEmpleado(empleado);
-
+         //Usamos el repositorio entrada para guardar la entrada y registrarlo correctamente
         entradaRepositorio.save(entrada);
 
     }
-
+    //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso 
     @Transactional
     public void modificarEntrada(String id, Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
+        //Usamos un optional para asegurarnos que la entrada este presente 
         Optional<Entradas> respuestaEntrada = entradaRepositorio.findById(id);
+        //Usamos un optional para asegurarnos que el comprador este presente 
         Optional<Compradores> respuestaComprador = compradorRepositorio.findById(idComprador);
+        //Usamos un optional para asegurarnos que el empleado este presente 
         Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(idEmpleado);
+        //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
         Juegos juego = new Juegos();
         Compradores comprador = new Compradores();
         Empleados empleado = new Empleados();
         if (respuestaEmpleado.isPresent()) {
-
+            //Asignamos el empleado encontrado al empleado para luego guardarlo
             empleado = empleadoRepositorio.findById(idEmpleado).get();
         }
 
         if (respuestaJuego.isPresent()) {
-
+            //Asignamos el juego encontrado al juego para luego guardarlo
             juego = juegosRepositorio.findById(idJuego).get();
         }
 
         if (respuestaComprador.isPresent()) {
-
+            //Asignamos el comprador encontrado al comprador para luego guardarlo
             comprador = compradorRepositorio.findById(idComprador).get();
         }
 
@@ -94,16 +101,16 @@ public class EntradasServicio {
             entrada.setJuego(juego);
             entrada.setComprador(comprador);
             entrada.setEmpleado(empleado);
-
+            //Usamos el repositorio entrada para guardar la entrada y registrarla correctamente
             entradaRepositorio.save(entrada);
 
         }
     }
-
+    //Usamos el repositorio entrada para buscar uno
     public Entradas getOne(String id) {
         return entradaRepositorio.getOne(id);
     }
-
+    //Usamos el repositorio entrada para buscar los registros y hacer una lista
     public List<Entradas> listarEntradas() {
 
         List<Entradas> entrada = new ArrayList();
@@ -112,7 +119,7 @@ public class EntradasServicio {
 
         return entrada;
     }
-
+    //Usamos el repositorio entrada para eliminar uno luego de buscarlo 
     public void eliminarEntrada(String id) throws MiException {
 
         Optional<Entradas> respuesta = entradaRepositorio.findById(id);
@@ -125,7 +132,7 @@ public class EntradasServicio {
 
         }
     }
-
+     //Metodo para validar que los datos necesarios sean correctos y esten presentes
     public void validarEntrada(Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
 
         if (numeroTicket == null) {

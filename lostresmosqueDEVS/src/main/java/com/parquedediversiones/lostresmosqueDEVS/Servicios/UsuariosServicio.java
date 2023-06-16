@@ -29,13 +29,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**/
 @Service
 public class UsuariosServicio implements UserDetailsService{
+    //Servicio para comtrolar el AMBL de usuarios
 @Autowired
     private UsuariosRepositorio usuarioRepositorio;
     
-    
+     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
     @Transactional
     public void registrar(String nombre, String email, String password, String password2) throws MiException{
-
+         //LLamamos al metodo validar para evitar errores
         validar(nombre, email, password, password2);
         
         Usuarios usuario = new Usuarios();
@@ -48,17 +49,17 @@ public class UsuariosServicio implements UserDetailsService{
         usuario.setRoles(Rol.EMP);
         
         System.out.println(usuario.toString());
-        
+         //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
         usuarioRepositorio.save(usuario);
     
 }
     
-    
+       //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso
        @Transactional
     public void actualizar(String idUsuario, String nombre, String email, String password, String password2) throws MiException{
-
+         //LLamamos al metodo validar para evitar errores
         validar(nombre, email, password, password2);
-        
+         //Usamos un optional para asegurarnos que el usuario este presente 
         Optional<Usuarios> respuesta = usuarioRepositorio.findById(idUsuario);
         
         if (respuesta.isPresent()){
@@ -68,13 +69,13 @@ public class UsuariosServicio implements UserDetailsService{
              usuario.setEmail(email);
              
              usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-            
+             //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
              usuarioRepositorio.save(usuario);
             
         }
         
 }
-    
+    //Metodo para validar que los datos necesarios sean correctos y esten presentes
     private void validar(String nombre, String email, String password, String password2) throws MiException{
 
 if(nombre.isEmpty() || nombre == null){
@@ -94,7 +95,7 @@ if(!password.equals(password2)){
 }
         
     }
-
+//Creamos un metodo para el logeo de los usuarios
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
      Usuarios usuario = usuarioRepositorio.buscarPorEmail(email);
@@ -120,13 +121,13 @@ if(!password.equals(password2)){
      }
      
     }
-    
+     //Usamos el repositorio usuario para buscar uno
     public Usuarios getone(String id){
         return  usuarioRepositorio.getOne(id);
         
     }
     
-    
+      //Usamos el repositorio usuario para eliminar uno luego de buscarlo 
       public void eliminarUsuario(String id) throws MiException{
 
         Optional<Usuarios> respuesta = usuarioRepositorio.findById(id);
@@ -139,7 +140,7 @@ if(!password.equals(password2)){
 
         }
     }
-      
+        //Usamos el repositorio usuario para buscar los registros y hacer una lista
        public List<Usuarios> listarUsuarios() {
 
         List<Usuarios> usuario = new ArrayList();

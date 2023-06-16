@@ -28,7 +28,8 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 
 public class Usuarios {
-    
+     //Declaramos el Id como autoGenerable y los demas atributos de la entidad
+    // Esta es una entidad madre/padre que sera utilizada en otras entidades
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")

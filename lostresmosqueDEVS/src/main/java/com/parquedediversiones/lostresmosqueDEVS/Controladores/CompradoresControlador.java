@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Tonna/SA FR34K
  */
 /**/
+// Controladora para los compradores y sus acciones
 @Controller
 @RequestMapping("/compradores")
 public class CompradoresControlador {
-
+    // Vista para registrarte como comprador 
     @Autowired
     private CompradoresServicio compradorServicio;
 
@@ -33,10 +34,11 @@ public class CompradoresControlador {
         return "registro_compradores_form.html";
 
     }
-
+    // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para registrar el comprador
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer dni,@RequestParam Integer edad,
             @RequestParam Date fechaDeaALta, Boolean activo,@RequestParam String email, ModelMap modelo) throws MiException {
+       // Metodo try and catch para asegurarnos de captar errores 
         try {
            compradorServicio.crearComprador(nombre, apellido, dni, edad, fechaDeaALta, activo, email);
             modelo.put("Exito", "El juego se registro exitosamente");
@@ -52,7 +54,7 @@ public class CompradoresControlador {
         return "index.html";
 
     }
-    
+    //Llamamos al servicio comprador para listar los compradores.
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
         List<Compradores> compradores = compradorServicio.listarCompradores();
@@ -60,6 +62,7 @@ public class CompradoresControlador {
 
         return "listar_compradores.html";
     }
+    // Luego de pasar los datos por parametro llamamos al servicio comprador para pasar los datos al PostMapping y hacer uso del metodo modificar
        @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, @RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer dni,@RequestParam Integer edad,
             @RequestParam Date fechaDeaALta, Boolean activo,@RequestParam String email, ModelMap modelo) {
@@ -68,10 +71,11 @@ public class CompradoresControlador {
 
         return "compradores_modificar.html";
     }
-
+    // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
     public String modificarComprador(@PathVariable String id, @RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer dni,@RequestParam Integer edad,
             @RequestParam Date fechaDeaALta, Boolean activo,@RequestParam String email, ModelMap modelo) {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
            
 
@@ -87,15 +91,17 @@ public class CompradoresControlador {
         }
 
     }
+    // LLamamos al servicio comprador para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("compradores", compradorServicio.getOne(id));
 
         return "compradores_eliminar.html";
     }
-
+    //Llamamos al servicio comprador con los datos del GetMapping para eliminar efectivamente un comprador 
     @PostMapping("/eliminar/{id}")
     public String eliminarComprador(@PathVariable String id, ModelMap modelo) {
+         // Metodo try and catch para asegurarnos de captar errores 
         try {
             compradorServicio.eliminarComprador(id);
             modelo.put("Exito", "Se elimino el comprador exitosamente");

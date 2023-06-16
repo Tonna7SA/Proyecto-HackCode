@@ -7,7 +7,7 @@ import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Turno;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.JuegosRepositorio;
-import java.util.Date;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,16 +18,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmpleadosServicio {
-
+    //Servicio para comtrolar el AMBL de empleado
     @Autowired
     private JuegosRepositorio juegosRepositorio;
      @Autowired
     private EmpleadosRepositorio empleadoRepositorio;
-
+     //Creamos un metodo para crear un empleado pasandole los parametros necesarios para eso 
     public void crearEmpleado(String id, String nombreUsuario, String email, String password, Rol roles, String dni, Integer edad, Boolean activo, Date fechaDeAlta,
             Turno turnos, String idJuego) throws MiException {
-
+        //LLamamos al metodo validar para evitar errores
         validarEmpleado(id, nombreUsuario, email, password, roles, dni, edad, activo, fechaDeAlta, turnos, idJuego);
+        //Usamos el juego repositorio para buscar que haya uno presente por la relacion entre estos
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         Empleados empleado = new Empleados();
 
@@ -42,21 +43,23 @@ public class EmpleadosServicio {
         empleado.setRoles(roles);
         empleado.setTurnos(turnos);
         empleado.setJuego(juego);
-
-        juegosRepositorio.save(juego);
+        //Usamos el repositorio empleado para guardar el comprador y registrarlo correctamente
+       empleadoRepositorio.save(empleado);
 
     }
-
+    //Creamos un metodo para modificar un empleado pasandole los parametros necesarios para eso 
     @Transactional
     public void modificarEmpleado(String id, String nombreUsuario, String email, String password, Rol roles, String dni, Integer edad, Boolean activo, Date fechaDeAlta,
             Turno turnos, String idJuego) throws MiException {
-
+         //LLamamos al metodo validar para evitar errores
         validarEmpleado(id, nombreUsuario, email, password, roles, dni, edad, activo, fechaDeAlta, turnos, idJuego);
+        //Usamos un optional para asegurarnos que el empleado este presente 
         Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(id);
+         //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
         Juegos juego = new Juegos();
         if (respuestaJuego.isPresent()) {
-
+            //Asignamos el juego encontrado al juego para luego guardarlo
             juego = juegosRepositorio.findById(idJuego).get();
         }
 
@@ -76,15 +79,16 @@ public class EmpleadosServicio {
             empleado.setRoles(roles);
             empleado.setTurnos(turnos);
             empleado.setJuego(juego);
+            //Usamos el repositorio empleado para guardar el empleado y registrarlo correctamente
             empleadoRepositorio.save(empleado);
 
         }
     }
-
+    //Usamos el repositorio empleado para buscar uno
     public Empleados getOne(String id) {
         return empleadoRepositorio.getOne(id);
     }
-
+    //Usamos el repositorio empleado para buscar los registros y hacer una lista
     public List<Empleados> listarEmpleados() {
 
         List<Empleados> empleado = new ArrayList();
@@ -93,9 +97,9 @@ public class EmpleadosServicio {
 
         return empleado;
     }
-
+    //Usamos el repositorio empleado para eliminar uno luego de buscarlo 
     public void eliminarEmpleado(String id) throws MiException {
-
+         //Optional para asegurarnos que el empleado buscado esta presente
         Optional<Empleados> respuesta = empleadoRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
@@ -106,7 +110,7 @@ public class EmpleadosServicio {
 
         }
     }
-
+    //Metodo para validar que los datos necesarios sean correctos y esten presentes
     public void validarEmpleado(String id, String nombreUsuario, String email, String password, Rol roles, String dni, Integer edad, Boolean activo, Date fechaDeAlta, Turno turnos, String idJuego) throws MiException {
 
         if (id.isEmpty() || id == null) {
@@ -132,10 +136,6 @@ public class EmpleadosServicio {
             throw new MiException("El empleado debe tener una edad ingresada correctamente y no puede ser menor a 18");
 
         }
-//         a chequear como validar un booleano 
-//        if (activo) {
-//            throw new MiException("Debe tener dni ingresado");
-//        }
         if (fechaDeAlta == null) {
             throw new MiException("Debe tener una fecha de alta");
         }

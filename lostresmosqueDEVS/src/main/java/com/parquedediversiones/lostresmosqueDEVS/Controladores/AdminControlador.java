@@ -19,18 +19,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Tonna/SA FR34K
  */
 /**/
+//Rol admin le damos sus visualizaciones necesarias para aplicar su rol con los distintos metodos
 @Controller
 @RequestMapping("admin")
 public class AdminControlador {
 
     @Autowired
     UsuariosServicio usuariosServicio;
-
+    //Panel de vista del Administrador
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
         return "panel.html";
     }
-
+    // LLamamos al servicio usuario para poder listar usuarios
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
         List<Usuarios> usuarios = usuariosServicio.listarUsuarios();
@@ -38,16 +39,17 @@ public class AdminControlador {
 
         return "listar_usuario.html";
     }
-
+    // LLamamos al servicio usuario para poder eliminar usuarios
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("usuario", usuariosServicio.getone(id));
 
         return "usuario_eliminar.html";
     }
-
+    // LLamamos al servicio usuario para poder eliminar usuarios
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id,  RedirectAttributes toto, ModelMap modelo) {
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             usuariosServicio.eliminarUsuario(id);
             
