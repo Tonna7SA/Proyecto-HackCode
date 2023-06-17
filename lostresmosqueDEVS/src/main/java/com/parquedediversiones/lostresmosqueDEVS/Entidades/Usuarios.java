@@ -5,15 +5,14 @@ import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Rol;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -40,4 +39,6 @@ public class Usuarios {
     @Enumerated(EnumType.STRING)
     private Rol roles;
 
+    @OneToOne
+    private Imagen imagen;
 }
