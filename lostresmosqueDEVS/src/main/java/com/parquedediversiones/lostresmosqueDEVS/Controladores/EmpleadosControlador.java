@@ -45,13 +45,13 @@ public class EmpleadosControlador {
 
     // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para registrar un empleado
     @PostMapping("/registro")
-    public String registro(@RequestParam String id, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
+    public String registro(@RequestParam Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
             @RequestParam Integer edad, @RequestParam Boolean activo, @RequestParam Date fechaDeAlta,
             Turno turnos, String idJuego, ModelMap modelo) throws MiException {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            empleadoServicio.crearEmpleado(id, nombreUsuario, email, password, roles, dni, edad, activo, fechaDeAlta, turnos, idJuego);
-            modelo.put("Exito", "El juego se registro exitosamente");
+            empleadoServicio.crearEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
+            modelo.put("Exito", "El empleado se registro exitosamente");
 
         } catch (MiException ex) {
 
@@ -78,11 +78,11 @@ public class EmpleadosControlador {
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
+    public String modificar(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
             @RequestParam Integer edad, @RequestParam Boolean activo, @RequestParam Date fechaDeAlta,
             Turno turnos, String idJuego, ModelMap modelo) {
 
-        modelo.put("empleados", empleadoServicio.getOne(id));
+        modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
         List<Juegos> juegos = juegoServicio.listarJuegos();
 
@@ -92,7 +92,7 @@ public class EmpleadosControlador {
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para modificar un empleado
     @PostMapping("/modificar/{id}")
-    public String modificarEntrada(@PathVariable String id, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
+    public String modificarEntrada(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
             @RequestParam Integer edad, @RequestParam Boolean activo, @RequestParam Date fechaDeAlta,
             Turno turnos, String idJuego, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
@@ -101,7 +101,7 @@ public class EmpleadosControlador {
 
             modelo.addAttribute("juegos", juegos);
 
-            empleadoServicio.modificarEmpleado(id, nombreUsuario, email, password, roles, dni, edad, activo, fechaDeAlta, turnos, idJuego);
+           empleadoServicio.modificarEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
 
             return "redirect:../listar";
 
@@ -117,17 +117,17 @@ public class EmpleadosControlador {
     }
      // LLamamos al servicio empleado para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        modelo.put("empleados", empleadoServicio.getOne(id));
+    public String eliminar(@PathVariable Long legajoDni, ModelMap modelo) {
+        modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
         return "empleados_eliminar.html";
     }
     //Llamamos al servicio empleado con los datos del GetMapping para eliminar efectivamente un empleado 
     @PostMapping("/eliminar/{id}")
-    public String eliminarEmpleado(@PathVariable String id, ModelMap modelo) {
+    public String eliminarEmpleado(@PathVariable Long legajoDni, ModelMap modelo) {
          // Metodo try and catch para asegurarnos de captar errores 
         try {
-            empleadoServicio.eliminarEmpleado(id);
+            empleadoServicio.eliminarEmpleado(legajoDni);
             modelo.put("exito", "Se elimino el empleado exitosamente");
 
             return "redirect:../listar";

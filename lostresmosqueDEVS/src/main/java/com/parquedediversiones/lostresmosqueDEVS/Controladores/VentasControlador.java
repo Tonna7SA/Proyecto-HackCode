@@ -63,11 +63,11 @@ public class VentasControlador {
     }
      // Luego de pasar los datos por parametro llamamos al servicio ventas y lo utilizamos  para registrar una venta
     @PostMapping("/registro")
-    public String registro(@RequestParam Integer totalVenta, @RequestParam Date fechaVenta, @RequestParam String idEmpleado,
+    public String registro(@RequestParam Integer totalVenta, @RequestParam Date fechaVenta, @RequestParam Long legajoDni,
             @RequestParam String idEntrada, @RequestParam String idComprador, ModelMap modelo) throws MiException {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            ventaServicio.crearVenta(totalVenta, fechaVenta, idEmpleado, idEntrada, idComprador);
+            ventaServicio.crearVenta(totalVenta, fechaVenta, legajoDni, idEntrada, idComprador);
             modelo.put("Exito", "La venta se registro correctamente");
             
         } catch (MiException ex) {
@@ -116,7 +116,7 @@ public class VentasControlador {
      // Luego de pasar los datos por parametro llamamos al servicio ventas y lo utilizamos  para modificar una venta
     @PostMapping("/modificar/{id}")
     public String modificarVenta(@PathVariable String id, @RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
-            @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
+            @RequestParam Integer precioTotal, @RequestParam Long legajoDni, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
        // Metodo try and catch para asegurarnos de captar errores 
         try {
             List<Empleados> empleados = empleadoServicio.listarEmpleados();
@@ -127,7 +127,7 @@ public class VentasControlador {
             modelo.addAttribute("compradores", compradores);
             modelo.addAttribute("empleados", empleados);
             
-            ventaServicio.modificarVenta(id, precioTotal, fechaTicket, idEmpleado, idEmpleado, idComprador);
+            ventaServicio.modificarVenta(id, precioTotal, fechaTicket, legajoDni, idJuego, idComprador);
             
             return "redirect:../listar";
             

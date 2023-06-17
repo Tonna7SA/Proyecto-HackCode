@@ -41,10 +41,10 @@ public class JuegosControlador {
     // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para registrar un juego
     @PostMapping("/registro")
     public String registro(@RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
-            @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam String idEmpleado, ModelMap modelo) throws MiException {
+            @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam Long legajoDni, ModelMap modelo) throws MiException {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            juegoServicio.crearJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
+            juegoServicio.crearJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, legajoDni);
             modelo.put("Exito", "El juego se registro exitosamente");
 
         } catch (MiException ex) {
@@ -84,14 +84,14 @@ public class JuegosControlador {
      // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para modificar un juego
     @PostMapping("/modificar/{id}")
     public String modificarJuego(@PathVariable String id, @RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
-            @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam String idEmpleado, ModelMap modelo) {
+            @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam Long legajoDni, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
             List<Empleados> empleados = empleadoServicio.listarEmpleados();
 
             modelo.addAttribute("empleados", empleados);
 
-            juegoServicio.crearJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
+            juegoServicio.crearJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, legajoDni);
 
             return "redirect:../listar";
 

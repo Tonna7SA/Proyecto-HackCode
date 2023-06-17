@@ -29,7 +29,7 @@ import lombok.ToString;
 
 public class Empleados extends Usuarios {
      //Declaramos atributos de la entidad el id sera heredado de usuarios asi como los demas atributos 
-    private String dni;
+    
     private Integer edad;
     private Boolean activo;
 
