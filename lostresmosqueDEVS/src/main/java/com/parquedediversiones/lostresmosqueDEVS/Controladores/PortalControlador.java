@@ -123,12 +123,12 @@ public class PortalControlador {
     //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @PostMapping("/perfil/{id}")
-    public String actualizar(@PathVariable String id, @RequestParam String nombre,
+    public String actualizar(@PathVariable Long legajoDni, @RequestParam String nombre,
             @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
        // Metodo try and catch para asegurarnos de captar errores 
         try {
-            usuarioServicio.actualizar(id, nombre, email, password, password2);
+            usuarioServicio.actualizar(legajoDni, nombre, email, password, password2);
 
             redirectAttributes.addFlashAttribute("exito", "El usuario fue actualizado correctamente!");
 

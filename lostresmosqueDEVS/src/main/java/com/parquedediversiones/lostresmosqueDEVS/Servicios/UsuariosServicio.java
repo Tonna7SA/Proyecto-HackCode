@@ -56,11 +56,11 @@ public class UsuariosServicio implements UserDetailsService{
     
        //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso
        @Transactional
-    public void actualizar(String idUsuario, String nombre, String email, String password, String password2) throws MiException{
+    public void actualizar(Long legajoDni, String nombre, String email, String password, String password2) throws MiException{
          //LLamamos al metodo validar para evitar errores
         validar(nombre, email, password, password2);
          //Usamos un optional para asegurarnos que el usuario este presente 
-        Optional<Usuarios> respuesta = usuarioRepositorio.findById(idUsuario);
+        Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
         
         if (respuesta.isPresent()){
             
@@ -122,15 +122,15 @@ if(!password.equals(password2)){
      
     }
      //Usamos el repositorio usuario para buscar uno
-    public Usuarios getone(String id){
-        return  usuarioRepositorio.getOne(id);
+    public Usuarios getone(Long legajoDni){
+        return  usuarioRepositorio.getOne(legajoDni);
         
     }
     
       //Usamos el repositorio usuario para eliminar uno luego de buscarlo 
-      public void eliminarUsuario(String id) throws MiException{
+      public void eliminarUsuario(Long legajoDni) throws MiException{
 
-        Optional<Usuarios> respuesta = usuarioRepositorio.findById(id);
+        Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
         
         if (respuesta.isPresent()) {
 

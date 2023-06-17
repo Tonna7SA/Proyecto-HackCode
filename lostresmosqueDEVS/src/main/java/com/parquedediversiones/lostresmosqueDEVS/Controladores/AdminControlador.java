@@ -41,17 +41,17 @@ public class AdminControlador {
     }
     // LLamamos al servicio usuario para poder eliminar usuarios
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        modelo.put("usuario", usuariosServicio.getone(id));
+    public String eliminar(@PathVariable Long legajoDni, ModelMap modelo) {
+        modelo.put("usuario", usuariosServicio.getone(legajoDni));
 
         return "usuario_eliminar.html";
     }
     // LLamamos al servicio usuario para poder eliminar usuarios
     @PostMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id,  RedirectAttributes toto, ModelMap modelo) {
+    public String eliminar(@PathVariable Long legajoDni,  RedirectAttributes toto, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            usuariosServicio.eliminarUsuario(id);
+            usuariosServicio.eliminarUsuario(legajoDni);
             
             toto.addFlashAttribute("exito", "Muy bien");
 
