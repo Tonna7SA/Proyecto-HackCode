@@ -42,23 +42,51 @@ public class PortalControlador {
     // Luego de pasar los datos por parametro utilizamos el servicio usuario para registrar uno
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
-        System.out.println("hola");
+       
         // Metodo try and catch para asegurarnos de captar errores 
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
 
             redirectAttributes.addFlashAttribute("exito", "El usuario fue cargado correctamente!");
-            System.out.println("chau");
+            
             return "redirect:/";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
-            System.out.println("zzz");
+           
             return "registro.html";
         }
 
     }
+    
+    
+//       User user = userRepository.findByUsername(username);
+//        
+//        if (user != null && user.getPassword().equals(password)) {
+//            // Verificar si es el primer inicio de sesión
+//            if (user.getFirstLogin() == null) {
+//                // Es el primer inicio de sesión, actualizar la fecha y hora actual
+//                user.setFirstLogin(LocalDateTime.now());
+//                userRepository.save(user);
+//            }
+//            
+//            // Resto de la lógica de inicio de sesión...
+//        }
+//      User user = userRepository.findByUsername(username);
+//        
+//        if (user != null && user.getPassword().equals(password)) {
+//            // Verificar si es el primer inicio de sesión
+//            if (user.getLoginCount() == 0) {
+//                // Es el primer inicio de sesión, incrementar el contador y guardar
+//                user.setLoginCount(1);
+//                userRepository.save(user);
+//            }
+//            else {
+//                // No es el primer inicio de sesión, simplemente incrementar el contador
+//                user.setLoginCount(user.getLoginCount() + 1);
+//                userRepository.save(user);
+//            }
     //Llamamos al login para poder ingresar como un usuario
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
@@ -66,7 +94,7 @@ public class PortalControlador {
         if (error != null) {
             modelo.put("error", "Usuario o contraseña inválidos");
         }
-
+        
         return "login.html";
     }
     //Llevamos al usuario al inicio correspondiente en caso de ser admin o empleado

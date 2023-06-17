@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  * @author Tonna/SA FR34K
  */
 @Repository
-public interface UsuariosRepositorio extends JpaRepository<Usuarios, String> {
+public interface UsuariosRepositorio extends JpaRepository<Usuarios, Long> {
 
     @Query(value = " Select * from Usuarios where email = :email ", nativeQuery = true)
     public Usuarios buscarPorEmail(@Param("email") String email);

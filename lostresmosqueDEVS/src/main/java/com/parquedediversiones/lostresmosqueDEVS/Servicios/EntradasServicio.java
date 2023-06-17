@@ -35,15 +35,15 @@ public class EntradasServicio {
     @Autowired
     private EntradasRepositorio entradaRepositorio;
     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
-    public void crearEntrada(Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
+    public void crearEntrada(Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, Long legajoDni, String idJuego, String idComprador) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
+        validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, legajoDni, idJuego, idComprador);
         //Usamos el juego repositorio para buscar que haya uno presente por la relacion entre estos
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         //Usamos el compradores repositorio para buscar que haya uno presente por la relacion entre estos
         Compradores comprador = compradorRepositorio.findById(idComprador).get();
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
-        Empleados empleado = empleadoRepositorio.findById(idEmpleado).get();
+        Empleados empleado = empleadoRepositorio.findById(legajoDni).get();
         Entradas entrada = new Entradas();
         // chequear cantidad de personas 
         entrada.setCantidadDePersonas(cantidadDePersonas);
@@ -60,15 +60,15 @@ public class EntradasServicio {
     }
     //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarEntrada(String id, Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
+    public void modificarEntrada(String id, Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, Long legajoDni, String idJuego, String idComprador) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
+        validarEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, legajoDni, idJuego, idComprador);
         //Usamos un optional para asegurarnos que la entrada este presente 
         Optional<Entradas> respuestaEntrada = entradaRepositorio.findById(id);
         //Usamos un optional para asegurarnos que el comprador este presente 
         Optional<Compradores> respuestaComprador = compradorRepositorio.findById(idComprador);
         //Usamos un optional para asegurarnos que el empleado este presente 
-        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(idEmpleado);
+        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
         //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
         Juegos juego = new Juegos();
@@ -76,7 +76,7 @@ public class EntradasServicio {
         Empleados empleado = new Empleados();
         if (respuestaEmpleado.isPresent()) {
             //Asignamos el empleado encontrado al empleado para luego guardarlo
-            empleado = empleadoRepositorio.findById(idEmpleado).get();
+            empleado = empleadoRepositorio.findById(legajoDni).get();
         }
 
         if (respuestaJuego.isPresent()) {
@@ -133,7 +133,7 @@ public class EntradasServicio {
         }
     }
      //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    public void validarEntrada(Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, String idEmpleado, String idJuego, String idComprador) throws MiException {
+    public void validarEntrada(Integer numeroTicket, Date fechaTicket, Integer cantidadDePersonas, Integer precioJuego, Integer precioTotal, Long legajoDni, String idJuego, String idComprador) throws MiException {
 
         if (numeroTicket == null) {
             throw new MiException("Debe tener nro de Ticket");
@@ -152,7 +152,7 @@ public class EntradasServicio {
             throw new MiException("Debe ingresar el precio total (debe ser mayor a 0)");
         }
 
-        if (idEmpleado.isEmpty() || idEmpleado == null) {
+        if (legajoDni == null) {
             throw new MiException("Debe tener un empleado asignado");
         }
         if (idJuego.isEmpty() || idJuego == null) {

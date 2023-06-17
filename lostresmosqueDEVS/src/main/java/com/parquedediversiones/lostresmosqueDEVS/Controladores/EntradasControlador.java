@@ -57,10 +57,10 @@ public class EntradasControlador {
     // Luego de pasar los datos por parametro llamamos al servicio entrada y lo utilizamos  para registrar una entrada
     @PostMapping("/registro")
     public String registro(@RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
-            @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) throws MiException {
+            @RequestParam Integer precioTotal, @RequestParam Long legajoDni, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) throws MiException {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            entradaServicio.crearEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
+            entradaServicio.crearEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, legajoDni, idJuego, idComprador);
             modelo.put("Exito", "La entrada se obtuvo exitosamente");
 
         } catch (MiException ex) {
@@ -113,7 +113,7 @@ public class EntradasControlador {
     // Luego de pasar los datos por parametro llamamos al servicio entrada y lo utilizamos para modificar una entrada
     @PostMapping("/modificar/{id}")
     public String modificarEntrada(@PathVariable String id, @RequestParam Integer numeroTicket, @RequestParam Date fechaTicket, @RequestParam Integer cantidadDePersonas, @RequestParam Integer precioJuego,
-            @RequestParam Integer precioTotal, @RequestParam String idEmpleado, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
+            @RequestParam Integer precioTotal, @RequestParam Long legajoDni, @RequestParam String idJuego, @RequestParam String idComprador, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
             List<Empleados> empleados = empleadoServicio.listarEmpleados();
@@ -124,7 +124,7 @@ public class EntradasControlador {
             modelo.addAttribute("compradores", compradores);
             modelo.addAttribute("empleados", empleados);
 
-            entradaServicio.crearEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, idEmpleado, idJuego, idComprador);
+            entradaServicio.crearEntrada(numeroTicket, fechaTicket, cantidadDePersonas, precioJuego, precioTotal, legajoDni, idJuego, idComprador);
 
             return "redirect:../listar";
 

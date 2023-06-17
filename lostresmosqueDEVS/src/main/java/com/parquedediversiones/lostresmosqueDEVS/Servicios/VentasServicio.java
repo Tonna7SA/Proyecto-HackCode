@@ -41,15 +41,15 @@ public class VentasServicio {
     @Autowired
     private VentasRepositorio ventaRepositorio;
      //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
-    public void crearVenta(Integer totalVenta, Date fechaVenta, String idEmpleado, String idEntrada, String idComprador) throws MiException {
+    public void crearVenta(Integer totalVenta, Date fechaVenta, Long legajoDni, String idEntrada, String idComprador) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarVenta(totalVenta, fechaVenta, idEmpleado, idEntrada, idComprador);
+        validarVenta(totalVenta, fechaVenta, legajoDni, idEntrada, idComprador);
          //Usamos el compradores repositorio para buscar que haya uno presente por la relacion entre estos
         Compradores comprador = compradorRepositorio.findById(idComprador).get();
         //Usamos el repositorio entrada para para buscar que haya uno presente por la relacion entre estos
         Entradas entrada = entradaRepositorio.findById(idEntrada).get();
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
-        Empleados empleado = empleadoRepositorio.findById(idEmpleado).get();
+        Empleados empleado = empleadoRepositorio.findById(legajoDni).get();
         
         Ventas venta = new Ventas();
 
@@ -65,9 +65,9 @@ public class VentasServicio {
     }
     //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarVenta(String id, Integer totalVenta, Date fechaVenta, String idEmpleado, String idEntrada, String idComprador) throws MiException {
+    public void modificarVenta(String id, Integer totalVenta, Date fechaVenta, Long legajoDni, String idEntrada, String idComprador) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarVenta(totalVenta, fechaVenta, idEmpleado, idEntrada, idComprador);
+        validarVenta(totalVenta, fechaVenta, legajoDni, idEntrada, idComprador);
         
         Optional<Ventas> respuestaVenta = ventaRepositorio.findById(id);
          //Usamos un optional para asegurarnos que la entrada este presente 
@@ -75,14 +75,14 @@ public class VentasServicio {
          //Usamos un optional para asegurarnos que el comprador este presente 
         Optional<Compradores> respuestaComprador = compradorRepositorio.findById(idComprador);
          //Usamos un optional para asegurarnos que el juego este presente 
-        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(idEmpleado);
+        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
 
         Entradas entrada = new Entradas();
         Compradores comprador = new Compradores();
         Empleados empleado = new Empleados();
         if (respuestaEmpleado.isPresent()) {
              //Asignamos el empleado encontrado al empleado para luego guardarlo
-            empleado = empleadoRepositorio.findById(idEmpleado).get();
+            empleado = empleadoRepositorio.findById(legajoDni).get();
         }
 
         if (respuestaEntrada.isPresent()) {
@@ -136,7 +136,7 @@ public class VentasServicio {
         }
     }
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    public void validarVenta(Integer totalVenta, Date fechaVenta, String idEmpleado, String idEntrada, String idComprador) throws MiException {
+    public void validarVenta(Integer totalVenta, Date fechaVenta, Long legajoDni, String idEntrada, String idComprador) throws MiException {
 
         if (totalVenta == null || totalVenta <= 0) {
             throw new MiException("Debe tener un monto total de la venta y debe ser mayor a 0");
@@ -145,7 +145,7 @@ public class VentasServicio {
             throw new MiException("Debe ingresar una fecha de la venta");
         }
 
-        if (idEmpleado.isEmpty() || idEmpleado == null) {
+        if (legajoDni == null) {
             throw new MiException("Debe tener un empleado asignado");
         }
         if (idEntrada.isEmpty() || idEntrada == null) {

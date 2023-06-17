@@ -22,11 +22,11 @@ public class JuegosServicio {
     @Autowired
     private EmpleadosRepositorio empleadoRepositorio;
     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
-    public void crearJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, String idEmpleado) throws MiException {
+    public void crearJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, Long legajoDni) throws MiException {
         //LLamamos al metodo validar para evitar errores
-       validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
+       validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, legajoDni);
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
-        Empleados empleado= empleadoRepositorio.findById(idEmpleado).get();
+        Empleados empleado= empleadoRepositorio.findById(legajoDni).get();
         Juegos juego = new Juegos();
         
         juego.setNombreDelJuego(nombreDelJuego);
@@ -43,17 +43,17 @@ public class JuegosServicio {
     }
      //Creamos un metodo para modificar un juego pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarJuego(String id, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, String idEmpleado) throws MiException {
+    public void modificarJuego(String id, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, Long legajoDni) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, idEmpleado);
+        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, legajoDni);
          //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(id);
         //Usamos un optional para asegurarnos que el empleado este presente 
-        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(idEmpleado);
+        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
         Empleados empleado= new Empleados();
         if (respuestaEmpleado.isPresent()) {
             //Asignamos el empleado encontrado al empleado para luego guardarlo
-            empleado=empleadoRepositorio.findById(idEmpleado).get();
+            empleado=empleadoRepositorio.findById(legajoDni).get();
         }
         
         
@@ -100,7 +100,7 @@ public class JuegosServicio {
         }
     }
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    private void validarJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, String idEmpleado) throws MiException {
+    private void validarJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, Long legajoDni) throws MiException {
 
         if (nombreDelJuego.isEmpty() || nombreDelJuego == null || nombreDelJuego.length() < 3) {
             throw new MiException("Debe ingresar un nombre");
@@ -118,7 +118,7 @@ public class JuegosServicio {
         if (precioDelJuego == null || precioDelJuego < 1) {
             throw new MiException("Debe ingresar un email valido");
         }
-        if (idEmpleado==null) {
+        if (legajoDni==null) {
             throw new MiException("El id del empleado no puede ser nulo");
             
         }

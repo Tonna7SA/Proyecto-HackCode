@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author Tonna/SA FR34K
  */
 @Repository
-public interface EmpleadosRepositorio extends JpaRepository<Empleados, String>{
+public interface EmpleadosRepositorio extends JpaRepository<Empleados, Long>{
     
 }

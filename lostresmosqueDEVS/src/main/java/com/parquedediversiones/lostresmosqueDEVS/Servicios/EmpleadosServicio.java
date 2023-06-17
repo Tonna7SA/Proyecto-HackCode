@@ -24,20 +24,20 @@ public class EmpleadosServicio {
      @Autowired
     private EmpleadosRepositorio empleadoRepositorio;
      //Creamos un metodo para crear un empleado pasandole los parametros necesarios para eso 
-    public void crearEmpleado(String id, String nombreUsuario, String email, String password, Rol roles, String dni, Integer edad, Boolean activo, Date fechaDeAlta,
+    public void crearEmpleado(Long legajoDni, String nombreUsuario, String email, String password, Rol roles, Integer edad, Boolean activo, Date fechaDeAlta,
             Turno turnos, String idJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarEmpleado(id, nombreUsuario, email, password, roles, dni, edad, activo, fechaDeAlta, turnos, idJuego);
+        validarEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
         //Usamos el juego repositorio para buscar que haya uno presente por la relacion entre estos
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         Empleados empleado = new Empleados();
 
         empleado.setActivo(true);
-        empleado.setDni(dni);
+        
         empleado.setEdad(edad);
         empleado.setEmail(email);
         empleado.setFechaDeAlta(new Date());
-        empleado.setId(id);
+        empleado.setLegajoDni(legajoDni);
         empleado.setNombreUsuario(nombreUsuario);
         empleado.setPassword(password);
         empleado.setRoles(roles);
@@ -49,12 +49,12 @@ public class EmpleadosServicio {
     }
     //Creamos un metodo para modificar un empleado pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarEmpleado(String id, String nombreUsuario, String email, String password, Rol roles, String dni, Integer edad, Boolean activo, Date fechaDeAlta,
+    public void modificarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, Rol roles,  Integer edad, Boolean activo, Date fechaDeAlta,
             Turno turnos, String idJuego) throws MiException {
          //LLamamos al metodo validar para evitar errores
-        validarEmpleado(id, nombreUsuario, email, password, roles, dni, edad, activo, fechaDeAlta, turnos, idJuego);
+        validarEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
         //Usamos un optional para asegurarnos que el empleado este presente 
-        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(id);
+        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
          //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
         Juegos juego = new Juegos();
@@ -68,11 +68,11 @@ public class EmpleadosServicio {
             Empleados empleado = respuestaEmpleado.get();
 
             empleado.setActivo(activo);
-            empleado.setDni(dni);
+            
             empleado.setEdad(edad);
             empleado.setEmail(email);
             empleado.setFechaDeAlta(fechaDeAlta);
-            empleado.setId(id);
+            empleado.setLegajoDni(legajoDni);
             empleado.setNombreUsuario(nombreUsuario);
             empleado.setPassword(password);
             empleado.setPassword(password);
@@ -85,8 +85,8 @@ public class EmpleadosServicio {
         }
     }
     //Usamos el repositorio empleado para buscar uno
-    public Empleados getOne(String id) {
-        return empleadoRepositorio.getOne(id);
+    public Empleados getOne(Long legajoDni) {
+        return empleadoRepositorio.getOne(legajoDni);
     }
     //Usamos el repositorio empleado para buscar los registros y hacer una lista
     public List<Empleados> listarEmpleados() {
@@ -98,9 +98,9 @@ public class EmpleadosServicio {
         return empleado;
     }
     //Usamos el repositorio empleado para eliminar uno luego de buscarlo 
-    public void eliminarEmpleado(String id) throws MiException {
+    public void eliminarEmpleado(Long legajoDni) throws MiException {
          //Optional para asegurarnos que el empleado buscado esta presente
-        Optional<Empleados> respuesta = empleadoRepositorio.findById(id);
+        Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
 
         if (respuesta.isPresent()) {
 
@@ -111,9 +111,9 @@ public class EmpleadosServicio {
         }
     }
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    public void validarEmpleado(String id, String nombreUsuario, String email, String password, Rol roles, String dni, Integer edad, Boolean activo, Date fechaDeAlta, Turno turnos, String idJuego) throws MiException {
+    public void validarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, Rol roles, Integer edad, Boolean activo, Date fechaDeAlta, Turno turnos, String idJuego) throws MiException {
 
-        if (id.isEmpty() || id == null) {
+        if (legajoDni!=0||  legajoDni == null) {
             throw new MiException("Debe tener un id de usuario");
         }
         if (nombreUsuario.isEmpty() || nombreUsuario == null) {
@@ -129,9 +129,7 @@ public class EmpleadosServicio {
         if (roles == null) {
             throw new MiException("Debe tener un rol valido");
         }
-        if (dni.isEmpty() || dni == null) {
-            throw new MiException("Debe tener dni ingresado");
-        }
+     
         if (edad == null || edad < 18) {
             throw new MiException("El empleado debe tener una edad ingresada correctamente y no puede ser menor a 18");
 
