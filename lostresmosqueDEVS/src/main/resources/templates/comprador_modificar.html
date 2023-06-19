@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro comprador</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/registro.css">
+
+</head>
+
+<body>
+    <nav>
+        <div id="logo"></div>
+
+        <label for="drop" class="toggle">Menu</label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu">
+
+            <li>
+                <label for="drop-1" class="toggle">Compradores +</label>
+                <a href="#">Compradores</a>
+                <input type="checkbox" id="drop-1" />
+                <ul>
+                    <li><a href="#">Cargar Comprador</a></li>
+                    <li><a href="#">Vender Entradas</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Empleados +</label>
+                <a href="#">Empleados</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Cargar Empleados</a></li>
+                    <li><a href="#">Listar Empleados</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Juegos +</label>
+                <a href="#">Juegos</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Cargar Juegos</a></li>
+                    <li><a href="#">Listar Juegos</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Usuarios +</label>
+                <a href="#">Usuarios</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Listar Usuarios</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Perfil +</label>
+                <a href="#">Perfil</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Editar Perfil</a></li>
+                    <li><a href="#">Cerrar Sesión</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Registrate</a></li>
+            <li><a href="#">Logueate</a></li>
+            <li><a href="#">Inicio</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="contenedorregistro">
+
+        <form class="form">
+            <span class="signup">Modificación de comprador</span>
+            <label class="palabrainput" style="font-size: 12px;" for="name">Nombre*</label>
+            <input type="text" name="name" required placeholder="Ingrese nombre" class="form--input">
+            <label class="palabrainput" style="font-size: 12px;" for="name">Apellido*</label>
+            <input type="text" name="name" required placeholder="Ingrese apellido" class="form--input">
+            <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
+            <input type="text" name="name" required placeholder="Ingrese documento" class="form--input">
+            <label class="palabrainput" style="font-size: 12px;" for="name">Correo Electrónico*</label>
+            <input type="email" name="email" required placeholder="Ingrese correo" class="form--input">
+
+
+            
+            <label class="palabrainput"  for="name">Fecha de Nacimiento*</label>
+            <input type="date" name="age" id="number" min="18" max="99" placeholder="Age" class="form--input">
+            
+            
+
+            <button class="form--submit">
+                Modificar
+            </button>
+        </form>
+
+    </div>
+
+    <div class="contenedor">
+
+        <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28 " preserveAspectRatio="none">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 
+    58-18 88-18s
+    58 18 88 18 
+    58-18 88-18 
+    58 18 88 18
+    v44h-352z" />
+            </defs>
+            <g class="parallax1">
+                <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
+            </g>
+            <g class="parallax2">
+                <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+            </g>
+            <g class="parallax3">
+                <use xlink:href="#gentle-wave" x="50" y="9" fill="#3461c1" />
+            </g>
+            <g class="parallax4">
+                <use xlink:href="#gentle-wave" x="50" y="6" fill="#fff" />
+            </g>
+        </svg>
+
+
+    </div>
+
+    <script src="../JS/carrusel.js"></script>
+
+</body>
+
+</html>

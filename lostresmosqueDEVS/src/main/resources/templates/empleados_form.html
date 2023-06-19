@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/registro.css">
+
+</head>
+
+<body>
+    <nav>
+        <div id="logo"></div>
+
+        <label for="drop" class="toggle">Menu</label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu">
+
+            <li>
+                <label for="drop-1" class="toggle">Nuevo Comprador +</label>
+                <a href="#">Nuevo Comprador</a>
+                <input type="checkbox" id="drop-1" />
+                <ul>
+                    <li><a href="#">Cargar Comprador</a></li>
+                    <li><a href="#">Entradas</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Empleados +</label>
+                <a href="#">Empleados</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Cargar Empleados</a></li>
+                    <li><a href="#">Listar Empleados</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Juegos +</label>
+                <a href="#">Juegos</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Cargar Juegos</a></li>
+                    <li><a href="#">Listar Juegos</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Usuarios +</label>
+                <a href="#">Usuarios</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Listar Usuarios</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Perfil +</label>
+                <a href="#">Perfil</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Editar Perfil</a></li>
+                    <li><a href="#">Cerrar Sesión</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Registrate</a></li>
+            <li><a href="#">Logueate</a></li>
+            <li><a href="#">Inicio</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="contenedorregistro">
+
+        <form class="form">
+            <span class="signup">Alta de empleado</span>
+            <input type="text" placeholder="Ingrese nombre del empleado" class="form--input">
+            <input type="text" placeholder="Ingrese Apellido del empleado" class="form--input">
+            <input type="text" placeholder="Ingrese Legajo/DNI del empleado" class="form--input">
+
+
+
+
+            <label class="form--input" style="border: 0px solid transparent; text-align: justify;
+            margin: -10px 0px 0px -10px; gap:0; font-size: 14px;">Fecha de nacimiento</label>
+
+            <input type="date" name="" id="birthdate" placeholder="Fecha" class="form--input">
+            <ul>
+                <li><span id="years" class="form--input"></span> Años</li>
+            </ul>
+
+            <label for="" id="years"></label>
+
+            <input hidden type="password" placeholder="Contraseña" class="form--input">
+            <input hidden type="password" placeholder="Confirmar Contraseña" class="form--input">
+
+            <div class="subirimagen">
+                <span class="subirimagen-title">Cargá de imagen</span>
+                <p class="subirimagen-paragraph">
+                    Solo formato .jpg
+                </p>
+                <label for="file-input" class="drop-container">
+                    <div id="image-preview-container">
+                        <img style="width: 150px; border-radius: 20px;" id="image-preview"
+                            src="https://img.freepik.com/vector-premium/avatar-hombre-imagen-perfil-web-masculina-generica_53562-18550.jpg?w=2000"
+                            alt="Vista previa de la imagen">
+                    </div>
+                    <input type="file" accept="image/*" required="" id="file-input">
+                </label>
+            </div>
+            <button id="btnModal" class="form--submit">
+                Registrar
+            </button>
+
+
+
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Información</h2>
+                    <p>Este es el contenido del modal.</p>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="contenedor">
+
+        <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28 " preserveAspectRatio="none">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 
+    58-18 88-18s
+    58 18 88 18 
+    58-18 88-18 
+    58 18 88 18
+    v44h-352z" />
+            </defs>
+            <g class="parallax1">
+                <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
+            </g>
+            <g class="parallax2">
+                <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+            </g>
+            <g class="parallax3">
+                <use xlink:href="#gentle-wave" x="50" y="9" fill="#3461c1" />
+            </g>
+            <g class="parallax4">
+                <use xlink:href="#gentle-wave" x="50" y="6" fill="#fff" />
+            </g>
+        </svg>
+
+
+    </div>
+
+    <script src="../JS/carrusel.js"></script>
+    <script src="../JS/formularioFoto.js"></script>
+    <script src="../JS/calcularFecha.js"></script>
+    <script src="../JS/modal.js"></script>
+    <script>
+        calculate(); // Llamar a la función calculate al cargar la página
+    </script>
+
+</body>
+
+</html>
