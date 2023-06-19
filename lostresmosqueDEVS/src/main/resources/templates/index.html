@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -14,8 +13,19 @@
 </head>
 
 <body>
-    
-    <nav th:replace="/fragments/navbar :: nav"  > </nav>
+    <nav>
+        <div id="logo"></div>
+
+        <label for="drop" class="toggle">Menu</label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu">
+
+            
+            <li><a href="#">Logueate</a></li>
+            <li><a href="#">Inicio</a></li>
+
+        </ul>
+    </nav>
 
     <div class="card-swiper">
         <div class="card-groups">

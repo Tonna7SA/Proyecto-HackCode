@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -78,27 +77,28 @@
 
     <div class="contenedorregistro">
 
-        <form class="form" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
-            <span class="signup">Registrate</span>
-            <input type="text" placeholder="Nombre" class="form--input" name="nombre" th:value="${nombre}">
-            <input type="email" placeholder="Correo electrónico" class="form--input" name="email" th:value="${email}">
-            <input type="password" placeholder="Contraseña" class="form--input" name="password" th:value="${password}">
-            <input type="password" placeholder="Confirmar Contraseña" class="form--input" name="password2" th:value="${password2}">
+        <form class="form">
+            <span class="signup">Alta de empleado</span>
+            <input type="text" placeholder="Ingrese nombre del empleado" class="form--input">
+            <input type="text" placeholder="Ingrese Apellido del empleado" class="form--input">
+            <input type="text" placeholder="Ingrese Legajo/DNI del empleado" class="form--input">
+            <input hidden type="password" placeholder="Contraseña" class="form--input">
+            <input hidden type="password" placeholder="Confirmar Contraseña" class="form--input">
 
             <div class="subirimagen">
-                <span class="subirimagen-title">Cargá tú imagen</span>
+                <span class="subirimagen-title">Cargá de imagen</span>
                 <p class="subirimagen-paragraph">
                     Solo formato .jpg
                 </p>
                 <label for="file-input" class="drop-container">
                     <div id="image-preview-container">
-                        <img style="width: 150px; border-radius: 20px;" id="image-preview" src="/img/crush-1.jpg"
+                        <img style="width: 150px; border-radius: 20px;" id="image-preview" src="https://img.freepik.com/vector-premium/avatar-hombre-imagen-perfil-web-masculina-generica_53562-18550.jpg?w=2000"
                             alt="Vista previa de la imagen">
                     </div>
-                    <input type="file" accept="image/*" required="" id="file-input" name="archivo">
+                    <input type="file" accept="image/*" required="" id="file-input">
                 </label>
             </div>
-            <button type="submit"class="form--submit">
+            <button class="form--submit">
                 Registrar
             </button>
         </form>
