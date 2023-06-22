@@ -1,0 +1,7 @@
+Compradores_form y modificar falta booleano y fecha de alta para el form no toma la edad con fecha de nac
+Empleados_form y modificar sobra apellido chequear imagen que no se hacerlo y ver si la edad la toma con 
+ese input(no la toma chequeado, ver presetear la password)
+Faltan parametros en empleados modificar
+Falta el juego listado en empleados
+En el html juegos_form y modificar falta el legajoDni del empleado para pasarle legajoDni y relacionar
+un empleado.

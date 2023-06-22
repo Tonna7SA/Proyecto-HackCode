@@ -12,9 +12,8 @@
 </head>
 
 <body>
-     <nav th:replace="/fragments/navbar :: nav"
+   <nav th:replace="/fragments/navbar :: nav">
     </nav>
-
     <div class="contenedorregistro">
 
         <form class="form" th:action="@{/juegos/modificar/__${juego.id}__}" method="POST">

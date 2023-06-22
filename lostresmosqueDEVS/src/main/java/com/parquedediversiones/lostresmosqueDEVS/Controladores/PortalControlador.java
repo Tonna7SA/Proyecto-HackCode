@@ -34,12 +34,7 @@ public class PortalControlador {
     @GetMapping("/")
     public String index() {
 
-        return "bienvenidos.html";
-    }
-
-    @GetMapping("/redireccionar")
-    public RedirectView redireccionar() {
-        return new RedirectView("/index.html");
+        return "index.html";
     }
 
     //llamamos al metodo registrar
