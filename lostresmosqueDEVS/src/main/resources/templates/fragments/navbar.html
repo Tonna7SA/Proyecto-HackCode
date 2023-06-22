@@ -11,6 +11,7 @@
                 <input type="checkbox" id="drop-1" />
                 <ul>
                     <li><a th:href="@{/compradores/registrar}">Cargar Comprador</a></li>
+                    <li><a th:href="@{/compradores/listar}">Listar Comprador</a></li>
                     <li><a th:href="@{/entradas/registrar}">Entradas</a></li>
                 </ul>
             </li>
@@ -36,15 +37,6 @@
             </li>
 
             <li>
-                <label for="drop-2" class="toggle">Usuarios +</label>
-                <a th:href="@{/usuarios/registrar}">Usuarios</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a th:href="@{/usuarios/listar}">Listar Usuarios</a></li>
-                </ul>
-            </li>
-
-            <li>
                 <label for="drop-2" class="toggle">Perfil +</label>
                 <a th:href="@{/juegos/registrar}">Perfil</a>
                 <input type="checkbox" id="drop-2" />
@@ -54,10 +46,6 @@
                 </ul>
             </li>
             <li><a href="login.html">Logueate</a></li>
-            <li><a href="index.html">Inicio</a></li>
-
-            <li><a href="#">Registrate</a></li>
-            <li><a href="#">Logueate</a></li>
             <li><a href="#">Inicio</a></li>
 
         </ul>
