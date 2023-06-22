@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+    <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org%22%3E/">
 
 <head>
     <meta charset="UTF-8">
@@ -41,6 +43,24 @@
                 <th class="header">Asignar Juego</th>
             </tr>
         </thead>
+            <tbody th:each="comprador : ${compradores}"> 
+                    <tr>
+                        <th scope="row" th:text="${comprador.id}"></th>
+                        <td th:text="${comprador.nombre}"></td>
+                        <td th:text="${comprador.apellido}"></td>
+                        <td th:text="${comprador.dni}"></td>
+                        <td th:text="${comprador.edad}"></td>
+                        <td th:text="${comprador.fechaDeAlta}"></td>
+                        <td th:text="${comprador.activo}"></td>
+                        <td th:text="${comprador.email}"></td>
+                        
+<!--                        <td>
+                            <a th:href= "@{/autor/modificar/__${autor.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+                        </td>-->
+
+                    </tr>
+
+                </tbody>
         <tbody>
             <tr>
                 <td>Wayne Rooney</td>

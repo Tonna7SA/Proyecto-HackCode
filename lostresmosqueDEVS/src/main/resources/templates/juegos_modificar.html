@@ -77,16 +77,16 @@
 
     <div class="contenedorregistro">
 
-        <form class="form">
+        <form class="form" th:action="@{/juegos/modificar/__${juego.id}__}" method="POST">
             <span class="signup">Alta de atracción</span>
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
-            <input type="text" name="" required placeholder="Nombre del juego" class="form--input">
+            <input type="text"  name="nombreDelJuego" th:value="nombreDelJuego" required placeholder="Nombre del juego" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Capacidad máxima</label>
-            <input type="number" name="" required placeholder="Capacidad máxima" class="form--input">
+            <input type="number" name="capacidadMaxima" th:value="capacidadMaxima" required placeholder="Capacidad máxima" class="form--input">
 
 
             <label class="palabrainput" style="font-size: 12px;" for="name">Tipo de juego</label>
-            <input type="text" name="" required placeholder="Tipo de juego" class="form--input">
+            <input type="text" name="tipoDeJuego" th:value="tipoDeJuego" required placeholder="Tipo de juego" class="form--input">
 
 
             <label class="palabrainput" style="font-size: 12px;" for="tipo-juego">Tipo de atracción</label>
@@ -102,9 +102,9 @@
 
 
             <label class="palabrainput" style="font-size: 12px;" for="name">Cantidad de empleados</label>
-            <input type="number" name="" required placeholder="Cantidad de empleados" class="form--input">
+            <input type="number" name="cantEmpleados" th:value="cantEmpleados" required placeholder="Cantidad de empleados" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Precio del juego</label>
-            <input type="text" name="" required placeholder="Precio del juego" class="form--input">
+            <input type="text" name="precioDelJuego" th:value="precioDelJuego" required placeholder="Precio del juego" class="form--input">
 
 
             <div class="subirimagen">

@@ -35,7 +35,7 @@ public class JuegosControlador {
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
         modelo.addAttribute("empleados", empleados);
 
-        return "registro_juegos_form.html";
+        return "juegos_form.html";
 
     }
     // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para registrar un juego
@@ -54,7 +54,7 @@ public class JuegosControlador {
 
             modelo.put("Error", ex.getMessage());
 
-            return "registro_juegos_form.html";
+            return "juegos_form.html";
 
         }
 
@@ -66,7 +66,7 @@ public class JuegosControlador {
         List<Juegos> juegos = juegoServicio.listarJuegos();
         modelo.put("juegos", juegos);
 
-        return "listar_juegos.html";
+        return "juegos_list.html";
     }
      // Luego de pasar los datos por parametro llamamos al servicio juego para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
@@ -109,7 +109,7 @@ public class JuegosControlador {
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("usuario", juegoServicio.getOne(id));
 
-        return "juego_eliminar.html";
+        return "juegos_list.html";
     }
     //Llamamos al servicio juego con los datos del GetMapping para eliminar efectivamente un juego
     @PostMapping("/eliminar/{id}")

@@ -31,7 +31,7 @@ public class CompradoresControlador {
     public String registrar() {
 
        
-        return "registro_compradores_form.html";
+        return "comprador_form.html";
 
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para registrar el comprador
@@ -41,14 +41,14 @@ public class CompradoresControlador {
        // Metodo try and catch para asegurarnos de captar errores 
         try {
            compradorServicio.crearComprador(nombre, apellido, dni, edad, fechaDeaALta, activo, email);
-            modelo.put("Exito", "El juego se registro exitosamente");
+            modelo.put("Exito", "El comprador se registro exitosamente");
 
         } catch (MiException ex) {
 
 
             modelo.put("Error", ex.getMessage());
 
-           return "registro_compradores_form.html";
+           return "comprador_form.html";
         }
 
         return "index.html";
@@ -60,7 +60,7 @@ public class CompradoresControlador {
         List<Compradores> compradores = compradorServicio.listarCompradores();
         modelo.put("compradores", compradores);
 
-        return "listar_compradores.html";
+        return "comprador_list.html";
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador para pasar los datos al PostMapping y hacer uso del metodo modificar
        @GetMapping("/modificar/{id}")
@@ -69,7 +69,7 @@ public class CompradoresControlador {
 
         modelo.put("compradores", compradorServicio.getOne(id));
 
-        return "compradores_modificar.html";
+        return "comprador_modificar.html";
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
@@ -87,7 +87,7 @@ public class CompradoresControlador {
            
             modelo.put("Error", ex.getMessage());
 
-             return "compradores_modificar.html";
+             return "comprador_modificar.html";
         }
 
     }
@@ -96,7 +96,7 @@ public class CompradoresControlador {
     public String eliminar(@PathVariable String id, ModelMap modelo) {
         modelo.put("compradores", compradorServicio.getOne(id));
 
-        return "compradores_eliminar.html";
+        return "comprador_list.html";
     }
     //Llamamos al servicio comprador con los datos del GetMapping para eliminar efectivamente un comprador 
     @PostMapping("/eliminar/{id}")

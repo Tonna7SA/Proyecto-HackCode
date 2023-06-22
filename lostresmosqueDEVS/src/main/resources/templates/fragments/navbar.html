@@ -1,13 +1,64 @@
-<nav>
-    <div id="logo"></div>
+   <nav>
+        <div id="logo"></div>
 
-    <label for="drop" class="toggle">Menu</label>
-    <input type="checkbox" id="drop" />
-    <ul class="menu">
+        <label for="drop" class="toggle">Menu</label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu">
 
-        <li><a th:href="@{/registrar}">Registrate</a></li>
-        <li><a th:href="@{/login}">Logueate</a></li>
-        <li><a href="/">Inicio</a></li>
+            <li>
+                <label for="drop-1" class="toggle">Nuevo Comprador +</label>
+                <a th:href="@{/compradores/registrar}">Nuevo Comprador</a>
+                <input type="checkbox" id="drop-1" />
+                <ul>
+                    <li><a th:href="@{/compradores/registrar}">Cargar Comprador</a></li>
+                    <li><a th:href="@{/entradas/registrar}">Entradas</a></li>
+                </ul>
+            </li>
 
-    </ul>
-</nav>
+            <li>
+                <label for="drop-2" class="toggle">Empleados +</label>
+                <a href="#">Empleados</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a th:href="@{/empleados/registrar}">Cargar Empleados</a></li>
+                    <li><a th:href="@{/empleados/listar}">Listar Empleados</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Juegos +</label>
+                <a th:href="@{/juegos/registrar}">Juegos</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a th:href="@{/juegos/registrar}">Cargar Juegos</a></li>
+                    <li><a th:href="@{/juegos/listar}">Listar Juegos</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Usuarios +</label>
+                <a th:href="@{/usuarios/registrar}">Usuarios</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a th:href="@{/usuarios/listar}">Listar Usuarios</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <label for="drop-2" class="toggle">Perfil +</label>
+                <a th:href="@{/juegos/registrar}">Perfil</a>
+                <input type="checkbox" id="drop-2" />
+                <ul>
+                    <li><a href="#">Editar Perfil</a></li>
+                    <li><a href="#">Cerrar Sesión</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Logueate</a></li>
+            <li><a href="index.html">Inicio</a></li>
+
+            <li><a href="#">Registrate</a></li>
+            <li><a href="#">Logueate</a></li>
+            <li><a href="#">Inicio</a></li>
+
+        </ul>
+    </nav>

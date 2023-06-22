@@ -39,7 +39,7 @@ public class EmpleadosControlador {
 
         List<Juegos> juegos = juegoServicio.listarJuegos();
         modelo.addAttribute("juegos", juegos);
-        return "registro_empleados_form.html";
+        return "empleados_form.html";
 
     }
 
@@ -61,7 +61,7 @@ public class EmpleadosControlador {
 
             modelo.put("Error", ex.getMessage());
 
-            return "registro_empleados_form.html";
+            return "empleados_form.html";
         }
 
         return "index.html";
@@ -74,7 +74,7 @@ public class EmpleadosControlador {
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
         modelo.put("empleados", empleados);
 
-        return "listar_empleados.html";
+        return "empleados_list.html";
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
@@ -120,7 +120,7 @@ public class EmpleadosControlador {
     public String eliminar(@PathVariable Long legajoDni, ModelMap modelo) {
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
-        return "empleados_eliminar.html";
+        return "empleados_list.html";
     }
     //Llamamos al servicio empleado con los datos del GetMapping para eliminar efectivamente un empleado 
     @PostMapping("/eliminar/{id}")

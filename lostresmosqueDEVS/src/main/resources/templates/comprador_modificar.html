@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+    <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org%22%3E/">
 
 <head>
     <meta charset="UTF-8">
@@ -75,23 +77,23 @@
         </ul>
     </nav>
 
-    <div class="contenedorregistro">
+    <div class="contenedorregistro" >
 
-        <form class="form">
+        <form class="form" th:action="@{/compradores/modificar/__${comprador.id}__}" method="POST">
             <span class="signup">Modificación de comprador</span>
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre*</label>
-            <input type="text" name="name" required placeholder="Ingrese nombre" class="form--input">
+            <input type="text" name="nombre" th:value="nombre" required placeholder="Ingrese nombre" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Apellido*</label>
-            <input type="text" name="name" required placeholder="Ingrese apellido" class="form--input">
+            <input type="text" name="apellido" th:vlue="apellido"  required placeholder="Ingrese apellido" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
-            <input type="text" name="name" required placeholder="Ingrese documento" class="form--input">
+            <input type="text" name="dni" th:value="dni" required placeholder="Ingrese documento" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Correo Electrónico*</label>
-            <input type="email" name="email" required placeholder="Ingrese correo" class="form--input">
+            <input type="email" name="email" th:value="email" required placeholder="Ingrese correo" class="form--input">
 
 
             
             <label class="palabrainput"  for="name">Fecha de Nacimiento*</label>
-            <input type="date" name="age" id="number" min="18" max="99" placeholder="Age" class="form--input">
+            <input type="date" name="edad" th:value="edad" id="number" min="18" max="99" placeholder="Age" class="form--input">
             
             
 
