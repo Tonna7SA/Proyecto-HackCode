@@ -43,8 +43,7 @@ public class Juegos {
     private String tipoDeJuego;
     private Integer cantEmpleados;
     private Integer precioDelJuego;
-    //Relaciones
-    @OneToMany
-    private List<Empleados> empleado;
-
+    
+    @OneToOne
+    private Imagen imagen;
 }

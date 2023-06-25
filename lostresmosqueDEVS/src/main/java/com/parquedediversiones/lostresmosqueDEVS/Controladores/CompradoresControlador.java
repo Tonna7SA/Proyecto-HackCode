@@ -36,12 +36,12 @@ public class CompradoresControlador {
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para registrar el comprador
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer dni,@RequestParam Integer edad,
-            @RequestParam Date fechaDeaALta, Boolean activo,@RequestParam String email, ModelMap modelo) throws MiException {
+    public String registro(@RequestParam String nombreApellido, @RequestParam Long dni,@RequestParam Integer edad,
+            @RequestParam String email, ModelMap modelo) throws MiException {
        // Metodo try and catch para asegurarnos de captar errores 
         try {
-           compradorServicio.crearComprador(nombre, apellido, dni, edad, fechaDeaALta, activo, email);
-            modelo.put("Exito", "El comprador se registro exitosamente");
+           compradorServicio.crearComprador(nombreApellido, dni, edad, email);
+            //modelo.put("Exito", "El comprador se registro exitosamente");
 
         } catch (MiException ex) {
 
@@ -64,8 +64,8 @@ public class CompradoresControlador {
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador para pasar los datos al PostMapping y hacer uso del metodo modificar
        @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, @RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer dni,@RequestParam Integer edad,
-            @RequestParam Date fechaDeaALta, Boolean activo,@RequestParam String email, ModelMap modelo) {
+    public String modificar(@PathVariable String id, @RequestParam String nombreApellido,@RequestParam Long dni,
+            Boolean activo,@RequestParam String email, ModelMap modelo) {
 
         modelo.put("compradores", compradorServicio.getOne(id));
 
@@ -73,13 +73,13 @@ public class CompradoresControlador {
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
-    public String modificarComprador(@PathVariable String id, @RequestParam String nombre,@RequestParam String apellido,@RequestParam Integer dni,@RequestParam Integer edad,
-            @RequestParam Date fechaDeaALta, Boolean activo,@RequestParam String email, ModelMap modelo) {
+    public String modificarComprador(@PathVariable String id, @RequestParam String nombreApellido,@RequestParam Long dni,
+            Boolean activo,@RequestParam String email, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
            
 
-            compradorServicio.modificarComprador(id, nombre, apellido, dni, edad, activo, email);
+            compradorServicio.modificarComprador(id, nombreApellido, dni, activo, email);
 
             return "redirect:../listar";
 

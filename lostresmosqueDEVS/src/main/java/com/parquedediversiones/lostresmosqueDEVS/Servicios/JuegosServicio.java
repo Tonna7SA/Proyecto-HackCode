@@ -1,6 +1,7 @@
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
+import com.parquedediversiones.lostresmosqueDEVS.Entidades.Imagen;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Juegos;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -21,12 +23,14 @@ public class JuegosServicio {
     private JuegosRepositorio juegosRepositorio;
     @Autowired
     private EmpleadosRepositorio empleadoRepositorio;
+    @Autowired
+    private ImagenServicio imagenServicio;
     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
-    public void crearJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, Long legajoDni) throws MiException {
+    public void crearJuego(MultipartFile archivo, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
-       validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, legajoDni);
+       validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
-        Empleados empleado= empleadoRepositorio.findById(legajoDni).get();
+        //Empleados empleado= empleadoRepositorio.findById(legajoDni).get();
         Juegos juego = new Juegos();
         
         juego.setNombreDelJuego(nombreDelJuego);
@@ -35,7 +39,9 @@ public class JuegosServicio {
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
-        juego.setEmpleado((List<Empleados>) empleado);
+        Imagen imagen = imagenServicio.guardar(archivo);
+        juego.setImagen(imagen);
+        
          //Usamos el repositorio juego para guardar el juego y registrarlo correctamente
         juegosRepositorio.save(juego);
 
@@ -43,18 +49,18 @@ public class JuegosServicio {
     }
      //Creamos un metodo para modificar un juego pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarJuego(String id, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, Long legajoDni) throws MiException {
+    public void modificarJuego(MultipartFile archivo, String id, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego, legajoDni);
+        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
          //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(id);
         //Usamos un optional para asegurarnos que el empleado este presente 
-        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
-        Empleados empleado= new Empleados();
-        if (respuestaEmpleado.isPresent()) {
+        //Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
+        //Empleados empleado= new Empleados();
+        //if (respuestaEmpleado.isPresent()) {
             //Asignamos el empleado encontrado al empleado para luego guardarlo
-            empleado=empleadoRepositorio.findById(legajoDni).get();
-        }
+         //   empleado=empleadoRepositorio.findById(legajoDni).get();
+        //}
         
         
         if (respuestaJuego.isPresent()) {
@@ -66,7 +72,13 @@ public class JuegosServicio {
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
-        juego.setEmpleado((List<Empleados>) empleado);
+        String idImagen = null;
+             if(juego.getImagen() !=null){
+                   idImagen = juego.getImagen().getId();
+             }
+             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+             juego.setImagen(imagen);
+        //juego.setEmpleado((List<Empleados>) empleado);
         //Usamos el repositorio juego para guardar el juego y registrarlo correctamente
         juegosRepositorio.save(juego);
 
@@ -80,11 +92,11 @@ public class JuegosServicio {
      //Usamos el repositorio juego para buscar los registros y hacer una lista
     public List<Juegos> listarJuegos() {
 
-        List<Juegos> juego = new ArrayList();
+        List<Juegos> juegos = new ArrayList();
 
-        juego = juegosRepositorio.findAll();
+        juegos = juegosRepositorio.findAll();
 
-        return juego;
+        return juegos;
     }
     //Usamos el repositorio juego para eliminar uno luego de buscarlo 
     public void eliminarJuego(String id) throws MiException {
@@ -100,7 +112,7 @@ public class JuegosServicio {
         }
     }
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    private void validarJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego, Long legajoDni) throws MiException {
+    private void validarJuego(String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
 
         if (nombreDelJuego.isEmpty() || nombreDelJuego == null || nombreDelJuego.length() < 3) {
             throw new MiException("Debe ingresar un nombre");
@@ -117,10 +129,6 @@ public class JuegosServicio {
 
         if (precioDelJuego == null || precioDelJuego < 1) {
             throw new MiException("Debe ingresar un email valido");
-        }
-        if (legajoDni==null) {
-            throw new MiException("El id del empleado no puede ser nulo");
-            
         }
     }
 }

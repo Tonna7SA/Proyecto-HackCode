@@ -1,6 +1,7 @@
 
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
+import com.parquedediversiones.lostresmosqueDEVS.Entidades.Imagen;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
 import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Rol;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,23 +34,29 @@ public class UsuariosServicio implements UserDetailsService{
     //Servicio para comtrolar el AMBL de usuarios
 @Autowired
     private UsuariosRepositorio usuarioRepositorio;
+@Autowired
+    private ImagenServicio imagenServicio;
     
      //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
     @Transactional
-    public void registrar(String nombre, String email, String password, String password2) throws MiException{
+    public void registrar(Long legajoDni, String nombreUsuario, String email, String password, String password2, MultipartFile archivo) throws MiException{
          //LLamamos al metodo validar para evitar errores
-        validar(nombre, email, password, password2);
+        validar(legajoDni, nombreUsuario, email, password, password2);
         
         Usuarios usuario = new Usuarios();
         
-        usuario.setNombreUsuario(nombre);
+        usuario.setLegajoDni(legajoDni);
+        usuario.setNombreUsuario(nombreUsuario);
         usuario.setEmail(email);
+        
+        Imagen imagen = imagenServicio.guardar(archivo);
+
+        usuario.setImagen(imagen);
         
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         
-        usuario.setRoles(Rol.EMP);
+        usuario.setRoles(Rol.ADM);
         
-        System.out.println(usuario.toString());
          //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
         usuarioRepositorio.save(usuario);
     
@@ -56,18 +64,25 @@ public class UsuariosServicio implements UserDetailsService{
     
        //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso
        @Transactional
-    public void actualizar(Long legajoDni, String nombre, String email, String password, String password2) throws MiException{
+    public void actualizar(Long legajoDni, String nombreUsuario, String email, String password, String password2, MultipartFile archivo) throws MiException{
          //LLamamos al metodo validar para evitar errores
-        validar(nombre, email, password, password2);
+        validar(legajoDni, nombreUsuario, email, password, password2);
          //Usamos un optional para asegurarnos que el usuario este presente 
         Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
         
         if (respuesta.isPresent()){
             
              Usuarios usuario = respuesta.get();
-             usuario.setNombreUsuario(nombre);
+             usuario.setNombreUsuario(nombreUsuario);
              usuario.setEmail(email);
              
+             
+             String idImagen = null;
+             if(usuario.getImagen() !=null){
+                   idImagen = usuario.getImagen().getId();
+             }
+             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+             usuario.setImagen(imagen);
              usuario.setPassword(new BCryptPasswordEncoder().encode(password));
              //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
              usuarioRepositorio.save(usuario);
@@ -76,9 +91,9 @@ public class UsuariosServicio implements UserDetailsService{
         
 }
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    private void validar(String nombre, String email, String password, String password2) throws MiException{
+    private void validar(Long legajoDni, String nombreUsuario, String email, String password, String password2) throws MiException{
 
-if(nombre.isEmpty() || nombre == null){
+if(nombreUsuario.isEmpty() || nombreUsuario == null){
     throw new MiException("El nombre no puede ser nulo o estar vacío");
 }
 
@@ -92,6 +107,9 @@ if(password.isEmpty() || password == null || password.length() <=5){
 
 if(!password.equals(password2)){
     throw new MiException("Las contraseñas ingresadas deben ser iguales");
+}
+if(legajoDni == null){
+    throw new MiException("el legajo ingresadas deben ser iguales");
 }
         
     }
@@ -145,7 +163,7 @@ if(!password.equals(password2)){
 
         List<Usuarios> usuario = new ArrayList();
 
-        usuario = usuarioRepositorio.findAll();
+        usuario = usuarioRepositorio.buscarPorRol();
         
         return usuario;
     }

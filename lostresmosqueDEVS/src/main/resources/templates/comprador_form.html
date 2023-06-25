@@ -14,90 +14,28 @@
 </head>
 
 <body>
-    <nav>
-        <div id="logo"></div>
-
-        <label for="drop" class="toggle">Menu</label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu">
-
-            <li>
-                <label for="drop-1" class="toggle">Compradores +</label>
-                <a href="#">Compradores</a>
-                <input type="checkbox" id="drop-1" />
-                <ul>
-                    <li><a href="#">Cargar Comprador</a></li>
-                    <li><a href="#">Vender Entradas</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Empleados +</label>
-                <a href="#">Empleados</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Cargar Empleados</a></li>
-                    <li><a href="#">Listar Empleados</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Juegos +</label>
-                <a href="#">Juegos</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Cargar Juegos</a></li>
-                    <li><a href="#">Listar Juegos</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Usuarios +</label>
-                <a href="#">Usuarios</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Listar Usuarios</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Perfil +</label>
-                <a href="#">Perfil</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Editar Perfil</a></li>
-                    <li><a href="#">Cerrar Sesión</a></li>
-                </ul>
-            </li>
-
-            <li><a href="#">Registrate</a></li>
-            <li><a href="#">Logueate</a></li>
-            <li><a href="#">Inicio</a></li>
-
-        </ul>
-    </nav>
+    <nav th:replace="/fragments/navbar :: nav"></nav>
 
     <div class="contenedorregistro">
 
         <form class="form" th:action="@{/compradores/registro/}" method="POST">
             <span class="signup">Registro Compradores</span>
-            <label class="palabrainput" style="font-size: 12px;" for="name">Nombre*</label>
-            <input type="text" name="nombre" th:value="nombre" required placeholder="Ingrese nombre" class="form--input">
-            <label class="palabrainput" style="font-size: 12px;" for="name">Apellido*</label>
-            <input type="text"  name="apellido" th:vlue="apellido" required placeholder="Ingrese apellido" class="form--input">
-            <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
-            <input type="text" name="dni" th:value="dni" required placeholder="Ingrese documento" class="form--input">
+            <label class="palabrainput" style="font-size: 12px;" for="name">Nombre y Apellido*</label>
+            <input type="text" name="nombreApellido" required placeholder="Ingrese Nombre y Apellido" class="form--input">
+      
+                <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
+            <input type="text" name="dni" required placeholder="Ingrese DNI" class="form--input">
+                
             <label class="palabrainput" style="font-size: 12px;" for="name">Correo Electrónico*</label>
-            <input type="email" name="email" th:value="email" required placeholder="Ingrese correo" class="form--input">
-
-
+            <input type="email" name="email" required placeholder="Ingrese correo electronico" class="form--input">
             
-            <label class="palabrainput"  for="name">Fecha de Nacimiento*</label>
-            <input type="date" name="edad" th:value="edad" id="number" min="18" max="99" placeholder="Age" class="form--input">
-            
+             <label class="palabrainput"  for="name">Fecha de Nacimiento*</label>
+             <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()" class="form--input">
+            <label for="edad"></label>
+            <span><input type="text" id="edad" name="edad" readonly class="form--input1"> Años</span>
             
 
-            <button class="form--submit">
+            <button type="submit" class="form--submit">
                 Registrar
             </button>
         </form>
@@ -134,7 +72,18 @@
     </div>
 
     <script src="../JS/carrusel.js"></script>
-
+<script>
+    function calcularEdad() {
+        var fechaNacimiento = new Date(document.getElementById("fecha_nacimiento").value);
+        var hoy = new Date();
+        var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+        var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+            edad--;
+        }
+        document.getElementById("edad").value = edad;
+    }
+    </script>
 </body>
 
 </html>

@@ -6,81 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-
     <link rel="stylesheet" href="../CSS/carrusel.css">
     <link rel="stylesheet" href="../CSS/style.css">
 
 </head>
 
 <body>
-    <nav>
-        <div id="logo"></div>
-
-        <label for="drop" class="toggle">Menu</label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu">
-
-            <li>
-                <label for="drop-1" class="toggle">Compradores +</label>
-                <a href="#">Compradores</a>
-                <input type="checkbox" id="drop-1" />
-                <ul>
-                    <li><a href="#">Cargar Comprador</a></li>
-                    <li><a href="#">Vender Entradas</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Empleados +</label>
-                <a href="#">Empleados</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Cargar Empleados</a></li>
-                    <li><a href="#">Listar Empleados</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Juegos +</label>
-                <a href="#">Juegos</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Cargar Juegos</a></li>
-                    <li><a href="#">Listar Juegos</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Usuarios +</label>
-                <a href="#">Usuarios</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Listar Usuarios</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <label for="drop-2" class="toggle">Perfil +</label>
-                <a href="#">Perfil</a>
-                <input type="checkbox" id="drop-2" />
-                <ul>
-                    <li><a href="#">Editar Perfil</a></li>
-                    <li><a href="#">Cerrar Sesión</a></li>
-                </ul>
-            </li>
-
-            <li><a href="#">Registrate</a></li>
-            <li><a href="#">Logueate</a></li>
-            <li><a href="#">Inicio</a></li>
-
-        </ul>
-    </nav>
+   
+    <nav th:replace="/fragments/navbar :: nav"  > </nav>
 
     <div class="contenedorCentro">
         <div class="card">
-            <div class="image"><span class="text">Foto empleado</span></div>
-            <span class="title">Nombre y Apellido</span>
-            <span class="price">Puesto</span>
+            <div class="image" th:if="${session.usuariosession != null}"><img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" width="160%"></div>
+            <span class="title" <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></p></span>
+            <span class="price"> <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p></span>
             </div>
     </div>
 

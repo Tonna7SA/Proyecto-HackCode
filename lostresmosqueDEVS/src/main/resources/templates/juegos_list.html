@@ -1,108 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org%22%3E/">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-
+    <title>Listado Juegos</title>
     <link rel="stylesheet" href="../CSS/carrusel.css">
     <link rel="stylesheet" href="../CSS/style.css">
 
 </head>
 
 <body>
-    <nav>
-        <div id="logo"></div>
-
-        <label for="drop" class="toggle">Menu</label>
-        <input type="checkbox" id="drop" />
-        <ul class="menu">
-
-
-            <li><a href="login.html">Logueate</a></li>
-            <li><a href="index.html">Inicio</a></li>
-
-        </ul>
-    </nav>
+    
+    <nav th:replace="/fragments/navbar :: nav"  > </nav>
+    
     <div class="contenedorCentro">
 
     <table class="zigzag">
         <thead>
             <tr>
-                <th class="header">Legajo</th>
-                <th class="header">Nombre</th>
-                <th class="header">Apellido</th>
-                <th class="header">Estado</th>
-                <th class="header">Puesto</th>
-                <th class="header">Asignar Puesto</th>
-                <th class="header">Juego Asignado</th>
-                <th class="header">Asignar Juego</th>
+                <th class="header">Id</th>
+                <th class="header">Nombre del Juego</th>
+                <th class="header">Capacidad Max.</th>
+                <th class="header">Tipo</th>
+                <th class="header">Cant. Empleados</th>
+                <th class="header">Fecha de Alta</th>
+                <th class="header">Precio x pers.</th>
             </tr>
         </thead>
-           <tbody th:each="juego : ${juegos}"> 
+           <tbody th:each="juegos : ${juegos}"> 
                     <tr>
-                        <th scope="row" th:text="${juego.nombreDelJuego}"></th>
-                        <td th:text="${juego.capacidadMaxima}"></td>
-                        <td th:text="${juego.tipoDeJuego}"></td>
-                        <td th:text="${juego.cantEmpleados}"></td>
-<!--                        <td th:text="${juegos.imagen}"></td>-->
-                        <td th:text="${juego.precioDelJuego}"></td>
-                        <td th:text="${juego.legajoDni}"></td>
+                        <th scope="row" th:text="${juegos.id}"></th>
+                        <td th:text="${juegos.nombreDelJuego}"></td>
+                        <td th:text="${juegos.capacidadMaxima}"></td>
+                        <td th:text="${juegos.tipoDeJuego}"></td>
+                        <td th:text="${juegos.cantEmpleados}"></td>
+                        <td th:text="${juegos.fechaDeAlta}"></td>
+                        <td th:text="${juegos.precioDelJuego}"></td>
                        
 <!--                        <td>
-                            <a th:href= "@{/autor/modificar/__${autor.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+                            <a th:href="@{/juegos/modificar/__${juego.idJuego}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
                         </td>-->
 
                     </tr>
 
                 </tbody>
-        <tbody>
-            <tr>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-            <tr>
-                <td>Bobby Charlton</td>
-                <td>49</td>
-                <td>19 Apr 1958</td>
-                <td>20 May 1970</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-            <tr>
-                <td>Bobby Charlton</td>
-                <td>49</td>
-                <td>19 Apr 1958</td>
-                <td>20 May 1970</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-            <tr>
-                <td>Bobby Charlton</td>
-                <td>49</td>
-                <td>19 Apr 1958</td>
-                <td>20 May 1970</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-        </tbody>
-    </table>
+        
 </div>
 
 

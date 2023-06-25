@@ -1,5 +1,6 @@
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
 
+import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Rol;
 import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Turno;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -38,10 +39,8 @@ public class Empleados extends Usuarios {
 
     @Enumerated(EnumType.STRING)
     private Turno turnos;
+  
     //Relaciones
     @OneToOne
     private Juegos juego;
-    
-    
-
 }
