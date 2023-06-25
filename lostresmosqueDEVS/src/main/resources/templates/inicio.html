@@ -16,7 +16,7 @@
    <nav th:replace="/fragments/navbar :: nav"></nav>
    
     <div class="contenedorCentro">
-        <div class="card">
+        <div class="card1">
             <div class="image" th:if="${session.usuariosession != null}"><img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" width="160%"></div>
             <span class="title" <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></p></span>
             <span class="price"> <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p></span>
