@@ -12,10 +12,9 @@
 
 </head>
 
-
-    
-    <nav th:replace="/fragments/navbar :: nav"  > </nav>
-
+<body>
+   <nav th:replace="/fragments/navbar :: nav"></nav>
+   
     <div class="contenedorCentro">
         <div class="card">
             <div class="image" th:if="${session.usuariosession != null}"><img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" width="160%"></div>

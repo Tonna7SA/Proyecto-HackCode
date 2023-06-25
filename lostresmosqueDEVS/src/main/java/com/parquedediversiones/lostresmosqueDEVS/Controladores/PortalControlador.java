@@ -29,8 +29,7 @@ public class PortalControlador {
 
     @Autowired
     private UsuariosServicio usuarioServicio;
-   //Llevamos la vista al index
-    
+
     @GetMapping("/")
     public String bienvenidos() {
 
@@ -49,16 +48,19 @@ public class PortalControlador {
     public String registrar() {
         return "usuarios_form.html";
     }
+
     // Luego de pasar los datos por parametro utilizamos el servicio usuario para registrar uno
     @PostMapping("/registro")
     public String registro(MultipartFile archivo, @RequestParam Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
         // Metodo try and catch para asegurarnos de captar errores 
+
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
-            
             usuarioServicio.registrar(legajoDni, nombreUsuario, email, password, password2, archivo);
 
-            //redirectAttributes.addFlashAttribute("exito", "El usuario fue cargado correctamente!");
-            return "index.html";
+            redirectAttributes.addFlashAttribute("exito", "El usuario fue cargado correctamente!");
+
+            return "redirect:/";
         } catch (MiException ex) {
             
             modelo.put("error", ex.getMessage());
@@ -68,8 +70,7 @@ public class PortalControlador {
         }
 
     }
-    
-    
+
 //       User user = userRepository.findByUsername(username);
 //        
 //        if (user != null && user.getPassword().equals(password)) {
@@ -104,9 +105,10 @@ public class PortalControlador {
         if (error != null) {
             modelo.put("error", "Usuario o contraseña inválidos");
         }
-        
+
         return "login.html";
     }
+
     //Llevamos al usuario al inicio correspondiente en caso de ser admin o empleado
     
     @GetMapping("/inicio")
@@ -120,6 +122,7 @@ public class PortalControlador {
 
         return "inicio.html";
     }
+
     //llevamos al usuario a la vista de modificacion en caso de ser admin o empleado
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @GetMapping("/perfil")
@@ -130,13 +133,14 @@ public class PortalControlador {
 
         return "usuarios_modificar.html";
     }
+
     //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @PostMapping("/perfil/{id}")
     public String actualizar(MultipartFile archivo, @PathVariable Long legajoDni, @RequestParam String nombreUsuario,
             @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
-       // Metodo try and catch para asegurarnos de captar errores 
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             usuarioServicio.actualizar(legajoDni, nombreUsuario, email, password, password2, archivo);
 
@@ -153,6 +157,7 @@ public class PortalControlador {
             return "usuarios_modificar.html";
         }
     }
+
     //Llamamos al servicio usuario para listar
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
