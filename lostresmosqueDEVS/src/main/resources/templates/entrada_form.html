@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Agregar personas al grupo</title>
+    <style>
+        html {
+            cursor: url(../static/img/spaceship.png), auto;
+        }
+    </style>
+    <script>
+        function agregarCampo() {
+            var contenedor = document.getElementById("contenedor");
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = "nombre";
+
+            var pregunta = document.createElement("p");
+            pregunta.innerHTML = "¿Deseas agregar otra persona?";
+
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "agregarOtro";
+            checkbox.value = "si";
+
+            contenedor.appendChild(input);
+            contenedor.appendChild(pregunta);
+            contenedor.appendChild(checkbox);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Agregar personas al grupo</h1>
+    <form>
+        <div id="contenedor">
+            <input type="text" name="nombre">
+            <p>¿Deseas agregar otra persona?</p>
+            <input type="checkbox" name="agregarOtro" value="si">
+        </div>
+        <input type="button" value="Agregar campo" onclick="agregarCampo()">
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+
+</html>
