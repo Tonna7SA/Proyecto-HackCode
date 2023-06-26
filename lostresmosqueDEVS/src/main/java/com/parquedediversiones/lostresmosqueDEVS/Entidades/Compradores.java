@@ -34,9 +34,8 @@ public class Compradores {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String nombre;
-    private String apellido;
-    private Integer dni;
+    private String nombreApellido;
+    private Long dni;
     private Integer edad;
     
     @Temporal(TemporalType.DATE)

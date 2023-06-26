@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -37,30 +38,28 @@ public class EmpleadosControlador {
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
 
-        List<Juegos> juegos = juegoServicio.listarJuegos();
-        modelo.addAttribute("juegos", juegos);
+        List<Juegos> juego = juegoServicio.listarJuegos();
+        modelo.addAttribute("juegos", juego);
         return "empleados_form.html";
 
     }
 
     // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para registrar un empleado
     @PostMapping("/registro")
-    public String registro(@RequestParam Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
-            @RequestParam Integer edad, @RequestParam Boolean activo, @RequestParam Date fechaDeAlta,
-            Turno turnos, String idJuego, ModelMap modelo) throws MiException {
+    public String registro(@RequestParam(required = true) Long legajoDni, @RequestParam(required = true) String nombreUsuario, 
+            @RequestParam (required = true) String email, @RequestParam (required = true) String password, 
+            @RequestParam (required = true) String password2, @RequestParam (required = true) Integer edad, 
+            @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) throws MiException {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            empleadoServicio.crearEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
-            modelo.put("Exito", "El empleado se registro exitosamente");
-
+            empleadoServicio.crearEmpleado(archivo, legajoDni, nombreUsuario, email, password, password2, edad, idJuego);
+          //  modelo.put("Exito", "El empleado se registro exitosamente");
         } catch (MiException ex) {
 
             List<Juegos> juegos = juegoServicio.listarJuegos();
-
             modelo.addAttribute("juegos", juegos);
 
             modelo.put("Error", ex.getMessage());
-
             return "empleados_form.html";
         }
 
@@ -78,9 +77,9 @@ public class EmpleadosControlador {
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
-            @RequestParam Integer edad, @RequestParam Boolean activo, @RequestParam Date fechaDeAlta,
-            Turno turnos, String idJuego, ModelMap modelo) {
+    public String modificar(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, 
+            @RequestParam String email, @RequestParam String password, @RequestParam Rol roles,
+            @RequestParam Integer edad, ModelMap modelo, MultipartFile archivo) {
 
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
@@ -92,16 +91,15 @@ public class EmpleadosControlador {
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para modificar un empleado
     @PostMapping("/modificar/{id}")
-    public String modificarEntrada(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, @RequestParam Rol roles, @RequestParam String dni,
-            @RequestParam Integer edad, @RequestParam Boolean activo, @RequestParam Date fechaDeAlta,
-            Turno turnos, String idJuego, ModelMap modelo) {
+    public String modificarEntrada(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password,
+            @RequestParam Integer edad, @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
             List<Juegos> juegos = juegoServicio.listarJuegos();
 
             modelo.addAttribute("juegos", juegos);
 
-           empleadoServicio.modificarEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
+           empleadoServicio.modificarEmpleado(archivo, legajoDni, nombreUsuario, email, password, password, edad, email);
 
             return "redirect:../listar";
 

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Lista de Compradores</title>
 
     <link rel="stylesheet" href="../CSS/carrusel.css">
     <link rel="stylesheet" href="../CSS/style.css">
@@ -15,28 +15,27 @@
 </head>
 
 <body>
-    <nav th:replace="/fragments/navbar :: nav">
-    </nav>
+
+<nav th:replace="/fragments/navbar :: nav"  > </nav>
+
     <div class="contenedorCentro">
 
     <table class="zigzag">
         <thead>
             <tr>
-                <th class="header">Legajo</th>
-                <th class="header">Nombre</th>
-                <th class="header">Apellido</th>
+                <th class="header">Id</th>
+                <th class="header">Nombre y Apellido</th>
+                <th class="header">Dni</th>
+                <th class="header">Edad</th>
+                <th class="header">Fecha de Alta</th>
                 <th class="header">Estado</th>
-                <th class="header">Puesto</th>
-                <th class="header">Asignar Puesto</th>
-                <th class="header">Juego Asignado</th>
-                <th class="header">Asignar Juego</th>
+                <th class="header">Email</th>
             </tr>
         </thead>
             <tbody th:each="comprador : ${compradores}"> 
                     <tr>
                         <th scope="row" th:text="${comprador.id}"></th>
-                        <td th:text="${comprador.nombre}"></td>
-                        <td th:text="${comprador.apellido}"></td>
+                        <td th:text="${comprador.nombreApellido}"></td>
                         <td th:text="${comprador.dni}"></td>
                         <td th:text="${comprador.edad}"></td>
                         <td th:text="${comprador.fechaDeAlta}"></td>
@@ -50,49 +49,7 @@
                     </tr>
 
                 </tbody>
-        <tbody>
-            <tr>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-            <tr>
-                <td>Bobby Charlton</td>
-                <td>49</td>
-                <td>19 Apr 1958</td>
-                <td>20 May 1970</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-            <tr>
-                <td>Bobby Charlton</td>
-                <td>49</td>
-                <td>19 Apr 1958</td>
-                <td>20 May 1970</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-            <tr>
-                <td>Bobby Charlton</td>
-                <td>49</td>
-                <td>19 Apr 1958</td>
-                <td>20 May 1970</td>
-                <td>Wayne Rooney</td>
-                <td>53</td>
-                <td>06 Sep 2003</td>
-                <td>27 Jun 2016</td>
-            </tr>
-        </tbody>
-    </table>
+        
 </div>
 
 

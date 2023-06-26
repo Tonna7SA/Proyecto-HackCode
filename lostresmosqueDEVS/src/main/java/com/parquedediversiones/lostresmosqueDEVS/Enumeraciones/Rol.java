@@ -11,6 +11,7 @@ package com.parquedediversiones.lostresmosqueDEVS.Enumeraciones;
  */
 public enum Rol {
     EMP,
+    SUP,
     ADM;
     
 }

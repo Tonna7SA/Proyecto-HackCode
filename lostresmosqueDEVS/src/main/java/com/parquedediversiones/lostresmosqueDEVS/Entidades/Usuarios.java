@@ -41,4 +41,5 @@ public class Usuarios {
 
     @OneToOne
     private Imagen imagen;
+
 }

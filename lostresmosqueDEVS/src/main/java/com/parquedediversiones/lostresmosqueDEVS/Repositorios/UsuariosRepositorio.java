@@ -6,6 +6,7 @@
 package com.parquedediversiones.lostresmosqueDEVS.Repositorios;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +19,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuariosRepositorio extends JpaRepository<Usuarios, Long> {
 
-    @Query(value = " Select * from Usuarios where email = :email ", nativeQuery = true)
+    @Query(value = "Select * from Usuarios where email = :email ", nativeQuery = true)
     public Usuarios buscarPorEmail(@Param("email") String email);
+    
+    @Query(value = "select * from usuarios where roles like\"ADM\" or roles like\"SUP\"", nativeQuery = true)
+    public List<Usuarios> buscarPorRol();
 
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -29,37 +29,44 @@ public class PortalControlador {
 
     @Autowired
     private UsuariosServicio usuarioServicio;
-    //Llevamos la vista al index
 
     @GetMapping("/")
+    public String bienvenidos() {
+
+        return "bienvenidos.html";
+    }
+    @GetMapping("/index")
     public String index() {
 
         return "index.html";
     }
-
+    
+    
+    
     //llamamos al metodo registrar
     @GetMapping("/registrar")
     public String registrar() {
-        return "registro.html";
+        return "usuarios_form.html";
     }
 
     // Luego de pasar los datos por parametro utilizamos el servicio usuario para registrar uno
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password, String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
+    public String registro(MultipartFile archivo, @RequestParam Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password, String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
+        // Metodo try and catch para asegurarnos de captar errores 
 
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            usuarioServicio.registrar(nombre, email, password, password2);
+            usuarioServicio.registrar(legajoDni, nombreUsuario, email, password, password2, archivo);
 
             redirectAttributes.addFlashAttribute("exito", "El usuario fue cargado correctamente!");
 
             return "redirect:/";
         } catch (MiException ex) {
+            
             modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
+            modelo.put("nombre", nombreUsuario);
             modelo.put("email", email);
-
-            return "registro.html";
+            return "usuarios_form.html";
         }
 
     }
@@ -91,6 +98,7 @@ public class PortalControlador {
 //                userRepository.save(user);
 //            }
     //Llamamos al login para poder ingresar como un usuario
+   
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
 
@@ -102,7 +110,7 @@ public class PortalControlador {
     }
 
     //Llevamos al usuario al inicio correspondiente en caso de ser admin o empleado
-    @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
+    
     @GetMapping("/inicio")
     public String inicio(HttpSession session) {
 
@@ -123,18 +131,18 @@ public class PortalControlador {
         Usuarios usuario = (Usuarios) session.getAttribute("usuariosession");
         modelo.put("usuario", usuario);
 
-        return "usuario_modificar.html";
+        return "usuarios_modificar.html";
     }
 
     //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @PostMapping("/perfil/{id}")
-    public String actualizar(@PathVariable Long legajoDni, @RequestParam String nombre,
+    public String actualizar(MultipartFile archivo, @PathVariable Long legajoDni, @RequestParam String nombreUsuario,
             @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            usuarioServicio.actualizar(legajoDni, nombre, email, password, password2);
+            usuarioServicio.actualizar(legajoDni, nombreUsuario, email, password, password2, archivo);
 
             redirectAttributes.addFlashAttribute("exito", "El usuario fue actualizado correctamente!");
 
@@ -143,20 +151,20 @@ public class PortalControlador {
         } catch (MiException ex) {
 
             modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
+            modelo.put("nombre", nombreUsuario);
             modelo.put("email", email);
 
-            return "usuario_modificar.html";
+            return "usuarios_modificar.html";
         }
     }
 
     //Llamamos al servicio usuario para listar
-    @GetMapping("/lista")
+    @GetMapping("/listar")
     public String listar(ModelMap modelo) {
         List<Usuarios> usuarios = usuarioServicio.listarUsuarios();
         modelo.put("usuarios", usuarios);
 
-        return "usuario_list.html";
+        return "usuarios_list.html";
     }
 
 }

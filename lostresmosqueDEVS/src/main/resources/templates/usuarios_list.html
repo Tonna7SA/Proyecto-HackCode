@@ -27,24 +27,14 @@
                 <th class="header">Nombre y Apellido</th>
                 <th class="header">Email</th>
                 <th class="header">Rol</th>
-                <th class="header">Edad</th>
-                <th class="header">Estado</th>
-                <th class="header">Fecha Alta</th>
-                <th class="header">Turno</th>
-                <th class="header">Juego</th>
             </tr>
         </thead>
-          <tbody th:each="empleados : ${empleados}"> 
+          <tbody th:each="usuarios : ${usuarios}"> 
                     <tr>
-                        <th scope="row" th:text="${empleados.legajoDni}"></th>
-                        <td th:text="${empleados.nombreUsuario}"></td>
-                        <td th:text="${empleados.email}"></td>
-                        <td th:text="${empleados.roles}"></td>
-                        <td th:text="${empleados.edad}"></td>
-                        <td th:text="${empleados.activo}"></td>
-                        <td th:text="${empleados.fechaDeAlta}"></td>
-                        <td th:text="${empleados.turnos}"></td>
-                        <td th:text="${empleados.juego.nombreDelJuego}"></td>
+                        <th scope="row" th:text="${usuarios.legajoDni}"></th>
+                        <td th:text="${usuarios.nombreUsuario}"></td>
+                        <td th:text="${usuarios.email}"></td>
+                        <td th:text="${usuarios.roles}"></td>
                         
 <!--                        <td>
                             <a th:href= "@{/empleados/modificar/__${empleado.legajoDni}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>

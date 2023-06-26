@@ -1,12 +1,14 @@
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
+import com.parquedediversiones.lostresmosqueDEVS.Entidades.Imagen;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Juegos;
 import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Rol;
 import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Turno;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.JuegosRepositorio;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.UsuariosRepositorio;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,52 +16,61 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class EmpleadosServicio {
+
     //Servicio para comtrolar el AMBL de empleado
     @Autowired
     private JuegosRepositorio juegosRepositorio;
-     @Autowired
+    @Autowired
     private EmpleadosRepositorio empleadoRepositorio;
-     //Creamos un metodo para crear un empleado pasandole los parametros necesarios para eso 
-    public void crearEmpleado(Long legajoDni, String nombreUsuario, String email, String password, Rol roles, Integer edad, Boolean activo, Date fechaDeAlta,
-            Turno turnos, String idJuego) throws MiException {
+    @Autowired
+    private UsuariosRepositorio usuarioRepositorio;
+    @Autowired
+    private ImagenServicio imagenServicio;
+    //Creamos un metodo para crear un empleado pasandole los parametros necesarios para eso 
+
+    public void crearEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email, String password, 
+            String password2, Integer edad, String idJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
+        validarEmpleado(legajoDni, nombreUsuario, email, password, password2, edad, idJuego);
         //Usamos el juego repositorio para buscar que haya uno presente por la relacion entre estos
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         Empleados empleado = new Empleados();
-
-        empleado.setActivo(true);
-        
-        empleado.setEdad(edad);
-        empleado.setEmail(email);
-        empleado.setFechaDeAlta(new Date());
         empleado.setLegajoDni(legajoDni);
         empleado.setNombreUsuario(nombreUsuario);
-        empleado.setPassword(password);
-        empleado.setRoles(roles);
-        empleado.setTurnos(turnos);
+        empleado.setEmail(email);
+        empleado.setActivo(true);
+        empleado.setEdad(edad);
+        empleado.setFechaDeAlta(new Date());
+        Imagen imagen = imagenServicio.guardar(archivo);
+        empleado.setImagen(imagen);
+        empleado.setPassword(new BCryptPasswordEncoder().encode(password));
+        empleado.setRoles(Rol.EMP);
+        empleado.setTurnos(Turno.DIURNO);
         empleado.setJuego(juego);
         //Usamos el repositorio empleado para guardar el comprador y registrarlo correctamente
-       empleadoRepositorio.save(empleado);
+        empleadoRepositorio.save(empleado);
 
     }
+
     //Creamos un metodo para modificar un empleado pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, Rol roles,  Integer edad, Boolean activo, Date fechaDeAlta,
-            Turno turnos, String idJuego) throws MiException {
-         //LLamamos al metodo validar para evitar errores
-        validarEmpleado(legajoDni, nombreUsuario, email, password, roles, edad, activo, fechaDeAlta, turnos, idJuego);
+    public void modificarEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email, 
+            String password, String password2, Integer edad, String idJuego) throws MiException {
+        //LLamamos al metodo validar para evitar errores
+        validarEmpleado(legajoDni, nombreUsuario, email, password, password2, edad, email);
         //Usamos un optional para asegurarnos que el empleado este presente 
         Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
-         //Usamos un optional para asegurarnos que el juego este presente 
+        //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
         Juegos juego = new Juegos();
         if (respuestaJuego.isPresent()) {
-            //Asignamos el juego encontrado al juego para luego guardarlo
+//            //Asignamos el juego encontrado al juego para luego guardarlo
             juego = juegosRepositorio.findById(idJuego).get();
         }
 
@@ -67,39 +78,47 @@ public class EmpleadosServicio {
 
             Empleados empleado = respuestaEmpleado.get();
 
-            empleado.setActivo(activo);
-            
+            empleado.setActivo(true);
+
             empleado.setEdad(edad);
             empleado.setEmail(email);
-            empleado.setFechaDeAlta(fechaDeAlta);
+            empleado.setFechaDeAlta(new Date());
             empleado.setLegajoDni(legajoDni);
             empleado.setNombreUsuario(nombreUsuario);
-            empleado.setPassword(password);
-            empleado.setPassword(password);
-            empleado.setRoles(roles);
-            empleado.setTurnos(turnos);
-            empleado.setJuego(juego);
+            empleado.setPassword(new BCryptPasswordEncoder().encode(password));
+            empleado.setRoles(Rol.ADM);
+            String idImagen = null;
+             if(empleado.getImagen() !=null){
+                   idImagen = empleado.getImagen().getId();
+             }
+             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+             empleado.setImagen(imagen);
+//            empleado.setTurnos(turnos);
+//            empleado.setJuego(juego);
             //Usamos el repositorio empleado para guardar el empleado y registrarlo correctamente
             empleadoRepositorio.save(empleado);
 
         }
     }
+
     //Usamos el repositorio empleado para buscar uno
     public Empleados getOne(Long legajoDni) {
         return empleadoRepositorio.getOne(legajoDni);
     }
+
     //Usamos el repositorio empleado para buscar los registros y hacer una lista
     public List<Empleados> listarEmpleados() {
 
-        List<Empleados> empleado = new ArrayList();
+        List<Empleados> empleados = new ArrayList();
 
-        empleado = empleadoRepositorio.findAll();
+        empleados = empleadoRepositorio.findAll();
 
-        return empleado;
+        return empleados;
     }
+
     //Usamos el repositorio empleado para eliminar uno luego de buscarlo 
     public void eliminarEmpleado(Long legajoDni) throws MiException {
-         //Optional para asegurarnos que el empleado buscado esta presente
+        //Optional para asegurarnos que el empleado buscado esta presente
         Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
 
         if (respuesta.isPresent()) {
@@ -110,40 +129,35 @@ public class EmpleadosServicio {
 
         }
     }
+
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    public void validarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, Rol roles, Integer edad, Boolean activo, Date fechaDeAlta, Turno turnos, String idJuego) throws MiException {
+    public void validarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, String password2, 
+            Integer edad, String idJuego) throws MiException {
 
-        if (legajoDni!=0||  legajoDni == null) {
-            throw new MiException("Debe tener un id de usuario");
-        }
         if (nombreUsuario.isEmpty() || nombreUsuario == null) {
-            throw new MiException("Debe ingresar un nombre de usuario");
+            throw new MiException("El nombre no puede ser nulo o estar vacío");
         }
+
         if (email.isEmpty() || email == null) {
-            throw new MiException("Debe ingresar un email");
-        }
-        if (password == null || password.length() <= 7) {
-            throw new MiException("Debe tener una contraseña mayor a 7 caracteres");
+            throw new MiException("El email no puede ser nulo o estar vacío");
         }
 
-        if (roles == null) {
-            throw new MiException("Debe tener un rol valido");
+        if (password.isEmpty() || password == null || password.length() <= 5) {
+            throw new MiException("El password no puede ser nulo, estar vacío o tener menos de 5 dígitos");
         }
-     
-        if (edad == null || edad < 18) {
-            throw new MiException("El empleado debe tener una edad ingresada correctamente y no puede ser menor a 18");
 
+        if (!password.equals(password2)) {
+            throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
-        if (fechaDeAlta == null) {
-            throw new MiException("Debe tener una fecha de alta");
+        if (legajoDni == null) {
+            throw new MiException("el legajo ingresadas deben ser iguales");
         }
-        if (turnos == null) {
-            throw new MiException("Debe tener un turno asignado");
-        }
+
+//        if (turnos == null) {
+//            throw new MiException("Debe tener un turno asignado");
+//        }
         if (idJuego.isEmpty() || idJuego == null) {
             throw new MiException("Debe tener un juego asignado");
         }
     }
 }
-
-

@@ -21,14 +21,13 @@ public class CompradoresServicio {
     @Autowired
     private CompradoresRepositorio compradorRepositorio;
     //Creamos un metodo para crear un comprador pasandole los parametros necesarios para eso 
-    public void crearComprador(String nombre, String apellido, Integer dni, Integer edad, Date fechaDeaALta, Boolean activo, String email) throws MiException {
+    public void crearComprador(String nombreApellido, Long dni, Integer edad, String email) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarComprador(nombre, apellido, dni, email);
+        validarComprador(nombreApellido, dni, email);
 
         Compradores comprador = new Compradores();
 
-        comprador.setNombre(nombre);
-        comprador.setApellido(apellido);
+        comprador.setNombreApellido(nombreApellido);
         comprador.setDni(dni);
         comprador.setEdad(edad);
         comprador.setFechaDeAlta(new Date());
@@ -39,19 +38,17 @@ public class CompradoresServicio {
 
     }
     //Creamos un metodo para modificar un comprador pasandole los parametros necesarios para eso 
-    public void modificarComprador(String id, String nombre, String apellido, Integer dni, Integer edad, Boolean activo, String email) throws MiException {
+    public void modificarComprador(String id, String nombreApellido, Long dni, Boolean activo, String email) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarComprador(email, apellido, dni, email);
+        validarComprador(nombreApellido, dni, email);
          //Usamos un optional para asegurarnos que el comprador este presente 
         Optional<Compradores> respuesta = compradorRepositorio.findById(id);
         if (respuesta.isPresent()) {
 
             Compradores comprador = respuesta.get();
 
-            comprador.setNombre(nombre);
-            comprador.setApellido(apellido);
+            comprador.setNombreApellido(nombreApellido);
             comprador.setDni(dni);
-            comprador.setEdad(edad);
             comprador.setActivo(true);
             comprador.setEmail(email);
              //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
@@ -85,22 +82,19 @@ public class CompradoresServicio {
         }
     }
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    private void validarComprador(String nombre, String apellido, Integer dni, String email) throws MiException {
+    private void validarComprador(String nombreApellido, Long dni, String email) throws MiException {
 
-        if (nombre.isEmpty() || nombre == null || nombre.length() < 3) {
+        if (nombreApellido.isEmpty() || nombreApellido == null) {
             throw new MiException("Debe ingresar un nombre");
         }
-        if (apellido.isEmpty() || apellido == null || apellido.length() < 3) {
-            throw new MiException("Debe ingresar un apellido");
-        }
-        if (nombre.isEmpty() || nombre == null || dni < 6) {
+        if (dni == null || dni == 0 || dni < 5000000) {
             throw new MiException("Debe ingresar un dni");
         }
         if (email.isEmpty() || email == null) {
             throw new MiException("Debe ingresar un email");
         }
 
-        if (email.contains("@") && email.contains(".")) {
+        if (!(email.contains("@") && email.contains("."))) {
             throw new MiException("Debe ingresar un email valido");
         }
     }

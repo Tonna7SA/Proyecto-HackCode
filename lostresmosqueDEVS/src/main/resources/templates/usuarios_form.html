@@ -19,28 +19,13 @@
 
     <div class="contenedorregistro">
 
-        <form class="form"  th:action="@{/empleados/registro}" method="POST" enctype="multipart/form-data">
-            <span class="signup">Alta de empleado</span>
+        <form class="form"  th:action="@{/registro}" method="POST" enctype="multipart/form-data">
+            <span class="signup">Alta Usuario</span>
             <input type="text" name="nombreUsuario" placeholder="Ingrese nombre y apellido del empleado" class="form--input">
             <input type="text" name="legajoDni" placeholder="Ingrese Legajo/DNI del empleado" class="form--input">
             <input type="email" name="email" placeholder="Ingrese el email" class="form--input">
             <input type="password" name="password" placeholder="Contraseña" class="form--input">
             <input type="password" name="password2" placeholder="Confirmar Contraseña" class="form--input">
-             <div class="form-group">
-                    <select name="idJuego">  
-                        <option>Seleccionar Juego</option>
-                        <option th:each="juego : ${juegos}"
-                                th:value="${juego.id}" 
-                                th:text="${juego.nombreDelJuego}"
-                                />
-                    </select>
-                </div>
-            <label class="form--input" style="border: 0px solid transparent; text-align: justify;
-            margin: -10px 0px 0px -10px; gap:0; font-size: 14px;">Fecha de nacimiento</label>
-            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()" class="form--input">
-            <label for="edad"></label>
-            <span><input type="text" id="edad" name="edad" readonly class="form--input1"> Años</span>
-            
             <div class="subirimagen">
                 <span class="subirimagen-title">Cargá de imagen</span>
                 <p class="subirimagen-paragraph">

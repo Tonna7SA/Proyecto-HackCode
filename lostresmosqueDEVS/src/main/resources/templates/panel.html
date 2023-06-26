@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-
     <link rel="stylesheet" href="../CSS/carrusel.css">
     <link rel="stylesheet" href="../CSS/style.css">
 
 </head>
 
 <body>
-    <nav th:replace="/fragments/navbar :: nav">
-    </nav>
+   
+    <nav th:replace="/fragments/navbar :: nav"  > </nav>
+
     <div class="contenedorCentro">
         <div class="card">
-            <div class="image"><span class="text">Foto empleado</span></div>
-            <span class="title">Nombre y Apellido</span>
-            <span class="price">Puesto</span>
+            <div class="image" th:if="${session.usuariosession != null}"><img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" width="160%"></div>
+            <span class="title" <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></p></span>
+            <span class="price"> <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p></span>
             </div>
     </div>
 

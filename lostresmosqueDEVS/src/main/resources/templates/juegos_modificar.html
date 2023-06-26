@@ -12,9 +12,9 @@
 </head>
 
 <body>
-   <nav th:replace="/fragments/navbar :: nav">
-    </nav>
-    <div class="contenedorregistro">
+   <nav th:replace="/fragments/navbar :: nav"></nav>
+
+   <div class="contenedorregistro">
 
         <form class="form" th:action="@{/juegos/modificar/__${juego.id}__}" method="POST">
             <span class="signup">Alta de atracción</span>
@@ -100,6 +100,6 @@
     <script src="../JS/tipodejuego.js"></script>
     <script src="../JS/formularioFoto.js"></script>
 
-</body>
+
 
 </html>

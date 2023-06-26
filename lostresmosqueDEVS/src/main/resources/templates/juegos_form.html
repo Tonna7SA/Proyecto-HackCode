@@ -8,19 +8,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro comprador</title>
+    <title>Registro Juegos</title>
     <link rel="stylesheet" href="../CSS/style.css">
     <link rel="stylesheet" href="../CSS/registro.css">
 
 </head>
 
 <body>
-  <nav th:replace="/fragments/navbar :: nav">
-    </nav>
+    
+    <nav th:replace="/fragments/navbar :: nav"  > </nav>
 
     <div class="contenedorregistro">
 
-        <form class="form"  th:action="@{/juegos/registro/}" method="POST">
+        <form class="form"  th:action="@{/juegos/registro/}" method="POST" enctype="multipart/form-data">
             <span class="signup">Alta de atracción</span>
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
             <input type="text" name="nombreDelJuego" th:value="nombreDelJuego"required placeholder="Nombre del juego" class="form--input">
@@ -60,7 +60,7 @@
                         <img style="width: 150px; border-radius: 20px;" id="image-preview" src=""
                             alt="Vista previa de la imagen">
                     </div>
-                    <input type="file" accept="image/*" required="" id="file-input">
+                    <input type="file" accept="image/*" name="archivo" required="" id="file-input">
                 </label>
             </div>
 

@@ -12,18 +12,17 @@
 </head>
 
 <body>
-    <nav th:replace="/fragments/navbar :: nav">
-    </nav>
-
+    <nav th:replace="/fragments/navbar :: nav"  > </nav>
+    
     <div class="contenedorregistro">
 
-        <form class="form">
+        <form class="form" th:action="@{/logincheck}" method="POST">
             <span class="signup">Ingresá</span>
-            <input type="email" placeholder="Correo electrónico" class="form--input">
-            <input type="password" placeholder="Contraseña" class="form--input">
+            <input type="email" name="email" placeholder="Correo electrónico" class="form--input">
+            <input type="password" name="password" placeholder="Contraseña" class="form--input">
 
-            <button class="form--submit">
-                Registrar
+            <button type="submit" class="form--submit">
+                Logueate !!!
             </button>
         </form>
 
