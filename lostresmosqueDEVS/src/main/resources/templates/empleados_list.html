@@ -23,7 +23,6 @@
     <table class="zigzag">
         <thead>
             <tr>
-                <th class="header">Legajo</th>
                 <th class="header">Nombre y Apellido</th>
                 <th class="header">Email</th>
                 <th class="header">Rol</th>
@@ -32,11 +31,12 @@
                 <th class="header">Fecha Alta</th>
                 <th class="header">Turno</th>
                 <th class="header">Juego</th>
+                <th class="header">Acciones</th>
             </tr>
         </thead>
           <tbody th:each="empleados : ${empleados}"> 
                     <tr>
-                        <th scope="row" th:text="${empleados.legajoDni}"></th>
+                        <th scope="row" hidden th:text="${empleados.legajoDni}"></th>
                         <td th:text="${empleados.nombreUsuario}"></td>
                         <td th:text="${empleados.email}"></td>
                         <td th:text="${empleados.roles}"></td>
@@ -45,6 +45,7 @@
                         <td th:text="${empleados.fechaDeAlta}"></td>
                         <td th:text="${empleados.turnos}"></td>
                         <td th:text="${empleados.juego.nombreDelJuego}"></td>
+                        <td><a th:href="@{/empleados/modificar/__${empleados.legajoDni}__}"><i class="fas fa-feather-alt"></i> Modificar </a></td>
                         
 <!--                        <td>
                             <a th:href= "@{/empleados/modificar/__${empleado.legajoDni}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>

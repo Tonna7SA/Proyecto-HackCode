@@ -63,7 +63,7 @@ public class EmpleadosServicio {
     public void modificarEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email, 
             String password, String password2, Integer edad, String idJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
-        validarEmpleado(legajoDni, nombreUsuario, email, password, password2, edad, email);
+        validarEmpleado1(nombreUsuario, email, password, password2, edad, email);
         //Usamos un optional para asegurarnos que el empleado este presente 
         Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
         //Usamos un optional para asegurarnos que el juego este presente 
@@ -152,6 +152,34 @@ public class EmpleadosServicio {
         if (legajoDni == null) {
             throw new MiException("el legajo ingresadas deben ser iguales");
         }
+
+//        if (turnos == null) {
+//            throw new MiException("Debe tener un turno asignado");
+//        }
+        if (idJuego.isEmpty() || idJuego == null) {
+            throw new MiException("Debe tener un juego asignado");
+        }
+    }
+    
+    public void validarEmpleado1(String nombreUsuario, String email, String password, String password2, 
+            Integer edad, String idJuego) throws MiException {
+
+        if (nombreUsuario.isEmpty() || nombreUsuario == null) {
+            throw new MiException("El nombre no puede ser nulo o estar vacío");
+        }
+
+        if (email.isEmpty() || email == null) {
+            throw new MiException("El email no puede ser nulo o estar vacío");
+        }
+
+        if (password.isEmpty() || password == null || password.length() <= 5) {
+            throw new MiException("El password no puede ser nulo, estar vacío o tener menos de 5 dígitos");
+        }
+
+        if (!password.equals(password2)) {
+            throw new MiException("Las contraseñas ingresadas deben ser iguales");
+        }
+        
 
 //        if (turnos == null) {
 //            throw new MiException("Debe tener un turno asignado");

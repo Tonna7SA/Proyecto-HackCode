@@ -70,30 +70,33 @@ public class EmpleadosControlador {
 
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
+        
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
         modelo.put("empleados", empleados);
-
+        System.out.println("sale del listar");
         return "empleados_list.html";
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
-    @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, 
-            @RequestParam String email, @RequestParam String password, @RequestParam Rol roles,
-            @RequestParam Integer edad, ModelMap modelo, MultipartFile archivo) {
-
+    @GetMapping("/modificar/{legajoDni}")
+    
+    public String modificar(@PathVariable Long legajoDni, ModelMap modelo, MultipartFile archivo) {
+        //List<Juegos> juegos = juegoServicio.listarJuegos();
+        System.out.println("entro en el get");
+        
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
-        List<Juegos> juegos = juegoServicio.listarJuegos();
-
-        modelo.addAttribute("juegos", juegos);
+        System.out.println("paso el put");
+        //modelo.addAttribute("juegos", juegos);
 
         return "empleados_modificar.html";
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para modificar un empleado
-    @PostMapping("/modificar/{id}")
-    public String modificarEntrada(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password,
-            @RequestParam Integer edad, @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) {
+    @PostMapping("/modificar/{legajoDni}")
+    public String modificarEntrada(@PathVariable Long legajoDni, @RequestParam(required = false) String nombreUsuario, @RequestParam String email, 
+            @RequestParam String password, @RequestParam Integer edad, 
+            @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) {
         // Metodo try and catch para asegurarnos de captar errores 
+        System.out.println("entro en el post");
         try {
             List<Juegos> juegos = juegoServicio.listarJuegos();
 
