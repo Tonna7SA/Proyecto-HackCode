@@ -64,8 +64,7 @@ public class CompradoresControlador {
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador para pasar los datos al PostMapping y hacer uso del metodo modificar
        @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, @RequestParam String nombreApellido,@RequestParam Long dni,
-            Boolean activo,@RequestParam String email, ModelMap modelo) {
+    public String modificar(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("compradores", compradorServicio.getOne(id));
 
@@ -73,7 +72,7 @@ public class CompradoresControlador {
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
-    public String modificarComprador(@PathVariable String id, @RequestParam String nombreApellido,@RequestParam Long dni,
+    public String modificarComprador(@PathVariable String id, @RequestParam (required = false) String nombreApellido,@RequestParam Long dni,
             Boolean activo,@RequestParam String email, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {

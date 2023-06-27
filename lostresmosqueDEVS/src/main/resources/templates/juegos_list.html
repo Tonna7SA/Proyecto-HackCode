@@ -31,6 +31,7 @@
                 <th class="header">Fecha de Alta</th>
                 <th class="header">Precio x pers.</th>
                 <th class="header">Modificar</th>
+                <th class="header">Eliminar</th>
             </tr>
         </thead>
            <tbody th:each="juegos : ${juegos}"> 
@@ -43,8 +44,11 @@
                         <td th:text="${juegos.fechaDeAlta}"></td>
                         <td th:text="${juegos.precioDelJuego}"></td>
                         <td>
-                                                        <a th:href="@{/juegos/modificar/__${juegos.id}__}" class="btn btn-primary">Modificar</a>
-                                                    </td> 
+                             <a th:href="@{/juegos/modificar/__${juegos.id}__}" class="btn btn-primary">Modificar</a>
+                        </td> 
+                        <td>
+                             <a class="btn btn-danger" th:href="@{/juegos/eliminar/__${juegos.id}__}">Eliminar </a>
+                        </td>
 
                     </tr>
 

@@ -8,8 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificacion comprador</title>
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link rel="stylesheet" href="../CSS/registro.css">
+    
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/registro.css">
 
 </head>
 
@@ -19,8 +20,9 @@
 
     <div class="contenedorregistro" >
 
-        <form class="form" th:action="@{/compradores/modificar/__${comprador.id}__}" method="POST">
+        <form class="form" th:action="@{/compradores/modificar/__${compradores.id}__}" method="POST">
             <span class="signup">Modificación de comprador</span>
+             <input hidden th:value="${compradores.id}" name="id">
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre*</label>
             <input type="text" name="nombre" th:value="nombre" required placeholder="Ingrese nombre" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Apellido*</label>
@@ -72,7 +74,9 @@
 
 
     </div>
-
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
     <script src="../JS/carrusel.js"></script>
 
 </body>
