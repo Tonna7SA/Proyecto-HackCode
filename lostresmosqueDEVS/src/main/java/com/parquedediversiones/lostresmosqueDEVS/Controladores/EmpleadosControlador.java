@@ -83,6 +83,7 @@ public class EmpleadosControlador {
         //List<Juegos> juegos = juegoServicio.listarJuegos();
         System.out.println("entro en el get");
         
+
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
         System.out.println("paso el put");
@@ -97,13 +98,15 @@ public class EmpleadosControlador {
             @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) {
         // Metodo try and catch para asegurarnos de captar errores 
         System.out.println("entro en el post");
-        try {
-            List<Juegos> juegos = juegoServicio.listarJuegos();
 
+        try {
+            
+            List<Juegos> juegos = juegoServicio.listarJuegos();
+                
             modelo.addAttribute("juegos", juegos);
 
            empleadoServicio.modificarEmpleado(archivo, legajoDni, nombreUsuario, email, password, password, edad, email);
-
+            System.out.println("Entramos al modificar post dentro del try ");
             return "redirect:../listar";
 
         } catch (MiException ex) {
@@ -111,20 +114,20 @@ public class EmpleadosControlador {
 
             modelo.addAttribute("juegos", juegos);
             modelo.put("error", ex.getMessage());
-
+             System.out.println("Entramos al modificar post dentro del catch ");
             return "empleados_modificar.html";
         }
 
     }
      // LLamamos al servicio empleado para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/eliminar/{legajoDni}")
     public String eliminar(@PathVariable Long legajoDni, ModelMap modelo) {
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
         return "empleados_list.html";
     }
     //Llamamos al servicio empleado con los datos del GetMapping para eliminar efectivamente un empleado 
-    @PostMapping("/eliminar/{id}")
+    @PostMapping("/eliminar/{legajoDni}")
     public String eliminarEmpleado(@PathVariable Long legajoDni, ModelMap modelo) {
          // Metodo try and catch para asegurarnos de captar errores 
         try {

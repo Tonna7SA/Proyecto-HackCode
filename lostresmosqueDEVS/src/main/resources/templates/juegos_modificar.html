@@ -16,10 +16,11 @@
 
    <div class="contenedorregistro">
 
-        <form class="form" th:action="@{/juegos/modificar/__${juego.id}__}" method="POST">
-            <span class="signup">Alta de atracción</span>
+        <form class="form" th:action="@{/juegos/modificar/__${juegos.id}__}" method="POST">
+            <span class="signup">Modificacion de atracción</span>
+            <input hidden th:value="${juegos.id}" name="id">
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
-            <input type="text"  name="nombreDelJuego" th:value="nombreDelJuego" required placeholder="Nombre del juego" class="form--input">
+            <input type="text"  name="nombreDelJuego"  th:value="nombreDelJuego" required placeholder="Nombre del juego" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Capacidad máxima</label>
             <input type="number" name="capacidadMaxima" th:value="capacidadMaxima" required placeholder="Capacidad máxima" class="form--input">
 

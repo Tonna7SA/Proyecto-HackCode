@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org%22%3E/">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org%22%3E/">
 
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Index</title>
-        <link rel="stylesheet" href="/css/style1.css">
-        <link rel="stylesheet" href="/css/carrusel.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <style>
+        html {
+            cursor: url(../static/img/spaceship.png), auto;
+        }
+    </style>
 
-    <body>
-   
-    <nav th:replace="/fragments/navbar :: nav"  > </nav>
-   
+    <link rel="stylesheet" href="css/carrusel.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<nav th:replace="/fragments/navbar :: nav">
+</nav>
+
+<body>
+
 
     <div class="card-swiper">
-  <div class="card-groups">
-    <div class="card-group" data-index="0" data-status="active">
-      <div class="little-card card">
+        <div class="card-groups">
+            <div class="card-group" data-index="0" data-status="active">
+                <div class="little-card card">
 
-      </div>
-      <div class="big-card card">
+                </div>
+                <div class="big-card card">
 
-      </div>
-      <div class="little-card card">
+                </div>
+                <div class="little-card card">
 
-      </div>
-      <div class="big-card card">
+                </div>
+                <div class="big-card card">
 
-      </div>
-      <div class="little-card card">
+                </div>
+                <div class="little-card card">
 
-      </div>
-      <div class="big-card card">
+                </div>
+                <div class="big-card card">
 
-      </div>
-      <div class="little-card card">
+                </div>
+                <div class="little-card card">
 
-      </div>
-      <div class="big-card card">
+                </div>
+                <div class="big-card card">
 
-      </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
-    
     </div>
-  </div>
-  
-</div>
-<div class="contenedor">
+    <div class="contenedor">
 
         <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              viewBox="0 24 150 28 " preserveAspectRatio="none">
@@ -80,16 +86,11 @@
 
 
     </div>
-<!-- partial -->
-  <script src="js/carrusel"></script>
+    <!-- partial -->
+    <script src="js/carrusel"></script>
 
-<<<<<<< HEAD
     <script src="/js/carrusel.js"></script>
 
-=======
-</body>
-</html>
->>>>>>> 66994ddbcb87ce716ce8320d149fd100d641c679
 </body>
 
 </html>
