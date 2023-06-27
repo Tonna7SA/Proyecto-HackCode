@@ -136,7 +136,7 @@ public class PortalControlador {
 
     //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
-    @PostMapping("/perfil/{id}")
+    @PostMapping("/perfil/{legajoDni}")
     public String actualizar(MultipartFile archivo, @PathVariable Long legajoDni, @RequestParam String nombreUsuario,
             @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
