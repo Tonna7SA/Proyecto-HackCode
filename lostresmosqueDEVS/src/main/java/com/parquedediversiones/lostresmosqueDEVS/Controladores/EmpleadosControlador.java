@@ -76,11 +76,11 @@ public class EmpleadosControlador {
         return "empleados_list.html";
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
-    @GetMapping("/modificar/{id}")
+    @GetMapping("/modificar/{legajoDni}")
     public String modificar(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, 
             @RequestParam String email, @RequestParam String password, @RequestParam Rol roles,
             @RequestParam Integer edad, ModelMap modelo, MultipartFile archivo) {
-
+        System.out.println("Entramos al modificar get ");
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
         List<Juegos> juegos = juegoServicio.listarJuegos();
@@ -90,17 +90,19 @@ public class EmpleadosControlador {
         return "empleados_modificar.html";
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para modificar un empleado
-    @PostMapping("/modificar/{id}")
-    public String modificarEntrada(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password,
+    @PostMapping("/modificar/{legajoDni}")
+    public String modificarEmpleado(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, @RequestParam String password,
             @RequestParam Integer edad, @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) {
         // Metodo try and catch para asegurarnos de captar errores 
+       System.out.println("Entramos al modificar post antes del try ");
         try {
+            
             List<Juegos> juegos = juegoServicio.listarJuegos();
-
+                
             modelo.addAttribute("juegos", juegos);
 
            empleadoServicio.modificarEmpleado(archivo, legajoDni, nombreUsuario, email, password, password, edad, email);
-
+            System.out.println("Entramos al modificar post dentro del try ");
             return "redirect:../listar";
 
         } catch (MiException ex) {
@@ -108,20 +110,20 @@ public class EmpleadosControlador {
 
             modelo.addAttribute("juegos", juegos);
             modelo.put("error", ex.getMessage());
-
+             System.out.println("Entramos al modificar post dentro del catch ");
             return "empleados_modificar.html";
         }
 
     }
      // LLamamos al servicio empleado para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/eliminar/{legajoDni}")
     public String eliminar(@PathVariable Long legajoDni, ModelMap modelo) {
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
 
         return "empleados_list.html";
     }
     //Llamamos al servicio empleado con los datos del GetMapping para eliminar efectivamente un empleado 
-    @PostMapping("/eliminar/{id}")
+    @PostMapping("/eliminar/{legajoDni}")
     public String eliminarEmpleado(@PathVariable Long legajoDni, ModelMap modelo) {
          // Metodo try and catch para asegurarnos de captar errores 
         try {

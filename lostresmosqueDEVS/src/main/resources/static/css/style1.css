@@ -297,6 +297,7 @@ li > a:only-child::after {
   }
 }
 
+
 @media all and (width <= 330px) {
   nav ul li {
     display: block;
