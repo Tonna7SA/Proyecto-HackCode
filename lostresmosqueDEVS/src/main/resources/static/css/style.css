@@ -426,7 +426,7 @@ h1,
   padding: 1em 1em;
 } */
 #survey-form button {
-  cursor: pointer;
+  /* cursor: pointer; */
 
   display: block;
 
@@ -459,7 +459,7 @@ h1,
 }
 
 .button {
-  cursor: pointer;
+  /* cursor: pointer; */
 
   position: relative;
 
@@ -727,7 +727,7 @@ table th {
   width: 15em;
   height: 22em;
   box-shadow: 0px 1px 13px rgba(0,0,0,0.1);
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: all 120ms;
   display: flex;
   align-items: center;
@@ -821,5 +821,5 @@ table th {
 .close:focus {
   color: black;
   text-decoration: none;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
