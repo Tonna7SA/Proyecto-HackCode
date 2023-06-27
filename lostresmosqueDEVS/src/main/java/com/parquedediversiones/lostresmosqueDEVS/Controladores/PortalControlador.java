@@ -122,23 +122,33 @@ public class PortalControlador {
 
         return "inicio.html";
     }
+  //Llamamos al servicio usuario para listar
+    @GetMapping("/listar")
+    public String listar(ModelMap modelo) {
+        List<Usuarios> usuarios = usuarioServicio.listarUsuarios();
+        modelo.put("usuarios", usuarios);
 
+        return "usuarios_list.html";
+    }
     //llevamos al usuario a la vista de modificacion en caso de ser admin o empleado
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
-    @GetMapping("/perfil")
+    @GetMapping("/perfil/{legajoDni}")
     public String perfil(ModelMap modelo, HttpSession session) {
 
-        Usuarios usuario = (Usuarios) session.getAttribute("usuariosession");
-        modelo.put("usuario", usuario);
+        Usuarios usuarios = (Usuarios) session.getAttribute("usuariosession");
+        modelo.put("usuarios", usuarios);
 
         return "usuarios_modificar.html";
     }
+    
+
 
     //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
+
     @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
     @PostMapping("/perfil/{legajoDni}")
-    public String actualizar(MultipartFile archivo, @PathVariable Long legajoDni, @RequestParam String nombreUsuario,
-            @RequestParam String email, @RequestParam String password, @RequestParam String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
+    public String modificarUsuario (MultipartFile archivo, @PathVariable Long legajoDni, @RequestParam (required = false) String nombreUsuario,
+            @RequestParam String email, @RequestParam (required = false) String password, @RequestParam (required = false) String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
         // Metodo try and catch para asegurarnos de captar errores 
         try {
@@ -157,14 +167,5 @@ public class PortalControlador {
             return "usuarios_modificar.html";
         }
     }
-
-    //Llamamos al servicio usuario para listar
-    @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        List<Usuarios> usuarios = usuarioServicio.listarUsuarios();
-        modelo.put("usuarios", usuarios);
-
-        return "usuarios_list.html";
-    }
-
 }
+

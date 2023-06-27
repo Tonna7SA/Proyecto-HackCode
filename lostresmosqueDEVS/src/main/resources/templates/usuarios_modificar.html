@@ -18,14 +18,14 @@
 
     <div class="contenedorregistro">
 
-        <form class="form" th:action="@{/usuarios/perfil/__${usuarios.legajoDni}__}" method="POST"  enctype="multipart/form-data">
-            <span class="signup">Alta Usuario</span>
+        <form class="form" th:action="@{/perfil/__${usuarios.legajoDni}__}" method="POST"  enctype="multipart/form-data">
+            <span class="signup">Modificacion Usuario</span>
              <input hidden th:value="${usuarios.legajoDni}" name="legajoDni">
-            <input type="text" name="nombreUsuario" th:value="${usuarios.nombreUsuario}" placeholder="Ingrese nombre y apellido del empleado" class="form--input">
+            <input type="text" name="nombreUsuario"  placeholder="Ingrese nombre y apellido del empleado" class="form--input">
             
-            <input type="email" name="email"  th:value="${usuarios.email}" placeholder="Ingrese el email" class="form--input">
-            <input type="password" name="password" th:value="${usuarios.passowrd}" placeholder="Contraseña" class="form--input">
-            <input type="password" name="password2" th:value="${usuarios.passowrd2}" placeholder="Confirmar Contraseña" class="form--input">
+            <input type="email" name="email"   placeholder="Ingrese el email" class="form--input">
+            <input type="password" name="password"  placeholder="Contraseña" class="form--input">
+            <input type="password" name="password2"  placeholder="Confirmar Contraseña" class="form--input">
             <div class="subirimagen">
                 <span class="subirimagen-title">Cargá de imagen</span>
                 <p class="subirimagen-paragraph">
@@ -37,7 +37,7 @@
                             src="https://img.freepik.com/vector-premium/avatar-hombre-imagen-perfil-web-masculina-generica_53562-18550.jpg?w=2000"
                             alt="Vista previa de la imagen">
                     </div>
-                    <input type="file" name="archivo "  th:value="${usuarios.archivo}" accept="image/*" required="" id="file-input">
+                    <input type="file" name="archivo "   accept="image/*" required="" id="file-input">
                 </label>
             </div>
             <button id="btnModal" class="form--submit">

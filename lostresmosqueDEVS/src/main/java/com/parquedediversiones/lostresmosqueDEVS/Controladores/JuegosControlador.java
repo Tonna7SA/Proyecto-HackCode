@@ -71,8 +71,7 @@ public class JuegosControlador {
     }
      // Luego de pasar los datos por parametro llamamos al servicio juego para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, @RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
-            @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, @RequestParam String idEmpleado, ModelMap modelo) {
+    public String modificar(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("juegos", juegoServicio.getOne(id));
 
@@ -84,7 +83,7 @@ public class JuegosControlador {
     }
      // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para modificar un juego
     @PostMapping("/modificar/{id}")
-    public String modificarJuego(MultipartFile archivo, @PathVariable String id, @RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
+    public String modificarJuego(MultipartFile archivo, @PathVariable String id, @RequestParam(required = false) String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
             @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
