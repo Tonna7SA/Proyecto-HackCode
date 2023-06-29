@@ -1,0 +1,17 @@
+
+.card{
+    justify-content: center;
+    background-color: bisque;
+    opacity: 80%;
+    margin: auto;
+    margin-top: 1.5%;
+    width: 100%;
+    padding: auto;
+    border-radius: 10px;
+    border-color: forestgreen;
+}
+
+.table{
+    width: 110%;
+    justify-content: center;
+}

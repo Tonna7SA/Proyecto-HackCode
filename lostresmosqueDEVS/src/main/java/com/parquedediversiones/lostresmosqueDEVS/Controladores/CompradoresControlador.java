@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/compradores")
 public class CompradoresControlador {
+
     // Vista para registrarte como comprador 
     @Autowired
     private CompradoresServicio compradorServicio;
@@ -30,30 +32,30 @@ public class CompradoresControlador {
     @GetMapping("/registrar")
     public String registrar() {
 
-       
         return "comprador_form.html";
 
     }
+
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para registrar el comprador
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombreApellido, @RequestParam Long dni,@RequestParam Integer edad,
+    public String registro(@RequestParam String nombreApellido, @RequestParam Long dni, @RequestParam Integer edad,
             @RequestParam String email, ModelMap modelo) throws MiException {
-       // Metodo try and catch para asegurarnos de captar errores 
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
-           compradorServicio.crearComprador(nombreApellido, dni, edad, email);
+            compradorServicio.crearComprador(nombreApellido, dni, edad, email);
             //modelo.put("Exito", "El comprador se registro exitosamente");
 
         } catch (MiException ex) {
 
-
             modelo.put("Error", ex.getMessage());
 
-           return "comprador_form.html";
+            return "comprador_form.html";
         }
 
         return "index.html";
 
     }
+
     //Llamamos al servicio comprador para listar los compradores.
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
@@ -62,55 +64,66 @@ public class CompradoresControlador {
 
         return "comprador_list.html";
     }
+
     // Luego de pasar los datos por parametro llamamos al servicio comprador para pasar los datos al PostMapping y hacer uso del metodo modificar
-       @GetMapping("/modificar/{id}")
+    @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("compradores", compradorServicio.getOne(id));
 
         return "comprador_modificar.html";
     }
+
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
-    public String modificarComprador(@PathVariable String id, @RequestParam (required = false) String nombreApellido,@RequestParam Long dni,
-            Boolean activo,@RequestParam String email, ModelMap modelo) {
+    public String modificarComprador(@PathVariable String id, @RequestParam(required = false) String nombreApellido, @RequestParam Long dni,
+            Boolean activo, @RequestParam String email, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-           
 
             compradorServicio.modificarComprador(id, nombreApellido, dni, activo, email);
 
             return "redirect:../listar";
 
         } catch (MiException ex) {
-           
+
             modelo.put("Error", ex.getMessage());
 
-             return "comprador_modificar.html";
+            return "comprador_modificar.html";
         }
 
     }
+
     // LLamamos al servicio comprador para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
+    public String eliminar(@PathVariable String id, ModelMap modelo, RedirectAttributes redirectAttributes) throws MiException {
         modelo.put("compradores", compradorServicio.getOne(id));
-
-        return "comprador_list.html";
-    }
-    //Llamamos al servicio comprador con los datos del GetMapping para eliminar efectivamente un comprador 
-    @PostMapping("/eliminar/{id}")
-    public String eliminarComprador(@PathVariable String id, ModelMap modelo) {
-         // Metodo try and catch para asegurarnos de captar errores 
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             compradorServicio.eliminarComprador(id);
             modelo.put("Exito", "Se elimino el comprador exitosamente");
-
+            redirectAttributes.addFlashAttribute("success", "Comprador eliminado exitosamente");
             return "redirect:../listar";
         } catch (MiException ex) {
-            modelo.put("Error", ex.getMessage());
+            redirectAttributes.addFlashAttribute("success", "El comprador no puede ser eliminado");
             return "redirect:../listar";
         }
 
     }
+    //Llamamos al servicio comprador con los datos del GetMapping para eliminar efectivamente un comprador 
+//    @PostMapping("/eliminar/{id}")
+//    public String eliminarComprador(@PathVariable String id, ModelMap modelo) {
+//         // Metodo try and catch para asegurarnos de captar errores 
+//        try {
+//            compradorServicio.eliminarComprador(id);
+//            modelo.put("Exito", "Se elimino el comprador exitosamente");
+//
+//            return "redirect:../listar";
+//        } catch (MiException ex) {
+//            modelo.put("Error", ex.getMessage());
+//            return "redirect:../listar";
+//        }
+//
+//    }
 
 }
