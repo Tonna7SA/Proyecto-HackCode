@@ -73,7 +73,16 @@ public class CompradoresControlador {
 
         return "comprador_modificar.html";
     }
-
+        @GetMapping("/modificarEstado/{id}")
+    public String cambiarEstado(@PathVariable String id, RedirectAttributes redirectAttributes) throws Exception {
+        try {
+            compradorServicio.cambiarEstado(id);
+            redirectAttributes.addFlashAttribute("success", "El Comprador con Id=" + id + " ha sido modificado correctamente!");
+        } catch (MiException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:../listar";
+    }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
     public String modificarComprador(@PathVariable String id, @RequestParam(required = false) String nombreApellido, @RequestParam Long dni,

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,23 @@ public class CompradoresServicio {
 
         }
     }
+   @Transactional
+    public void cambiarEstado(String id) throws Exception {
+        Optional<Compradores> respuesta = compradorRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+             Compradores comprador = respuesta.get();
+                if (comprador.getActivo().equals(Boolean.TRUE)) {
+                    comprador.setActivo(Boolean.FALSE);
+                } else if (comprador.getActivo().equals(Boolean.FALSE)) {
+                    comprador.setActivo(Boolean.TRUE);
+                }
+            } else {
+                throw new MiException("No se pudo cambiar el estado del empleado");
+            }
+
+        }
+    
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
     private void validarComprador(String nombreApellido, Long dni, String email) throws MiException {
 

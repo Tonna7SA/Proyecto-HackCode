@@ -3,17 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Empleados</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/registro.css">
+    <head>
+        <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Registro Empleados</title>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+                          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+                        <link rel="stylesheet" href="/css/style.css">
+                            <link rel="stylesheet" href="/css/registro.css">
 
-</head>
+                                </head>
 
                                 <body>
 
@@ -35,6 +35,8 @@
                                                     <th class="header">Turno</th>
                                                     <th class="header">Juego</th>
                                                     <th class="header">Modificar</th>
+                                                    <th class="header">Cambiar Rol</th>
+                                                    <th class="header">Cambiar Estado</th>                                                    
                                                     <th class="header">Eliminar</th>
                                                 </tr>
                                             </thead>
@@ -45,16 +47,23 @@
                                                     <td th:text="${empleados.email}"></td>
                                                     <td th:text="${empleados.roles}"></td>
                                                     <td th:text="${empleados.edad}"></td>
-                                                    <td th:text="${empleados.activo}"></td>
+                                                    <td th:text="${empleados.activo ? 'Activo' : 'Inactivo'}"></td>
                                                     <td th:text="${empleados.fechaDeAlta}"></td>
                                                     <td th:text="${empleados.turnos}"></td>
                                                     <td th:text="${empleados.juego.nombreDelJuego}"></td>                                        
                                                     <td>
                                                         <a th:href="@{/empleados/modificar/__${empleados.legajoDni}__}" class="btn btn-primary">Modificar</a>
                                                     </td> 
+
                                                     <td>
-                                                         <a class="btn btn-danger" th:href="@{/empleados/eliminar/__${empleados.legajoDni}__}">Eliminar </a>
-                                                     </td>
+                                                        <a th:href= "@{/empleados/modificarRol/__${empleados.legajoDni}__}"><button type="button" class="btn btn-info btn-sm">Cambiar</button></a>
+                                                    </td>
+                                                    <td>
+                                                        <a th:href= "@{/empleados/modificarEstado/__${empleados.legajoDni}__}"><button type="button" class="btn btn-secondary btn-sm">Cambiar</button></a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-danger" th:href="@{/empleados/eliminar/__${empleados.legajoDni}__}">Eliminar </a>
+                                                    </td>
 
 
                                                 </tr>
@@ -92,11 +101,11 @@
 
 
                                     </div>
-                                    
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
-    <script src="../JS/carrusel.js"></script>
+
+                                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+                                            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+                                    crossorigin="anonymous"></script>
+                                    <script src="../JS/carrusel.js"></script>
                                 </body>
 
                                 </html>

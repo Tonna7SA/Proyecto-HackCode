@@ -1,8 +1,10 @@
 
 package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
+import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Servicios.EmpleadosServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.UsuariosServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class AdminControlador {
 
     @Autowired
     UsuariosServicio usuariosServicio;
+     @Autowired
+    EmpleadosServicio empleadosServicio;
     //Panel de vista del Administrador
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
@@ -34,8 +38,11 @@ public class AdminControlador {
     // LLamamos al servicio usuario para poder listar usuarios
     @GetMapping("/listar")
     public String listar(ModelMap modelo) {
+        
         List<Usuarios> usuarios = usuariosServicio.listarUsuarios();
         modelo.put("usuarios", usuarios);
+        List<Empleados> empleados = empleadosServicio.listarEmpleados();
+        modelo.put("empleados", empleados);
 
         return "listar_usuario.html";
     }

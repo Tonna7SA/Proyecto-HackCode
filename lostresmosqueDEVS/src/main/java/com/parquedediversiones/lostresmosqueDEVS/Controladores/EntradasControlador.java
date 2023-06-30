@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -144,26 +145,22 @@ public class EntradasControlador {
 
     }
 
-    // LLamamos al servicio entrada para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        modelo.put("entradas", entradaServicio.getOne(id));
-
-        return "entradas_eliminar.html";
-    }
+ 
 //Llamamos al servicio entrada con los datos del GetMapping para eliminar efectivamente una entrada 
 
-    @PostMapping("/eliminar/{id}")
-    public String eliminarEntrada(@PathVariable String id, ModelMap modelo) {
+     @GetMapping("/eliminar/{id}")
+    public String eliminarEntrada(@PathVariable String id, ModelMap modelo,RedirectAttributes redirectAttributes)throws MiException {
+            modelo.put("entradas", entradaServicio.getOne(id));
         try {
             entradaServicio.eliminarEntrada(id);
             modelo.put("exito", "Se elimino la entrada exitosamente");
-
+            redirectAttributes.addFlashAttribute("success", "Entrada eliminada exitosamente");
             return "redirect:../listar";
         } catch (MiException ex) {
-            modelo.put("Error", ex.getMessage());
+            redirectAttributes.addFlashAttribute("success", "La entrada no puede ser eliminada");
             return "redirect:../listar";
         }
 
     }
+   
 }

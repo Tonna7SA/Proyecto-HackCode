@@ -129,6 +129,49 @@ public class EmpleadosServicio {
 
         }
     }
+        @Transactional
+    public void cambiarRol(Long legajoDni) throws MiException {
+        Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
+
+        if (respuesta.isPresent()) {
+            Empleados empleado = respuesta.get();
+
+            if (!empleado.getRoles().equals(Rol.ADM)) {
+                if (empleado.getRoles().equals(Rol.EMP)) {
+
+                    empleado.setRoles(Rol.SUP);
+                    
+
+                } else if (empleado.getRoles().equals(Rol.SUP)) {
+
+                    empleado.setRoles(Rol.EMP);
+                    
+                }
+            } 
+        }else{
+             throw new MiException("No se pudo cambiar el rol del empleado");
+        }
+    }
+
+    @Transactional
+    public void cambiarEstado(Long legajoDni) throws Exception {
+        Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
+
+        if (respuesta.isPresent()) {
+             Empleados empleado = respuesta.get();
+
+            if (empleado.getRoles().equals(Rol.EMP)||empleado.getRoles().equals(Rol.SUP)) {
+                if (empleado.getActivo().equals(Boolean.TRUE)) {
+                    empleado.setActivo(Boolean.FALSE);
+                } else if (empleado.getActivo().equals(Boolean.FALSE)) {
+                    empleado.setActivo(Boolean.TRUE);
+                }
+            } else {
+                throw new MiException("No se pudo cambiar el estado del empleado");
+            }
+
+        }
+    }
 
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
     public void validarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, String password2, 

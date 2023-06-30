@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -104,25 +105,21 @@ public class JuegosControlador {
         }
 
     }
-     // LLamamos al servicio juego para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
+      //Llamamos al servicio juego con los datos del GetMapping para eliminar efectivamente un juego
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
+    public String eliminarJuego(@PathVariable String id, ModelMap modelo, RedirectAttributes redirectAttributes)throws MiException {
+       
         modelo.put("usuario", juegoServicio.getOne(id));
-
-        return "juegos_list.html";
-    }
-    //Llamamos al servicio juego con los datos del GetMapping para eliminar efectivamente un juego
-    @PostMapping("/eliminar/{id}")
-    public String eliminarJuego(@PathVariable String id, ModelMap modelo) {
-       // Metodo try and catch para asegurarnos de captar errores 
+        // Metodo try and catch para asegurarnos de captar errores 
         try {
             juegoServicio.eliminarJuego(id);
-
+            
             modelo.put("Exito", "Se elimino el juego exitosamente");
-
+            redirectAttributes.addFlashAttribute("success", "Juego eliminado exitosamente");
             return "redirect:../listar";
         } catch (MiException ex) {
-            modelo.put("Error", ex.getMessage());
+            redirectAttributes.addFlashAttribute("success", "El juego no puede ser eliminado");
+            
             return "redirect:../listar";
         }
 

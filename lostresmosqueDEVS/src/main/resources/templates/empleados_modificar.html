@@ -29,11 +29,12 @@
             <input type="password" name="password2" placeholder="Confirmar Contraseña" class="form--input">
             <div class="form-group">
                     <select name="idJuego">  
-                        <option>Seleccionar Juego</option>
+                        <option th:value="${empleados.juego.id}">Seleccionar Juego</option>
                         <option th:each="juego : ${juegos}"
                                 th:value="${juego.id}" 
                                 th:text="${juego.nombreDelJuego}"
                                 />
+                        
                     </select>
                 </div>
             <label class="form--input" style="border: 0px solid transparent; text-align: justify;
