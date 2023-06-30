@@ -3,30 +3,46 @@
 
 <head>
     <title>Agregar personas al grupo</title>
-    <style>
-        html {
-            cursor: url(../static/img/spaceship.png), auto;
-        }
-    </style>
     <script>
         function agregarCampo() {
             var contenedor = document.getElementById("contenedor");
 
-            var input = document.createElement("input");
-            input.type = "text";
-            input.name = "nombre";
+            var div = document.createElement("div");
 
-            var pregunta = document.createElement("p");
-            pregunta.innerHTML = "¿Deseas agregar otra persona?";
+            var nombreLabel = document.createElement("label");
+            nombreLabel.innerHTML = "Nombre:";
+            var nombreInput = document.createElement("input");
+            nombreInput.type = "text";
+            nombreInput.name = "nombre";
 
-            var checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.name = "agregarOtro";
-            checkbox.value = "si";
+            var apellidoLabel = document.createElement("label");
+            apellidoLabel.innerHTML = "Apellido:";
+            var apellidoInput = document.createElement("input");
+            apellidoInput.type = "text";
+            apellidoInput.name = "apellido";
 
-            contenedor.appendChild(input);
-            contenedor.appendChild(pregunta);
-            contenedor.appendChild(checkbox);
+            var dniLabel = document.createElement("label");
+            dniLabel.innerHTML = "DNI:";
+            var dniInput = document.createElement("input");
+            dniInput.type = "text";
+            dniInput.name = "dni";
+
+            var fechaLabel = document.createElement("label");
+            fechaLabel.innerHTML = "Fecha de nacimiento:";
+            var fechaInput = document.createElement("input");
+            fechaInput.type = "text";
+            fechaInput.name = "fecha";
+
+            div.appendChild(nombreLabel);
+            div.appendChild(nombreInput);
+            div.appendChild(apellidoLabel);
+            div.appendChild(apellidoInput);
+            div.appendChild(dniLabel);
+            div.appendChild(dniInput);
+            div.appendChild(fechaLabel);
+            div.appendChild(fechaInput);
+
+            contenedor.appendChild(div);
         }
     </script>
 </head>
@@ -35,9 +51,20 @@
     <h1>Agregar personas al grupo</h1>
     <form>
         <div id="contenedor">
-            <input type="text" name="nombre">
-            <p>¿Deseas agregar otra persona?</p>
-            <input type="checkbox" name="agregarOtro" value="si">
+            <div>
+                <label>Nombre:</label>
+                <input type="text" name="nombre">
+                <br>
+                <label>Apellido:</label>
+                <input type="text" name="apellido">
+                <br>
+                <label>DNI:</label>
+                <input type="text" name="dni">
+                <br>
+                <label>Fecha de nacimiento:</label>
+                <input type="text" name="fecha">
+                <br>
+            </div>
         </div>
         <input type="button" value="Agregar campo" onclick="agregarCampo()">
         <input type="submit" value="Enviar">

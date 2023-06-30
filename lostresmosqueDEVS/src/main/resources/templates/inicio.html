@@ -9,18 +9,37 @@
 
     <link rel="stylesheet" href="../CSS/carrusel.css">
     <link rel="stylesheet" href="../CSS/style1.css">
+    <link rel="stylesheet" href="../CSS/cardempleados.css">
 
 </head>
 
 <body>
-   <nav th:replace="/fragments/navbar :: nav"></nav>
-   
-    <div class="contenedorCentro">
-        <div class="card">
-            <div class="image" th:if="${session.usuariosession != null}"><img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" width="160%"></div>
-            <span class="title" <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></p></span>
-            <span class="price"> <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p></span>
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div class="contenedorEmpleado">
+
+        <article class="profile">
+            <div class="profile-image">
+                <img th:if="${session.usuariosession != null}"><img
+                    th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" />
             </div>
+            <h2 class="profile-username" th:if="${session.usuariosession != null}"
+                th:text="${session.usuariosession.nombreUsuario}"></h2>
+            <small class="profile-user-handle" th:if="${session.usuariosession != null}"
+                th:text="${session.usuariosession.roles}"></small>
+
+            <div class="profile-links">
+                <a href="#" class="link link--icon">
+                    <i class="ph-twitter-logo"></i>
+                </a>
+                <a href="#" class="link link--icon">
+                    <i class="ph-facebook-logo"></i>
+                </a>
+                <a href="#" class="link link--icon">
+                    <i class="ph-instagram-logo"></i>
+                </a>
+            </div>
+        </article>
     </div>
 
 
@@ -57,4 +76,3 @@
     <script src="../JS/carrusel.js"></script>
 
 </html>
-

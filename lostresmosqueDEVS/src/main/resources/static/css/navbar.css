@@ -1,0 +1,205 @@
+nav {
+    top: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #f461c1;
+}
+
+a{
+    white-space: nowrap;
+}
+
+#logo {
+    float: left;
+    display: block;
+
+    padding: 0 30px;
+
+    font-size: 20px;
+    line-height: 60px;
+}
+
+
+nav::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+nav ul {
+    position: relative;
+
+    float: right;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+    z-index: 100000;
+}
+
+
+nav ul li {
+    display: inline-block;
+    margin: 0;
+    background-color: #f461c1;
+}
+
+
+nav a {
+    display: block;
+    padding: 18px 20px;
+    font-size: 17px;
+    color: #fff;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #4579e2;
+}
+
+
+nav ul ul {
+    position: absolute;
+    top: 70px;
+    display: none;
+}
+
+nav ul li:hover > ul {
+    display: inherit;
+}
+
+nav ul ul li {
+    position: relative;
+    float: none;
+    display: list-item;
+    width: 170px;
+}
+
+nav ul ul ul li {
+    position: relative;
+    top: -60px;
+    left: 170px;
+}
+
+li > a::after {
+    content: " +";
+}
+
+li > a:only-child::after {
+    content: "";
+}
+
+/* ----------------Media Queries----------------------------- */
+
+@media all and (width <= 768px) {
+    #logo {
+        float: none;
+        display: block;
+
+        width: 100%;
+        padding: 0;
+
+        text-align: center;
+    }
+
+    nav {
+        margin: 0;
+    }
+
+    .toggle + a,
+    .menu {
+        display: none;
+    }
+
+    a:visited {
+        color: white; 
+    }
+
+    .toggle {
+        display: block;
+
+        padding: 14px 20px;
+
+        font-size: 17px;
+        color: #fff;
+        text-decoration: none;
+
+        background-color: #f461c1;
+        border: none;
+    }
+
+    .toggle:hover {
+        background-color: #4579e2;
+    }
+
+    [id^="drop"]:checked + ul {
+        display: block;
+    }
+
+    nav ul li {
+        display: block;
+        width: 100%;
+    }
+
+    nav ul ul .toggle,
+    nav ul ul a {
+        padding: 0;
+    }
+
+    nav ul ul ul a {
+        padding: 0 80px;
+    }
+
+    nav a:hover,
+    nav ul ul ul a {
+        color: white;
+        text-decoration: none;
+        background-color: #f461c1;
+    }
+
+    nav ul li ul li .toggle,
+    nav ul ul a,
+    nav ul ul ul a {
+        padding: 14px 20px;
+        font-size: 17px;
+        color: #fff;
+    }
+
+    nav ul li ul li .toggle,
+    nav ul ul a {
+        background-color: #212121;
+    }
+
+    nav ul ul {
+        position: static;
+        float: none;
+        color: #fff;
+    }
+
+    nav ul ul li:hover > ul,
+    nav ul li:hover > ul {
+        display: none;
+    }
+
+    nav ul ul li {
+        display: block;
+        width: 100%;
+    }
+
+    nav ul ul ul li {
+        position: static;
+    }
+}
+
+@media all and (width <= 330px) {
+    nav ul li {
+        display: block;
+        width: 94%;
+    }
+}
+
+a {
+    color: white; /* Cambia el color aquí */
+}
