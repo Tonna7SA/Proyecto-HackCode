@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -146,27 +147,26 @@ public class VentasControlador {
         }
         
     }
-    // LLamamos al servicio ventas para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id, ModelMap modelo) {
-        modelo.put("ventas", ventaServicio.getOne(id));
-
-        return "ventas_eliminar.html";
-    }
+ 
     //Llamamos al servicio ventas con los datos del GetMapping para eliminar efectivamente una venta
-    @PostMapping("/eliminar/{id}")
-    public String eliminarVenta(@PathVariable String id, ModelMap modelo) {
+    @GetMapping("/eliminar/{id}")
+    public String eliminarVenta(@PathVariable String id, ModelMap modelo, RedirectAttributes redirectAttributes)throws MiException {
+         modelo.put("ventas", ventaServicio.getOne(id));
         // Metodo try and catch para asegurarnos de captar errores 
+        
         try {
             ventaServicio.eliminarVenta(id);
             modelo.put("Exito", "Se elimino la venta exitosamente");
-
+            redirectAttributes.addFlashAttribute("success", "Venta eliminada exitosamente");
             return "redirect:../listar";
         } catch (MiException ex) {
-            modelo.put("Error", ex.getMessage());
+            redirectAttributes.addFlashAttribute("success", "La venta no puede ser eliminada");
             return "redirect:../listar";
         }
 
     }
+
+    }
+
     
-}
+

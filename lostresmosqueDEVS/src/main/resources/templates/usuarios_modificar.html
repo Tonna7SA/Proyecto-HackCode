@@ -21,9 +21,9 @@
         <form class="form" th:action="@{/perfil/__${usuarios.legajoDni}__}" method="POST"  enctype="multipart/form-data">
             <span class="signup">Modificacion Usuario</span>
              <input hidden th:value="${usuarios.legajoDni}" name="legajoDni">
-            <input type="text" name="nombreUsuario"  placeholder="Ingrese nombre y apellido del empleado" class="form--input">
+            <input type="text" name="nombreUsuario"  th:value="${usuarios.nombreUsuario}"  placeholder="Ingrese nombre y apellido del empleado" class="form--input">
             
-            <input type="email" name="email"   placeholder="Ingrese el email" class="form--input">
+            <input type="email" name="email" th:value="${usuarios.email}"   placeholder="Ingrese el email" class="form--input">
             <input type="password" name="password"  placeholder="Contraseña" class="form--input">
             <input type="password" name="password2"  placeholder="Confirmar Contraseña" class="form--input">
             <div class="subirimagen">

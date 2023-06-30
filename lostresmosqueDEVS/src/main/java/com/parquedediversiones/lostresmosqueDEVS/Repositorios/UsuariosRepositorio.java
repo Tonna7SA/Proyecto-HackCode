@@ -22,7 +22,7 @@ public interface UsuariosRepositorio extends JpaRepository<Usuarios, Long> {
     @Query(value = "Select * from Usuarios where email = :email ", nativeQuery = true)
     public Usuarios buscarPorEmail(@Param("email") String email);
     
-    @Query(value = "select * from usuarios where roles like\"ADM\" or roles like\"SUP\"", nativeQuery = true)
+    @Query(value = "select * from usuarios where roles like\"ADM\"", nativeQuery = true)
     public List<Usuarios> buscarPorRol();
 
 }
