@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org%22%3E/">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org%22%3E/">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro comprador</title>
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link rel="stylesheet" href="../CSS/registro.css">
+    <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/registro.css">
+    <link rel="stylesheet" href="/css/navbar.css">
 
 </head>
 
 <body>
     <nav th:replace="/fragments/navbar :: nav"></nav>
-=======
+
 
     <div class="contenedorregistro">
 
         <form class="form" th:action="@{/compradores/registro/}" method="POST">
             <span class="signup">Registro Compradores</span>
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre y Apellido*</label>
-            <input type="text" name="nombreApellido" required placeholder="Ingrese Nombre y Apellido" class="form--input">
-      
-                <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
+            <input type="text" name="nombreApellido" required placeholder="Ingrese Nombre y Apellido"
+                class="form--input">
+
+            <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
             <input type="text" name="dni" required placeholder="Ingrese DNI" class="form--input">
-                
+
             <label class="palabrainput" style="font-size: 12px;" for="name">Correo Electrónico*</label>
             <input type="email" name="email" required placeholder="Ingrese correo electronico" class="form--input">
-            
-             <label class="palabrainput"  for="name">Fecha de Nacimiento*</label>
-             <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()" class="form--input">
+
+            <label class="palabrainput" for="name">Fecha de Nacimiento*</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()"
+                class="form--input">
             <label for="edad"></label>
             <span><input type="text" id="edad" name="edad" readonly class="form--input1"> Años</span>
-            
+
 
             <button type="submit" class="form--submit">
                 Registrar
@@ -49,11 +52,11 @@
             viewBox="0 24 150 28 " preserveAspectRatio="none">
             <defs>
                 <path id="gentle-wave" d="M-160 44c30 0 
-    58-18 88-18s
-    58 18 88 18 
-    58-18 88-18 
-    58 18 88 18
-    v44h-352z" />
+58-18 88-18s
+58 18 88 18 
+58-18 88-18 
+58 18 88 18
+v44h-352z" />
             </defs>
             <g class="parallax1">
                 <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
@@ -72,67 +75,22 @@
 
     </div>
 
-    <script src="../JS/carrusel.js"></script>
-<script>
-    function calcularEdad() {
-        var fechaNacimiento = new Date(document.getElementById("fecha_nacimiento").value);
-        var hoy = new Date();
-        var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-        var mes = hoy.getMonth() - fechaNacimiento.getMonth();
-        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-            edad--;
+    <script src="/JS/carrusel.js"></script>
+    <script>
+        function calcularEdad() {
+            var fechaNacimiento = new Date(document.getElementById("fecha_nacimiento").value);
+            var hoy = new Date();
+            var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+            var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+                edad--;
+            }
+            document.getElementById("edad").value = edad;
         }
-        document.getElementById("edad").value = edad;
-    }
+    </script>
+    <script>
+        calculate(); // Llamar a la función calculate al cargar la página
     </script>
 </body>
 
 </html>
-    <!-- <div class="contenedor">
-        <div class="container">
-            <article>
-                
-                <p id="description"></p>
-                <form id="survey-form">
-                    <div class="form-group">
-                        <h1 id="title">Registro de compradores</h1>
-                        <br>
-                        
-                        <strong> <label for="name" id="name-label">
-                                Nombre*
-                            </label></strong>
-                        <input type="text" name="name" required placeholder="Ingrese nombre" id="name">
-                        <strong> <label for="name" id="name-label">
-                                Apellido*
-                            </label></strong>
-                        <input type="text" name="name" required placeholder="Ingrese apellido" id="name">
-                        <strong> <label for="name" id="name-label">
-                                DNI*
-                            </label></strong>
-                        <input type="text" name="name" required placeholder="Ingrese documento" id="name">
-                        <strong>
-                            <label for="email" id="email-label">
-                                Correo Electrónica*
-                            </label>
-                        </strong>
-                        <input type="email" name="email" required placeholder="Ingrese correo" id="email" required>
-                        <strong>
-                            <label id="number-label" for="numbre">Fecha de nacimiento* <span
-                                    class="clue"></span></label>
-                        </strong>
-                        <input type="date" name="age" id="number" min="10" max="99" placeholder="Age" />
-
-                        <strong> <label for="name" id="name-label">
-                                Fecha de alta*
-                            </label></strong>
-                        <input type="date" name="name" required placeholder="Ingrese nombre" id="name">
-
-                        
-                        <button type="submit" id="submit">
-                            Submit
-                        </button>
-                </form>
-            </article>
-        </div>
-
-    </div> -->

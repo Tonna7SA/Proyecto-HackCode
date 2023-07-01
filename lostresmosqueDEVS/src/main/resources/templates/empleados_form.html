@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
@@ -8,39 +7,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Empleados</title>
+    <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/registro.css">
+    <link rel="stylesheet" href="/css/navbar.css">
 
 </head>
 
 <body>
-   
-    <nav th:replace="/fragments/navbar :: nav"  > </nav>
+
+    <nav th:replace="/fragments/navbar :: nav"> </nav>
 
     <div class="contenedorregistro">
 
-        <form class="form"  th:action="@{/empleados/registro}" method="POST" enctype="multipart/form-data">
+        <form class="form" th:action="@{/empleados/registro}" method="POST" enctype="multipart/form-data">
             <span class="signup">Alta de empleado</span>
-            <input type="text" name="nombreUsuario" placeholder="Ingrese nombre y apellido del empleado" class="form--input">
+            <label class="palabrainput" style="font-size: 12px;" for="name">Nombre y Apellido</label>
+            <input type="text" name="nombreUsuario" placeholder="Ingrese nombre y apellido del empleado"
+                class="form--input">
+
+            <label class="palabrainput" style="font-size: 12px;" for="name">Ingrese Legajo/DNI</label>
             <input type="text" name="legajoDni" placeholder="Ingrese Legajo/DNI del empleado" class="form--input">
+
+            <label class="palabrainput" style="font-size: 12px;" for="name">Correo electrónico</label>
             <input type="email" name="email" placeholder="Ingrese el email" class="form--input">
+
+            <label class="palabrainput" style="font-size: 12px;" for="name">Ingrese contraseña</label>
             <input type="password" name="password" placeholder="Contraseña" class="form--input">
+
+            <label class="palabrainput" style="font-size: 12px;" for="name">Repita contraseña</label>
             <input type="password" name="password2" placeholder="Confirmar Contraseña" class="form--input">
-             <div class="form-group">
-                    <select name="idJuego">  
-                        <option>Seleccionar Juego</option>
-                        <option th:each="juego : ${juegos}"
-                                th:value="${juego.id}" 
-                                th:text="${juego.nombreDelJuego}"
-                                />
-                    </select>
-                </div>
-            <label class="form--input" style="border: 0px solid transparent; text-align: justify;
-            margin: -10px 0px 0px -10px; gap:0; font-size: 14px;">Fecha de nacimiento</label>
-            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()" class="form--input">
+
+            <label class="palabrainput" style="font-size: 12px;" for="name">Selecciones juego a asignar</label>
+            <div>
+                <select class="form--input" style="width: 385px; height: 40px;" name="idJuego">
+                    <option>Seleccionar Juego</option>
+                    <option th:each="juego : ${juegos}" th:value="${juego.id}" th:text="${juego.nombreDelJuego}">
+                    </option>
+                </select>
+            </div>
+            <label class="palabrainput" style="font-size: 12px;" for="name">Fecha de nacimiento</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()"
+                class="form--input">
             <label for="edad"></label>
             <span><input type="text" id="edad" name="edad" readonly class="form--input1"> Años</span>
-            
+
             <div class="subirimagen">
                 <span class="subirimagen-title">Cargá de imagen</span>
                 <p class="subirimagen-paragraph">
@@ -58,16 +69,6 @@
             <button id="btnModal" class="form--submit">
                 Registrar
             </button>
-
-
-
-            <div id="modal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Información</h2>
-                    <p>Este es el contenido del modal.</p>
-                </div>
-            </div>
 
         </form>
 
@@ -102,24 +103,24 @@
 
     </div>
     <script>
-    var edad = document.getElementById("years");
-    
-</script>
+        var edad = document.getElementById("years");
 
-    <script src="../JS/carrusel.js"></script>
-    <script src="../JS/formularioFoto.js"></script>
-    <script src="../JS/modal.js"></script>
+    </script>
+
+    <script src="/JS/carrusel.js"></script>
+    <script src="/JS/formularioFoto.js"></script>
+    <script src="/JS/modal.js"></script>
     <script>
-    function calcularEdad() {
-        var fechaNacimiento = new Date(document.getElementById("fecha_nacimiento").value);
-        var hoy = new Date();
-        var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-        var mes = hoy.getMonth() - fechaNacimiento.getMonth();
-        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-            edad--;
+        function calcularEdad() {
+            var fechaNacimiento = new Date(document.getElementById("fecha_nacimiento").value);
+            var hoy = new Date();
+            var edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+            var mes = hoy.getMonth() - fechaNacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+                edad--;
+            }
+            document.getElementById("edad").value = edad;
         }
-        document.getElementById("edad").value = edad;
-    }
     </script>
     <script>
         calculate(); // Llamar a la función calculate al cargar la página

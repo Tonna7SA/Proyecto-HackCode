@@ -97,10 +97,8 @@ li > a:only-child::after {
     #logo {
         float: none;
         display: block;
-
         width: 100%;
         padding: 0;
-
         text-align: center;
     }
 
@@ -119,13 +117,10 @@ li > a:only-child::after {
 
     .toggle {
         display: block;
-
         padding: 14px 20px;
-
         font-size: 17px;
         color: #fff;
         text-decoration: none;
-
         background-color: #f461c1;
         border: none;
     }

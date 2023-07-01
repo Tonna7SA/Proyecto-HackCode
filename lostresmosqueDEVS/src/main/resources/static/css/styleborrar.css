@@ -1,5 +1,5 @@
 
-.card{
+ .card{
     justify-content: center;
     background-color: bisque;
     opacity: 80%;
@@ -14,4 +14,4 @@
 .table{
     width: 110%;
     justify-content: center;
-}
+} 

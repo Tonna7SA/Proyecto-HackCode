@@ -1,8 +1,162 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Entradas Form</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+</head>
+
+
+
+<body>
+
+  <div id="compradorForm">
+    <h3>Comprador</h3>
+    <label for="compradorFecha">Fecha:</label>
+    <input type="date" id="compradorFecha" required>
+    
+    <label for="compradorHorario">Horario:</label>
+    <input type="time" id="compradorHorario" required>
+    
+    <label for="compradorNombre">Nombre:</label>
+    <input type="text" id="compradorNombre" required>
+    
+    <label for="compradorApellido">Apellido:</label>
+    <input type="text" id="compradorApellido" required>
+    
+    <label for="compradorEdad">Edad:</label>
+    <input type="number" id="compradorEdad" min="0" required>
+    
+    <label for="compradorDni">DNI:</label>
+    <input type="text" id="compradorDni" required>
+  </div>
+
+  <div id="opcionesEntradas"></div>
+
+  <button id="btnAgregarPersona">Agregar Persona</button>
+  <button id="btnCalcular" disabled>Calcular Total</button>
+  <button id="btnGenerarQR" disabled>Generar QR y PDF</button>
+
+  <p id="totalCosto"></p>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var compradorForm = document.getElementById('compradorForm');
+      var opcionesEntradasDiv = document.getElementById('opcionesEntradas');
+      var btnAgregarPersona = document.getElementById('btnAgregarPersona');
+      var btnCalcular = document.getElementById('btnCalcular');
+      var totalCostoParaMostrar = document.getElementById('totalCosto');
+      var btnGenerarQR = document.getElementById('btnGenerarQR');
+      
+      var personas = [];
+      
+      btnAgregarPersona.addEventListener('click', function () {
+        var personaIndex = personas.length + 1;
+        
+        var personaDiv = document.createElement('div');
+        personaDiv.id = 'persona' + personaIndex;
+        personaDiv.innerHTML = `
+          <h3>Persona ${personaIndex}</h3>
+          <label for="fecha${personaIndex}">Fecha:</label>
+          <input type="date" id="fecha${personaIndex}" required>
+          
+          <label for="horario${personaIndex}">Horario:</label>
+          <input type="time" id="horario${personaIndex}" required>
+          
+          <label for="nombre${personaIndex}">Nombre:</label>
+          <input type="text" id="nombre${personaIndex}" required>
+          
+          <label for="apellido${personaIndex}">Apellido:</label>
+          <input type="text" id="apellido${personaIndex}" required>
+          
+          <label for="edad${personaIndex}">Edad:</label>
+          <input type="number" id="edad${personaIndex}" min="0" required>
+          
+          <label for="dni${personaIndex}">DNI:</label>
+          <input type="text" id="dni${personaIndex}" required>
+          
+          <br><br>
+        `;
+        
+        opcionesEntradasDiv.appendChild(personaDiv);
+        personas.push(personaIndex);
+        
+        if (personas.length > 0) {
+          btnCalcular.disabled = false;
+        }
+      });
+      
+      btnCalcular.addEventListener('click', function () {
+        var totalCosto = personas.length + 1;
+        totalCostoParaMostrar.textContent = `Total de costo: $${totalCosto}`;
+        btnGenerarQR.disabled = false;
+      });
+      
+      btnGenerarQR.addEventListener('click', function () {
+        var qrData = {
+          comprador: {
+            fecha: document.getElementById('compradorFecha').value,
+            horario: document.getElementById('compradorHorario').value,
+            nombre: document.getElementById('compradorNombre').value,
+            apellido: document.getElementById('compradorApellido').value,
+            edad: document.getElementById('compradorEdad').value,
+            dni: document.getElementById('compradorDni').value
+          },
+          personas: []
+        };
+        
+        personas.forEach(function (personaIndex) {
+          var persona = {
+            fecha: document.getElementById('fecha' + personaIndex).value,
+            horario: document.getElementById('horario' + personaIndex).value,
+            nombre: document.getElementById('nombre' + personaIndex).value,
+            apellido: document.getElementById('apellido' + personaIndex).value,
+            edad: document.getElementById('edad' + personaIndex).value,
+            dni: document.getElementById('dni' + personaIndex).value
+          };
+          
+          qrData.personas.push(persona);
+        });
+        
+        // Generar el QR
+        var qrCode = jsQR(JSON.stringify(qrData));
+        var qrImage = qrCode.dataURL;
+        
+        // Generar el PDF
+        var pdf = new jsPDF();
+        pdf.text('Datos de la Compra:', 10, 10);
+        pdf.text(JSON.stringify(qrData), 10, 20);
+        pdf.text('QR:', 10, 40);
+        pdf.addImage(qrImage, 'JPEG', 10, 50, 50, 50);
+        
+        // Descargar el PDF
+        pdf.save('entrada.pdf');
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
 
 <head>
     <title>Agregar personas al grupo</title>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Modificar Empleados</title>
+        <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/css/style.css">
+
+    </head>
     <script>
         function agregarCampo() {
             var contenedor = document.getElementById("contenedor");
@@ -48,27 +202,35 @@
 </head>
 
 <body>
-    <h1>Agregar personas al grupo</h1>
-    <form>
-        <div id="contenedor">
-            <div>
-                <label>Nombre:</label>
-                <input type="text" name="nombre">
-                <br>
-                <label>Apellido:</label>
-                <input type="text" name="apellido">
-                <br>
-                <label>DNI:</label>
-                <input type="text" name="dni">
-                <br>
-                <label>Fecha de nacimiento:</label>
-                <input type="text" name="fecha">
-                <br>
+
+    <div class="contenedorregistro">
+        <form>
+            <div id="contenedor">
+                <div>
+                    <label>Nombre:</label>
+                    <input type="text" name="nombre">
+                    <br>
+                    <label>Apellido:</label>
+                    <input type="text" name="apellido">
+                    <br>
+                    <label>DNI:</label>
+                    <input type="text" name="dni">
+                    <br>
+                    <label>Fecha de nacimiento:</label>
+                    <input type="text" name="fechaTicket">
+                    <br>
+
+                    <h1>Agregar personas para la venta</h1>
+                </div>
+
             </div>
-        </div>
-        <input type="button" value="Agregar campo" onclick="agregarCampo()">
-        <input type="submit" value="Enviar">
-    </form>
+
+            
+
+            <input type="button" value="Agregar campo" onclick="agregarCampo()">
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
 </body>
 
-</html>
+</html> -->

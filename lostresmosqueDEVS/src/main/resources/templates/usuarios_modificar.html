@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificacion Empleados</title>
-    <link rel="stylesheet" href="../CSS/style.css">
-    <link rel="stylesheet" href="../CSS/registro.css">
+    <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/registro.css">
+    <link rel="stylesheet" href="/css/navbar.css">
 
 </head>
 
@@ -18,14 +20,16 @@
 
     <div class="contenedorregistro">
 
-        <form class="form" th:action="@{/perfil/__${usuarios.legajoDni}__}" method="POST"  enctype="multipart/form-data">
+        <form class="form" th:action="@{/perfil/__${usuarios.legajoDni}__}" method="POST" enctype="multipart/form-data">
             <span class="signup">Modificacion Usuario</span>
-             <input hidden th:value="${usuarios.legajoDni}" name="legajoDni">
-            <input type="text" name="nombreUsuario"  th:value="${usuarios.nombreUsuario}"  placeholder="Ingrese nombre y apellido del empleado" class="form--input">
-            
-            <input type="email" name="email" th:value="${usuarios.email}"   placeholder="Ingrese el email" class="form--input">
-            <input type="password" name="password"  placeholder="Contraseña" class="form--input">
-            <input type="password" name="password2"  placeholder="Confirmar Contraseña" class="form--input">
+            <input hidden th:value="${usuarios.legajoDni}" name="legajoDni">
+            <input type="text" name="nombreUsuario" th:value="${usuarios.nombreUsuario}"
+                placeholder="Ingrese nombre y apellido del empleado" class="form--input">
+
+            <input type="email" name="email" th:value="${usuarios.email}" placeholder="Ingrese el email"
+                class="form--input">
+            <input type="password" name="password" placeholder="Contraseña" class="form--input">
+            <input type="password" name="password2" placeholder="Confirmar Contraseña" class="form--input">
             <div class="subirimagen">
                 <span class="subirimagen-title">Cargá de imagen</span>
                 <p class="subirimagen-paragraph">
@@ -37,11 +41,11 @@
                             src="https://img.freepik.com/vector-premium/avatar-hombre-imagen-perfil-web-masculina-generica_53562-18550.jpg?w=2000"
                             alt="Vista previa de la imagen">
                     </div>
-                    <input type="file" name="archivo "   accept="image/*" required="" id="file-input">
+                    <input type="file" name="archivo " accept="image/*" required="" id="file-input">
                 </label>
             </div>
             <button id="btnModal" class="form--submit">
-                Registrar
+                Modificar
             </button>
 
 
@@ -87,10 +91,10 @@
 
     </div>
 
-    <script src="../JS/carrusel.js"></script>
-    <script src="../JS/formularioFoto.js"></script>
-    <script src="../JS/calcularFecha.js"></script>
-    <script src="../JS/modal.js"></script>
+    <script src="/JS/carrusel.js"></script>
+    <script src="/JS/formularioFoto.js"></script>
+    <script src="/JS/calcularFecha.js"></script>
+    <script src="/JS/modal.js"></script>
     <script>
         calculate(); // Llamar a la función calculate al cargar la página
     </script>

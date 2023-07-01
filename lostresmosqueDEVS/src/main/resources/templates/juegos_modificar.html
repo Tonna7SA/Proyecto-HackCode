@@ -5,102 +5,110 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro comprador</title>
-     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/registro.css">
+    <title>Juego Modificar</title>
+    <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/registro.css">
+    <link rel="stylesheet" href="/css/navbar.css">
 
 
 </head>
 
 <body>
-   <nav th:replace="/fragments/navbar :: nav"></nav>
+<nav th:replace="/fragments/navbar :: nav"></nav>
 
-   <div class="contenedorregistro">
+<div class="contenedorregistro">
 
-        <form class="form" th:action="@{/juegos/modificar/__${juegos.id}__}" method="POST">
-            <span class="signup">Modificacion de atracción</span>
-            <input hidden th:value="${juegos.id}" name="id">
-            <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
-            <input type="text"  name="nombreDelJuego"  th:value="${juegos.nombreDelJuego}" required placeholder="Nombre del juego" class="form--input">
-            <label class="palabrainput" style="font-size: 12px;" for="name">Capacidad máxima</label>
-            <input type="number" name="capacidadMaxima" th:value="${juegos.capacidadMaxima}" required placeholder="Capacidad máxima" class="form--input">
-
-
-            <label class="palabrainput" style="font-size: 12px;" for="name">Tipo de juego</label>
-            <input type="text" name="tipoDeJuego" th:value="${juegos.tipoDeJuego}"required placeholder="Tipo de juego" class="form--input">
+    <form class="form" th:action="@{/juegos/modificar/__${juegos.id}__}" method="POST">
+        <span class="signup">Modificacion de atracción</span>
+        <input hidden th:value="${juegos.id}" name="id">
+        <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
+        <input type="text" name="nombreDelJuego" th:value="${juegos.nombreDelJuego}" required
+            placeholder="Nombre del juego" class="form--input">
+        <label class="palabrainput" style="font-size: 12px;" for="name">Capacidad máxima</label>
+        <input type="number" name="capacidadMaxima" th:value="${juegos.capacidadMaxima}" required
+            placeholder="Capacidad máxima" class="form--input">
 
 
-            <label class="palabrainput" style="font-size: 12px;" for="tipo-juego">Tipo de atracción</label>
-            <select name="tipo-juego" id="tipo-juego" class="form--input" required >
-                <option >Seleccione un tipo de juego</option>
-                <option value="tranquilos">Juegos de adrenalina</option>
-                <option value="ruidosos">Juegos Familiares</option>
-                <option value="para-niños">Juegos Infantiles</option>
-                <option value="para-niños">Shows</option>
-            </select>
+        <label class="palabrainput" style="font-size: 12px;" for="name">Tipo de juego</label>
+        <input type="text" name="tipoDeJuego" th:value="${juegos.tipoDeJuego}" required placeholder="Tipo de juego"
+            class="form--input">
 
 
+        <label class="palabrainput" style="font-size: 12px;" for="tipo-juego">Tipo de atracción</label>
+        <select name="tipo-juego" id="tipo-juego" class="form--input" style="width: 385px; height: 40px;" required>
+            <option>Seleccione un tipo de juego</option>
+            <option value="tranquilos">Juegos de adrenalina</option>
+            <option value="ruidosos">Juegos Familiares</option>
+            <option value="para-niños">Juegos Infantiles</option>
+            <option value="para-niños">Shows</option>
+        </select>
+
+    
+
+        <label class="palabrainput" style="font-size: 12px;" for="name">Cantidad de empleados</label>
+        <input type="number" name="cantEmpleados" th:value="${juegos.cantEmpleados}" required
+            placeholder="Cantidad de empleados" class="form--input">
+        <label class="palabrainput" style="font-size: 12px;" for="name">Precio del juego</label>
+        <input type="text" name="precioDelJuego" th:value="${juegos.precioDelJuego}" required
+            placeholder="Precio del juego" class="form--input">
 
 
-            <label class="palabrainput" style="font-size: 12px;" for="name">Cantidad de empleados</label>
-            <input type="number" name="cantEmpleados" th:value="${juegos.cantEmpleados}" required placeholder="Cantidad de empleados" class="form--input">
-            <label class="palabrainput" style="font-size: 12px;" for="name">Precio del juego</label>
-            <input type="text" name="precioDelJuego" th:value="${juegos.precioDelJuego}" required placeholder="Precio del juego" class="form--input">
+        <div class="subirimagen">
+            <span class="subirimagen-title">Cargá imagen del juego</span>
+            <p class="subirimagen-paragraph">
+                Solo formato .jpg
+            </p>
+            <label for="file-input" class="drop-container">
+                <div id="image-preview-container">
+                    <img style="width: 150px; border-radius: 20px;" id="image-preview"
+                        src="https://img.freepik.com/vector-premium/parque-diversiones-escena-muchos-paseos_1639-11075.jpg?w=2000"
+                        alt="Vista previa de la imagen">
+                </div>
+                <input type="file" accept="image/*" required="" id="file-input">
+            </label>
+        </div>
+
+        <button class="form--submit">
+            Registrar
+        </button>
+    </form>
+
+</div>
+
+<div class="contenedor">
+
+    <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28 " preserveAspectRatio="none">
+        <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 
+58-18 88-18s
+58 18 88 18 
+58-18 88-18 
+58 18 88 18
+v44h-352z" />
+        </defs>
+        <g class="parallax1">
+            <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
+        </g>
+        <g class="parallax2">
+            <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+        </g>
+        <g class="parallax3">
+            <use xlink:href="#gentle-wave" x="50" y="9" fill="#3461c1" />
+        </g>
+        <g class="parallax4">
+            <use xlink:href="#gentle-wave" x="50" y="6" fill="#fff" />
+        </g>
+    </svg>
 
 
-            <div class="subirimagen">
-                <span class="subirimagen-title">Cargá imagen del juego</span>
-                <p class="subirimagen-paragraph">
-                    Solo formato .jpg
-                </p>
-                <label for="file-input" class="drop-container">
-                    <div id="image-preview-container">
-                        <img style="width: 150px; border-radius: 20px;" id="image-preview" src=""
-                            alt="Vista previa de la imagen">
-                    </div>
-                    <input type="file" accept="image/*" required="" id="file-input">
-                </label>
-            </div>
+</div>
 
-            <button class="form--submit">
-                Registrar
-            </button>
-        </form>
+<script src="/JS/carrusel.js"></script>
+<script src="/JS/tipodejuego.js"></script>
+<script src="/JS/formularioFoto.js"></script>
 
-    </div>
-
-    <div class="contenedor">
-
-        <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 28 " preserveAspectRatio="none">
-            <defs>
-                <path id="gentle-wave" d="M-160 44c30 0 
-    58-18 88-18s
-    58 18 88 18 
-    58-18 88-18 
-    58 18 88 18
-    v44h-352z" />
-            </defs>
-            <g class="parallax1">
-                <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
-            </g>
-            <g class="parallax2">
-                <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
-            </g>
-            <g class="parallax3">
-                <use xlink:href="#gentle-wave" x="50" y="9" fill="#3461c1" />
-            </g>
-            <g class="parallax4">
-                <use xlink:href="#gentle-wave" x="50" y="6" fill="#fff" />
-            </g>
-        </svg>
-
-
-    </div>
-
-    <script src="../JS/carrusel.js"></script>
-    <script src="../JS/tipodejuego.js"></script>
-    <script src="../JS/formularioFoto.js"></script>
 
 
 
