@@ -99,6 +99,7 @@ public class EmpleadosControlador {
         System.out.println("sale del listar");
         return "empleados_list.html";
     }
+    
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{legajoDni}")
     public String modificar(@PathVariable Long legajoDni, ModelMap modelo, MultipartFile archivo) {

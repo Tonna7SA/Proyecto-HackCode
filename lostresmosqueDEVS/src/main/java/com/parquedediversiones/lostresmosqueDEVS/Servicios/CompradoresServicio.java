@@ -24,6 +24,8 @@ public class CompradoresServicio {
     //Creamos un metodo para crear un comprador pasandole los parametros necesarios para eso 
     public void crearComprador(String nombreApellido, Long dni, Integer edad, String email) throws MiException {
         //LLamamos al metodo validar para evitar errores
+        if(compradorRepositorio.buscarPorDni(dni)==null){
+        
         validarComprador(nombreApellido, dni, email);
 
         Compradores comprador = new Compradores();
@@ -36,7 +38,11 @@ public class CompradoresServicio {
         comprador.setEmail(email);
         //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
         compradorRepositorio.save(comprador);
-
+        }else{
+            System.out.println("Ya se encuentra ese dni");
+            throw new MiException("El dni ingresado ya se encuentra registrado");
+            
+        }
     }
     //Creamos un metodo para modificar un comprador pasandole los parametros necesarios para eso 
     public void modificarComprador(String id, String nombreApellido, Long dni, Boolean activo, String email) throws MiException {

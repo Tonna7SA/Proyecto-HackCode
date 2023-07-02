@@ -19,9 +19,8 @@
     <div class="wrapper">
         <div class="TextHolder">
             <div class="Texts">
-                <div class="FourOhFour">404</div>
+                <div class="FourOhFour" th:text="'Error ' + ${codigo}"></div>
                 <div class="Maybe">GUH.. Maybe.. We have <span>PROBLEMS HERE</span></div>
-                <div class="Bad" th:text="'Error ' + ${codigo}"></div>
                 <p class="tituloLibros" th:text="${mensaje}"></p>
                 <div class="Return">RETURN HOME</div>
             </div>

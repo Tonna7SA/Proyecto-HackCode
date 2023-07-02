@@ -69,18 +69,24 @@
         </div>
     </div>
 
-    <div class="content">
-        <div class="group">
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                <g>
-                    <path
-                        d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
-                    </path>
-                </g>
-            </svg>
-            <input class="buscaPalabra" placeholder="Search" type="search" class="input">
-        </div>
+    <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+
+    <div class="my-3">
+        <form th:action="@{/Juegos}">
+            <div class="d-flex justify-content-center">
+                <div class="col-md-6 mt-2">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-search"></i>
+                        <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form-control ms-3"
+                               placeholder="Ingrese dni">
+                        <button type="submit" class="btn btn-secondary ms-3">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
+
+</div>
 
     <div class="contenedorCentro">
 
@@ -89,6 +95,7 @@
                 <tr>
                     <th class="header">Id</th>
                     <th class="header">Nombre del Juego</th>
+                    <th class="header">Imagen</th>
                     <th class="header">Capacidad Max.</th>
                     <th class="header">Tipo</th>
                     <th class="header">Cant. Empleados</th>
@@ -102,6 +109,11 @@
                 <tr>
                     <th scope="row" th:text="${juegos.id}"></th>
                     <td th:text="${juegos.nombreDelJuego}"></td>
+                    <td>
+                    <div class=" col-md-7 ">
+              <img th:src="@{/imagen/juegos/__${juegos.id}__}" class="float-left ml-1" style="max-width:100px">
+            </div>
+                    </td>
                     <td th:text="${juegos.capacidadMaxima}"></td>
                     <td th:text="${juegos.tipoDeJuego}"></td>
                     <td th:text="${juegos.cantEmpleados}"></td>

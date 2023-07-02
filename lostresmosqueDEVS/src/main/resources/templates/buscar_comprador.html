@@ -69,72 +69,56 @@
         </div>
     </div>
 
-<div class="container-fluid" style="max-width: 1500px; margin: 0 auto;">
+    <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form-control ms-3"
+                               placeholder="Ingrese palabra clave">
+                        <button type="submit" class="btn btn-secondary ms-3">Buscar</button>
 
-    <div class="my-3">
-        <form th:action="@{/compradores/listar}">
-            <div class="d-flex justify-content-center">
-                <div class="col-md-6 mt-2">
-                    <div class="d-flex align-items-center">
-                        <i class="fa fa-search"></i>
-                        <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form--input" style="width: 150px; height: 40px;
-                               background-color: #343945; color: white; border-radius: 10px; text-align: center"
-                               placeholder="Ingrese dni">
-                            <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
-                                    border-radius: 10px"><b>Buscar</b></button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-</div>
     <div class="contenedorCentro">
 
         <table class="zigzag">
             <thead>
                 <tr>
-<!--                    <th class="header">Id</th>-->
+                    <th class="header">Id</th>
                     <th class="header">Nombre y Apellido</th>
                     <th class="header">Dni</th>
                     <th class="header">Edad</th>
                     <th class="header">Fecha de Alta</th>
                     <th class="header">Estado</th>
                     <th class="header">Email</th>
-                    <th class="header" sec:authorize="hasAnyRole('ADM')">Modificar</th>
-                    <th class="header" sec:authorize="hasAnyRole('ADM')">Cambiar Estado</th>
-                    <th class="header" sec:authorize="hasAnyRole('ADM')">Eliminar</th>
-                    <th class="header" >Vender entrada</th>
+                    <th class="header">Modificar</th>
+                    <th class="header">Cambiar Estado</th>
+                    <th class="header">Eliminar</th>
+                    <th class="header">Vender entrada</th>
                 </tr>
             </thead>
             <tbody th:each="compradores : ${compradores}">
                 <tr>
-<!--                    <th scope="row" th:text="${compradores.id}"></th>-->
+                    <th scope="row" th:text="${compradores.id}"></th>
                     <td th:text="${compradores.nombreApellido}"></td>
                     <td th:text="${compradores.dni}"></td>
                     <td th:text="${compradores.edad}"></td>
                     <td th:text="${compradores.fechaDeAlta}"></td>
                     <td th:text="${compradores.activo  ? 'Activo' : 'Inactivo'}"></td>
                     <td th:text="${compradores.email}"></td>
-                    <td sec:authorize="hasAnyRole('ADM')">
-                        <button class="btnModificar" >
+                    <td>
+                        <button class="btnModificar">
                             <a th:href="@{/compradores/modificar/__${compradores.id}__}">Modificar</a>
                         </button>
 
                     </td>
-                    <td sec:authorize="hasAnyRole('ADM')">
-                        <button class="btnCambiar" >
+                    <td>
+                        <button class="btnCambiar">
                             <a th:href="@{/compradores/modificarEstado/__${compradores.id}__}">Cambiar </a>
                         </button>
                     </td>
-                    <td sec:authorize="hasAnyRole('ADM')">
-                        <button class="btnEliminar" >
+                    <td>
+                        <button class="btnEliminar">
                             <a th:href="@{/compradores/eliminar/__${compradores.id}__}">Eliminar
                             </a>
                         </button>
                     </td>
                     <td>
-                        <button class="btnVender" th:if="${compradores.activo == true}">
+                        <button class="btnVender">
                             <a>Venta</a>
                         </button>
                     </td>

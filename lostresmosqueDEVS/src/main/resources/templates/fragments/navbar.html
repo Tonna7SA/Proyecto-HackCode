@@ -7,11 +7,10 @@
 
             <li>
                 <label for="drop-1" class="toggle">Compradores +</label>
-                <a th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ADM', 'SUP')">Compradores</a>
+                <a th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ADM', 'SUP', 'EMP')">Compradores</a>
                 <input type="checkbox" id="drop-1" />
                 <ul>
-                    <li><a th:href="@{/compradores/registrar}">Registrar</a></li>
-                    <li><a th:href="@{/compradores/modificar}">Modificar</a></li>
+                    <li><a th:href="@{/compradores/registrar}" sec:authorize="hasAnyRole('ADM')">Registrar</a></li>
                     <li><a th:href="@{/compradores/listar}">Listar</a></li>
                 </ul>
             </li>

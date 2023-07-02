@@ -2,10 +2,13 @@ package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Compradores;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.CompradoresRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.CompradoresServicio;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,9 @@ public class CompradoresControlador {
     // Vista para registrarte como comprador 
     @Autowired
     private CompradoresServicio compradorServicio;
+
+    @Autowired
+    private CompradoresRepositorio compradorRepositorio;
 
     @GetMapping("/registrar")
     public String registrar() {
@@ -55,13 +61,32 @@ public class CompradoresControlador {
         return "index.html";
 
     }
-
+    
+//  @GetMapping("/listar")
+//    public String listar(ModelMap modelo) {
+//        
+//        List<Compradores> compradores = compradorServicio.listarCompradores();
+//        modelo.put("compradores", compradores);
+//        System.out.println("sale del listar");
+//        return "comprador_list.html";
+//    }
     //Llamamos al servicio comprador para listar los compradores.
+     
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        List<Compradores> compradores = compradorServicio.listarCompradores();
-        modelo.put("compradores", compradores);
-
+    public String listar(ModelMap modelo, @Param("keyword")Long keyword) {
+        try{
+        List<Compradores> compradores = new ArrayList<>();
+        if(keyword==null){
+            compradorRepositorio.findAll().forEach(compradores::add);
+        }else{
+            compradorRepositorio.DniDevuelveId(keyword).forEach(compradores::add);
+            modelo.addAttribute("keyword", keyword);
+        }
+        modelo.addAttribute("compradores",compradores );
+        }catch(Exception e){
+        System.out.println("sale del listar");
+        modelo.addAttribute("error", e.getMessage());
+        }
         return "comprador_list.html";
     }
 
@@ -102,7 +127,7 @@ public class CompradoresControlador {
         }
 
     }
-
+    
     // LLamamos al servicio comprador para hacer uso de su metodo buscar uno y pasamos los datos al PostMapping
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, ModelMap modelo, RedirectAttributes redirectAttributes) throws MiException {
