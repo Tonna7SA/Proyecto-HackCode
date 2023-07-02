@@ -20,9 +20,14 @@
         <div class="TextHolder">
             <div class="Texts">
                 <div class="FourOhFour" th:text="'Error ' + ${codigo}"></div>
+<<<<<<< HEAD
                 <div class="Maybe">GUH.. Maybe.. We have <span>PROBLEMS HERE</span></div>
+=======
+                <div class="Maybe">Ups.. Quizás.. tenemos <span>UN PROBLEMA!!</span></div>
+                <!-- <div class="Bad" th:text="'Error ' + ${codigo}"></div> -->
+>>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
                 <p class="tituloLibros" th:text="${mensaje}"></p>
-                <div class="Return">RETURN HOME</div>
+                <div class="Return"><a th:href="@{/}">Volver al inicio</a></div>
             </div>
         </div>
         <div class="Body">

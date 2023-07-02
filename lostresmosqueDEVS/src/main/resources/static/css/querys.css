@@ -28,52 +28,6 @@ body {
   border-radius: 3rem;
   background: #4579e2;
 }
-/*<<<<<<< HEAD
-
-.btn {
-	border: 0;
-	background-color: transparent;
-	padding: 0;
-	height: 46px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-	line-height: 1;
-	transition: 0.15s ease;
-
-	&--primary {
-		border-radius: 99em;
-		background-color: #3772ff;
-		background-image: linear-gradient(135deg, #5587ff, #3772ff);
-		color: #fff;
-		padding: 0 1.375em;
-		&:hover,
-		&:focus {
-			background-size: 150%;
-		}
-	}
-
-	&--icon {
-		height: 46px;
-		width: 46px;
-		border-radius: 50%;
-		border: 3px solid #343945;
-		color: #7d8396;
-		i {
-			font-size: 1.25em;
-		}
-
-		&:hover,
-		&:focus {
-			border-color: #7d8396;
-		}
-	}
-
-
-.profile-links {
-	margin-top: 3.5rem;
-=======
 .container::-webkit-scrollbar {
   width: 0;
 }
@@ -86,8 +40,7 @@ body {
   position: absolute;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.35);
->>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
-}*/
+}
 .container::after {
   content: "";
   bottom: 0rem;
@@ -110,6 +63,7 @@ body {
   margin-bottom: 3rem;
   box-shadow: 0 7px 2rem #f461c1;
   background: #cf79b1;
+  border-radius: 40px;
 }
 .container ol {
   margin: 0;
@@ -122,7 +76,7 @@ body {
   counter-reset: my-counter;
 }
 .container ol li {
-  width: 40rem;
+  min-width: 20rem;
   text-align: center;
   color: #fff;
   border-radius: 3rem;

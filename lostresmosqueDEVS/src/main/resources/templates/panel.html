@@ -19,15 +19,24 @@
 
     <div class="contenedorEmpleado">
 
-        
+        <div class="carrona">
+            <div class="carrona-image" th:if="${session.usuariosession != null}"><img
+                    th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" style="width: 490px;"></div>
+            <div class="category"> </div>
+            <div class="heading" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></div>
+            <div class="author" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></div>
+        </div>
+
     </div>
+
+
 
     <!-- <div class="card">
             <div class="image" th:if="${session.usuariosession != null}"><img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" width="160%"></div>
             <span class="title" <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></p></span>
             <span class="price"> <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p></span>
             </div> -->
-    </div>
+
 
 
 

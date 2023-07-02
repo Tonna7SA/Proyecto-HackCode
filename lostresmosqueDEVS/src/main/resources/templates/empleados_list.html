@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Empleados</title>
-    <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./img/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/CSS/style.css">
     <link rel="stylesheet" href="/CSS/tablas.css">
     <link rel="stylesheet" href="/css/navbar.css">
@@ -19,7 +19,7 @@
     <nav th:replace="/fragments/navbar :: nav"> </nav>
 
     <div class="content">
-        <div class="cardExito">
+        <div class="cardExito" th:if="${success != null}" th:text="${success}">
             <div class="headerExito">
                 <div class="imageCheck">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@
                     </svg>
                 </div>
                 <div class="actions">
-                    <button type="button" class="history" th:if="${success != null}" th:text="${success}">Éxito al
+                    <button type="button" class="history">Éxito al
                         eliminar</button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="content">
-        <div class="cardEliminar">
+        <div class="cardEliminar" th:if="${error != null}" th:text="${error}">
             <div class="headerEliminar">
                 <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                         fill="none">
@@ -50,7 +50,7 @@
                     </svg></div>
 
                 <div class="actions">
-                    <button class="desactivate" type="button" th:if="${error != null}" th:text="${error}">Error al
+                    <button class="desactivate" type="button">Error al
                         eliminar</button>
                 </div>
             </div>
@@ -68,8 +68,13 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 <!--
     <div class="content">
+=======
+
+    <!-- <div class="content">
+>>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
                 <g>
@@ -80,7 +85,11 @@
             </svg>
             <input placeholder="Search" type="search" class="input">
         </div>
+<<<<<<< HEAD
     </div>-->
+=======
+    </div> -->
+>>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
 
     <div class="contenedorCentro">
 
@@ -89,7 +98,11 @@
                 <tr>
                     <th class="header">Legajo</th>
                     <th class="header">Nombre y Apellido</th>
+<<<<<<< HEAD
                     <th class="header">Imagen</th>
+=======
+                    <th class="header">Foto Empleado</th>
+>>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
                     <th class="header">Email</th>
                     <th class="header">Rol</th>
                     <th class="header">Edad</th>
@@ -107,11 +120,15 @@
                 <tr>
                     <th scope="row" th:text="${empleados.legajoDni}"></th>
                     <td th:text="${empleados.nombreUsuario}"></td>
+<<<<<<< HEAD
                     <td>
                     <div class=" col-md-7 ">
               <img th:src="@{/imagen/empleados/__${empleados.legajoDni}__}" class="float-left ml-1" style="max-width:100%;max-height:100%;min-width:99%;">
             </div>
                     </td>
+=======
+                    <td><img th:src="@{/imagen/__${empleados.legajoDni}__}" style="width: 100px;"></td>
+>>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
                     <td th:text="${empleados.email}"></td>
                     <td th:text="${empleados.roles}"></td>
                     <td th:text="${empleados.edad}"></td>
@@ -136,14 +153,29 @@
                         </button>
                     </td>
                     <td>
-                        <button class="btnEliminar">
+                        <!-- <button class="btnEliminar">
                             <a th:href="@{/empleados/eliminar/__${empleados.legajoDni}__}">Eliminar
                             </a>
+                        </button> -->
+                        <button class="btnEliminar" data-toggle="modal" data-target="#confirmModal">
+                            Eliminar
                         </button>
                     </td>
-
-
                 </tr>
+
+                <div id="confirmModal" class="modal">
+                    <div class="modal-content">
+                        <h2>Confirmar Eliminación</h2>
+                        <p>¿Estás seguro de que deseas eliminar?</p>
+                        <div class="modal-buttons">
+                            <button id="cancelButton">Cancelar</button>
+                            <button id="confirmButton"> 
+                                <a th:href="@{/empleados/eliminar/__${empleados.legajoDni}__}">Eliminar
+                                </a>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
 
             </tbody>
 
@@ -156,11 +188,11 @@
             viewBox="0 24 150 28 " preserveAspectRatio="none">
             <defs>
                 <path id="gentle-wave" d="M-160 44c30 0 
-                                                      58-18 88-18s
-                                                      58 18 88 18 
-                                                      58-18 88-18 
-                                                      58 18 88 18
-                                                      v44h-352z" />
+                                                    58-18 88-18s
+                                                    58 18 88 18 
+                                                    58-18 88-18 
+                                                    58 18 88 18
+                                                    v44h-352z" />
             </defs>
             <g class="parallax1">
                 <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
@@ -183,6 +215,7 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
     <script src="/JS/carrusel.js"></script>
+    <script src="/js/modal.js"></script>
 </body>
 
 </html>

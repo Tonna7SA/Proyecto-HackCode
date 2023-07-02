@@ -19,7 +19,7 @@
     
     <nav th:replace="/fragments/navbar :: nav"  > </nav>
     <div class="content">
-        <div class="cardExito">
+        <div class="cardExito" th:if="${success != null}" th:text="${success}">
             <div class="headerExito">
                 <div class="imageCheck">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -32,15 +32,17 @@
                     </svg>
                 </div>
                 <div class="actions">
-                    <button type="button" class="history" th:if="${success != null}" th:text="${success}">Éxito al
+                    <button type="button" class="history" >Éxito al
                         eliminar</button>
                 </div>
             </div>
         </div>
     </div>
 
+
+
     <div class="content">
-        <div class="cardEliminar">
+        <div class="cardEliminar" th:if="${error != null}" th:text="${error}">
             <div class="headerEliminar">
                 <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                         fill="none">
@@ -50,7 +52,7 @@
                     </svg></div>
 
                 <div class="actions">
-                    <button class="desactivate" type="button" th:if="${error != null}" th:text="${error}">Error al
+                    <button class="desactivate" type="button">Error al
                         eliminar</button>
                 </div>
             </div>
@@ -70,7 +72,7 @@
         </div>
     </div>
 
-    <div class="content">
+    <!-- <div class="content">
         <div class="group">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
                 <g>
@@ -81,7 +83,7 @@
             </svg>
 <!--            <input class="buscaPalabra" placeholder="Search" type="search" class="input">-->
         </div>
-    </div>
+    </div> -->
 
     <div class="contenedorCentro">
 
@@ -92,6 +94,7 @@
                     <th class="header">Nombre y Apellido</th>
                     <th class="header">Imagen</th>
                     <th class="header">Email</th>
+                    <th class="header">Foto Empleado</th>
                     <th class="header">Rol</th>
                     <th class="header">Modificar</th>
                 </tr>
@@ -99,6 +102,7 @@
             <tbody th:each="usuarios : ${usuarios}">
                 <tr>
                     <th scope="row" th:text="${usuarios.legajoDni}"></th>
+<<<<<<< HEAD
                     <td th:text="${usuarios.nombreUsuario}"></td>
                     <td>
                     <div class=" col-md-7 ">
@@ -106,6 +110,10 @@
             </div>
                     </td>
                     <td th:text="${usuarios.email}"></td>
+=======
+                    <td th:text="${usuarios.nombreUsuario}"></td><td th:text="${usuarios.email}"></td>
+                    <td ><img th:src="@{/imagen/__${usuarios.legajoDni}__}" style="width: 100px;"></td>
+>>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
                     <td th:text="${usuarios.roles}"></td>
                     <td>
                         <button class="btnModificar">
