@@ -615,12 +615,13 @@ span:after {
   width: 110px;
   position: relative;
   margin: 0 auto;
+  width: 150px;
 }
 
 .Return:after {
   content: "";
   position: absolute;
-  width: 100px;
+  width: 550px;
   height: 80%;
   left: 3.5px;
   top: 2px;

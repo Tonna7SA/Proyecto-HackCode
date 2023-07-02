@@ -63,6 +63,7 @@ body {
   margin-bottom: 3rem;
   box-shadow: 0 7px 2rem #f461c1;
   background: #cf79b1;
+  border-radius: 40px;
 }
 .container ol {
   margin: 0;
@@ -75,7 +76,7 @@ body {
   counter-reset: my-counter;
 }
 .container ol li {
-  width: 40rem;
+  min-width: 20rem;
   text-align: center;
   color: #fff;
   border-radius: 3rem;
