@@ -588,6 +588,7 @@ span {
   width: 70px;
   color: #fff;
   position: relative;
+  width: 200px;
 }
 
 span:after {

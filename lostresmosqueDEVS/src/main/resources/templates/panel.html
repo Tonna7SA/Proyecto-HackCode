@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/CSS/style.css">
     <link rel="stylesheet" href="/CSS/cardempleados.css">
-    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/CSS/navbar.css">
 
 </head>
 
@@ -20,12 +20,25 @@
     <div class="contenedorEmpleado">
 
         <div class="carrona">
+            <div class="carrona-img"th:if="${session.usuariosession != null}"><img
+                th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" style="width: 280px; height: 350px; border-radius: 35px;"></div>
+            <div class="carrona-info">
+            <p class="text-title" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></p>
+            <p class="text-body" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p>
+            </div>
+            <div class="carrona-footer">
+            
+            
+            </div>
+          </div></div>
+
+        <!-- <div class="carrona">
             <div class="carrona-image" th:if="${session.usuariosession != null}"><img
                     th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" style="width: 490px;"></div>
             <div class="category"> </div>
             <div class="heading" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></div>
             <div class="author" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></div>
-        </div>
+        </div> -->
 
     </div>
 

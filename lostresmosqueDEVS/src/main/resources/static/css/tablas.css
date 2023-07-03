@@ -60,6 +60,15 @@ z-index: 0;
 text-transform: uppercase;
 font-weight: 600;
 letter-spacing: 2px;
+text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
 }
 
 .btnModificar::before {
@@ -74,10 +83,12 @@ background: orange;
 transition: all 0.7s ease-in-out;
 z-index: -1;
 transform: translateX(-300px) skew(-20deg);
+text-decoration: none;
 }
 
 .btnModificar:hover::before {
 transform: translateX(0px) skew(-20deg);
+text-decoration: none;
 }
 
 .btnCambiar {

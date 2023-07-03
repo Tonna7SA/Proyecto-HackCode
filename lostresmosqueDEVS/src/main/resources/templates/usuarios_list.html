@@ -94,7 +94,6 @@
                     <th class="header">Nombre y Apellido</th>
                     <th class="header">Imagen</th>
                     <th class="header">Email</th>
-                    <th class="header">Foto Empleado</th>
                     <th class="header">Rol</th>
                     <th class="header">Modificar</th>
                 </tr>
@@ -102,18 +101,13 @@
             <tbody th:each="usuarios : ${usuarios}">
                 <tr>
                     <th scope="row" th:text="${usuarios.legajoDni}"></th>
-<<<<<<< HEAD
                     <td th:text="${usuarios.nombreUsuario}"></td>
                     <td>
                     <div class=" col-md-7 ">
-              <img th:src="@{/imagen/__${usuarios.legajoDni}__}" class="float-left ml-1" style="width:100px">
+            <img th:src="@{/imagen/__${usuarios.legajoDni}__}" class="float-left ml-1" style="width:100px">
             </div>
                     </td>
                     <td th:text="${usuarios.email}"></td>
-=======
-                    <td th:text="${usuarios.nombreUsuario}"></td><td th:text="${usuarios.email}"></td>
-                    <td ><img th:src="@{/imagen/__${usuarios.legajoDni}__}" style="width: 100px;"></td>
->>>>>>> f726680d7fff87ce4399691f8c88282352de4ccb
                     <td th:text="${usuarios.roles}"></td>
                     <td>
                         <button class="btnModificar">
