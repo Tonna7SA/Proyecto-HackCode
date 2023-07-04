@@ -1,4 +1,17 @@
 
+@font-face {
+  font-family: 'richu';
+  src: url('../fonts/Richu\ Mast\ Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'hug';
+  src: url('../fonts/Hug\ Me\ Tight\ -\ OTF.otf') format('truetype');
+}
+
+
+  
+
 .contenedorEmpleado {
 	display: flex;
 	justify-content: center;
@@ -6,23 +19,63 @@
     margin-bottom: 100px;
   }
 
-.container {
-  width: 60vw;
-  padding: 3rem;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  position: relative;
-  border-radius: 3rem;
-  background: #4579e2;
-}
+  .concuchara {
+    width: 400px;
+    background: linear-gradient(to bottom, #f461c1, #ffffff);
+    border-radius: 35px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .image-container {
+    width: 100%;
+    max-height: 400px;
+    margin: 10px;
+    border-radius: 30px;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 30px;
+  }
+  
+  .employee-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    text-align: center;
+   
+  }
+  
+  .concuchara .hache {
+    color: #4579e2;
+    margin-bottom: 0px;
+    font-family: 'richu', Arial, sans-serif;
+    font-size: 40px;
+  }
+  
+  .concuchara .parrafo {
+    color: black;
+    font-size: 26px;
+    margin-bottom: 0px;
+    font-family: 'hug', Arial, sans-serif;
+  }
+  
+  .concuchara .parrafo:last-child {
+    color: #f461c1;
+  }
+  
 
 
 
 
-
-
-
-
+/* 
 .carrona {
   width: 490px;
   height: 654px;
@@ -57,7 +110,7 @@
   border-top: 1px solid #ddd;
  }
  
- /*Text*/
+ 
  .text-title {
   font-weight: 900;
   font-size: 1.2em;
@@ -69,7 +122,7 @@
   padding-bottom: 10px;
  }
  
- /*Button*/
+ 
  .carrona-button {
   border: 1px solid #252525;
   display: flex;
@@ -79,7 +132,7 @@
   transition: .3s ease-in-out;
  }
  
- /*Hover*/
+
  .carrona-img:hover {
  
   box-shadow: rgba(226, 196, 63, 0.25) 0px 13px 47px -5px, rgba(180, 71, 71, 0.3) 0px 8px 16px -8px;
@@ -89,4 +142,4 @@
   border: 1px solid #ffcaa6;
   background-color: #ffcaa6;
  }
- 
+  */
