@@ -5,6 +5,7 @@
  */
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
+import ch.qos.logback.classic.pattern.Util;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Compradores;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Entradas;
@@ -16,7 +17,7 @@ import com.parquedediversiones.lostresmosqueDEVS.Repositorios.CompradoresReposit
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EntradasRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.VentasRepositorio;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +57,7 @@ public class VentasServicio {
         venta.setNombreVendedor(nombreVendedor);
         venta.setLegajoVendedor(legajoVendedor);
         venta.setTotalVenta(totalVenta);
+        
         venta.setFechaVenta(new Date());
         
         ventaRepositorio.save(venta);

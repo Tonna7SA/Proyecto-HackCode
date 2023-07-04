@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +45,7 @@ public class Ventas {
      private String nombreVendedor;
      private Long legajoVendedor;
     private Integer totalVenta;
+    @Temporal(TemporalType.DATE)
     private Date fechaVenta;
    
     //Relaciones
