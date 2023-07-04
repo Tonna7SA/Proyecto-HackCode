@@ -44,6 +44,9 @@ public class Juegos {
     private Integer cantEmpleados;
     private Integer precioDelJuego;
     
+    private String horaApertura;
+    private String horaCierre;
+    
     @OneToOne
     private Imagen imagen;
 }

@@ -82,7 +82,7 @@ public class CompradoresControlador {
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {
 
-        modelo.put("compradores", compradorServicio.getOne(id));
+       modelo.put("compradores", compradorServicio.getOne(id));
 
         return "comprador_modificar.html";
     }

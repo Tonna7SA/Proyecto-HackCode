@@ -33,15 +33,21 @@ public class Ventas {
      @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private String idVenta;
+     private String nombreJuego;
+     private String tipoJuego;
+     private Integer precioJuego;
+     private String nombreComprador;
+     private String dniComprador;
+     private String emailComprador;
+     private String nombreVendedor;
+     private Long legajoVendedor;
     private Integer totalVenta;
     private Date fechaVenta;
-     //Relaciones
+   
+    //Relaciones
     @OneToOne
     private Empleados empleado;
-    
-    @OneToMany
-    private List<Entradas> entrada;
     
     @OneToOne
     private Compradores comprador;

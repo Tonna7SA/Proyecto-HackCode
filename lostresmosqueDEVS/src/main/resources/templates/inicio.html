@@ -18,7 +18,16 @@
 
     <div class="contenedorEmpleado">
 
-        
+
+        <div class="concuchara">
+            <div class="image-container" th:if="${session.usuariosession != null}">
+            <img th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" alt="Foto del empleado">
+        </div>
+            <h2 class="hache" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombreUsuario}"></h2>
+            <p class="parrafo" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.roles}"></p>
+            <p>Horario</p>
+            <p>Rol asignado dentro de la empresa</p>
+        </div>
     </div>
 
 

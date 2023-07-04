@@ -26,7 +26,8 @@ public class JuegosServicio {
     @Autowired
     private ImagenServicio imagenServicio;
     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
-    public void crearJuego(MultipartFile archivo, String nombreDelJuego, Integer capacidadMaxima, String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
+    public void crearJuego(MultipartFile archivo, String nombreDelJuego, Integer capacidadMaxima, 
+            String tipoDeJuego, Integer cantEmpleados, Integer precioDelJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
@@ -37,6 +38,8 @@ public class JuegosServicio {
         juego.setCapacidadMaxima(capacidadMaxima);
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
+        juego.setHoraApertura("12:00");
+        juego.setHoraCierre("19:00");
         juego.setPrecioDelJuego(precioDelJuego);
         Imagen imagen = imagenServicio.guardar(archivo);
         juego.setImagen(imagen);
