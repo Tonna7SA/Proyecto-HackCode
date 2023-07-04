@@ -19,7 +19,7 @@
 
 <div class="contenedorregistro">
 
-    <form class="form" th:action="@{/juegos/modificar/__${juegos.id}__}" method="POST">
+    <form class="form" th:action="@{/juegos/modificar/__${juegos.id}__}" method="POST" enctype="multipart/form-data">
         <span class="signup">Modificacion de atracción</span>
         <input hidden th:value="${juegos.id}" name="id">
         <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
@@ -28,32 +28,15 @@
         <label class="palabrainput" style="font-size: 12px;" for="name">Capacidad máxima</label>
         <input type="number" name="capacidadMaxima" th:value="${juegos.capacidadMaxima}" required
             placeholder="Capacidad máxima" class="form--input">
-
-
         <label class="palabrainput" style="font-size: 12px;" for="name">Tipo de juego</label>
         <input type="text" name="tipoDeJuego" th:value="${juegos.tipoDeJuego}" required placeholder="Tipo de juego"
             class="form--input">
-
-
-        <label class="palabrainput" style="font-size: 12px;" for="tipo-juego">Tipo de atracción</label>
-        <select name="tipo-juego" id="tipo-juego" class="form--input" style="width: 385px; height: 40px;" required>
-            <option>Seleccione un tipo de juego</option>
-            <option value="tranquilos">Juegos de adrenalina</option>
-            <option value="ruidosos">Juegos Familiares</option>
-            <option value="para-niños">Juegos Infantiles</option>
-            <option value="para-niños">Shows</option>
-        </select>
-
-    
-
         <label class="palabrainput" style="font-size: 12px;" for="name">Cantidad de empleados</label>
         <input type="number" name="cantEmpleados" th:value="${juegos.cantEmpleados}" required
             placeholder="Cantidad de empleados" class="form--input">
         <label class="palabrainput" style="font-size: 12px;" for="name">Precio del juego</label>
         <input type="text" name="precioDelJuego" th:value="${juegos.precioDelJuego}" required
             placeholder="Precio del juego" class="form--input">
-
-
         <div class="subirimagen">
             <span class="subirimagen-title">Cargá imagen del juego</span>
             <p class="subirimagen-paragraph">
@@ -62,10 +45,9 @@
             <label for="file-input" class="drop-container">
                 <div id="image-preview-container">
                     <img style="width: 150px; border-radius: 20px;" id="image-preview"
-                        src="https://img.freepik.com/vector-premium/parque-diversiones-escena-muchos-paseos_1639-11075.jpg?w=2000"
-                        alt="Vista previa de la imagen">
+                        th:src="@{/imagen/juegos/__${juegos.id}__}" alt="Vista previa de la imagen">
                 </div>
-                <input type="file" accept="image/*" required="" id="file-input">
+                <input type="file" accept="image/*" id="file-input" name="archivo">
             </label>
         </div>
 
@@ -108,7 +90,21 @@ v44h-352z" />
 <script src="/JS/carrusel.js"></script>
 <script src="/JS/tipodejuego.js"></script>
 <script src="/JS/formularioFoto.js"></script>
+<script>   
+document.getElementById("file-input").addEventListener("change", function() {
+    var reader = new FileReader();
+    reader.onload = function() {
+        document.getElementById("image-preview").src = reader.result;
+    }
+    reader.readAsDataURL(this.files[0]);
+});
 
+document.getElementById("file-input").addEventListener("blur", function() {
+    if (this.value == "") {
+        document.getElementById("image-preview").src = document.getElementById("image-preview").getAttribute("th:src");
+    }
+});
+</script>
 
 
 

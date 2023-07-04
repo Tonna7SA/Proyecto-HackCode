@@ -24,7 +24,7 @@
             <span class="signup">Modificación de comprador</span>
             <input hidden th:value="${compradores.id}" name="id">
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre y Apellido</label>
-            <input type="text" name="nombre" th:value="${compradores.nombreApellido}" required
+            <input type="text" name="nombreApellido" th:value="${compradores.nombreApellido}" required
                 placeholder="Ingrese nombre y apellido" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">DNI*</label>
             <input type="text" name="dni" th:value="${compradores.dni}" required placeholder="Ingrese documento"
@@ -39,7 +39,7 @@
             <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()"
                 class="form--input">
             <label for="edad"></label>
-            <span><input type="text" id="edad" name="edad" readonly class="form--input1"> Años</span>
+            <span><input type="text" id="edad" name="edad" readonly class="form--input1" th:value="${compradores.edad}"> Años</span>
             <button class="form--submit">
                 Modificar
             </button>

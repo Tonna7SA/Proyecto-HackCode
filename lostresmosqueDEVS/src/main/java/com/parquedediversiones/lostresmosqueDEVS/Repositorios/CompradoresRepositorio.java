@@ -19,8 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CompradoresRepositorio extends JpaRepository<Compradores, String>{
     
-    List<Compradores> findByDni(String keyword);
-    
+        
     @Query(value = "Select * from Compradores where dni = :dni ", nativeQuery = true)
     public Compradores buscarPorDni(@Param("dni") Long dni);
     

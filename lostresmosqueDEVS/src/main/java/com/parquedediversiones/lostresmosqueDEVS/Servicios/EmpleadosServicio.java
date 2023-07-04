@@ -34,7 +34,7 @@ public class EmpleadosServicio {
     private ImagenServicio imagenServicio;
     //Creamos un metodo para crear un empleado pasandole los parametros necesarios para eso 
 
-    public void crearEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email, String password, 
+    public void crearEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email, String password,
             String password2, Integer edad, String idJuego) throws MiException {
         //LLamamos al metodo validar para evitar errores
         validarEmpleado(legajoDni, nombreUsuario, email, password, password2, edad, idJuego);
@@ -60,42 +60,27 @@ public class EmpleadosServicio {
 
     //Creamos un metodo para modificar un empleado pasandole los parametros necesarios para eso 
     @Transactional
-    public void modificarEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email, 
-            String password, String password2, Integer edad, String idJuego) throws MiException {
+    public void modificarEmpleado(MultipartFile archivo, Long legajoDni, String nombreUsuario, String email,
+            String password, String password2, Integer edad) throws MiException {
         //LLamamos al metodo validar para evitar errores
         validarEmpleado1(nombreUsuario, email, password, password2, edad, email);
         //Usamos un optional para asegurarnos que el empleado este presente 
         Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
-        //Usamos un optional para asegurarnos que el juego este presente 
-        Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
-        Juegos juego = new Juegos();
-        if (respuestaJuego.isPresent()) {
-//            //Asignamos el juego encontrado al juego para luego guardarlo
-            juego = juegosRepositorio.findById(idJuego).get();
-        }
 
         if (respuestaEmpleado.isPresent()) {
 
             Empleados empleado = respuestaEmpleado.get();
 
-            empleado.setActivo(true);
-
             empleado.setEdad(edad);
             empleado.setEmail(email);
-            empleado.setFechaDeAlta(new Date());
-            empleado.setLegajoDni(legajoDni);
             empleado.setNombreUsuario(nombreUsuario);
             empleado.setPassword(new BCryptPasswordEncoder().encode(password));
-            empleado.setRoles(Rol.ADM);
             String idImagen = null;
-             if(empleado.getImagen() !=null){
-                   idImagen = empleado.getImagen().getId();
-             }
-             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-             empleado.setImagen(imagen);
-//            empleado.setTurnos(turnos);
-//            empleado.setJuego(juego);
-            //Usamos el repositorio empleado para guardar el empleado y registrarlo correctamente
+            if (empleado.getImagen() != null) {
+                idImagen = empleado.getImagen().getId();
+            }
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            empleado.setImagen(imagen);
             empleadoRepositorio.save(empleado);
 
         }
@@ -111,7 +96,7 @@ public class EmpleadosServicio {
 
         List<Empleados> empleados = new ArrayList();
 
-        empleados = empleadoRepositorio.findAll();
+        empleados = empleadoRepositorio.buscarPorRol();
 
         return empleados;
     }
@@ -129,7 +114,8 @@ public class EmpleadosServicio {
 
         }
     }
-        @Transactional
+
+    @Transactional
     public void cambiarRol(Long legajoDni) throws MiException {
         Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
 
@@ -140,16 +126,36 @@ public class EmpleadosServicio {
                 if (empleado.getRoles().equals(Rol.EMP)) {
 
                     empleado.setRoles(Rol.SUP);
-                    
 
                 } else if (empleado.getRoles().equals(Rol.SUP)) {
 
                     empleado.setRoles(Rol.EMP);
-                    
+
                 }
-            } 
-        }else{
-             throw new MiException("No se pudo cambiar el rol del empleado");
+            }
+        } else {
+            throw new MiException("No se pudo cambiar el rol del empleado");
+        }
+    }
+    
+    @Transactional
+    public void cambiarTurno(Long legajoDni) throws MiException {
+        Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
+
+        if (respuesta.isPresent()) {
+            Empleados empleado = respuesta.get();
+
+            if (empleado.getTurnos().equals(Turno.DIURNO)) {
+
+                    empleado.setTurnos(Turno.NOCTURNO);
+
+                } else {
+
+                    empleado.setTurnos(Turno.DIURNO);
+
+            }
+        } else {
+            throw new MiException("No se pudo cambiar el rol del empleado");
         }
     }
 
@@ -158,9 +164,9 @@ public class EmpleadosServicio {
         Optional<Empleados> respuesta = empleadoRepositorio.findById(legajoDni);
 
         if (respuesta.isPresent()) {
-             Empleados empleado = respuesta.get();
+            Empleados empleado = respuesta.get();
 
-            if (empleado.getRoles().equals(Rol.EMP)||empleado.getRoles().equals(Rol.SUP)) {
+            if (empleado.getRoles().equals(Rol.EMP) || empleado.getRoles().equals(Rol.SUP)) {
                 if (empleado.getActivo().equals(Boolean.TRUE)) {
                     empleado.setActivo(Boolean.FALSE);
                 } else if (empleado.getActivo().equals(Boolean.FALSE)) {
@@ -173,8 +179,31 @@ public class EmpleadosServicio {
         }
     }
 
+    @Transactional
+    public void cambiarJuego(Long legajoDni, String idJuego) throws Exception {
+        Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
+        //Usamos un optional para asegurarnos que el juego este presente 
+        Optional<Juegos> respuestaJuego = juegosRepositorio.findById(idJuego);
+        Juegos juego = new Juegos();
+        if (respuestaJuego.isPresent()) {
+//            //Asignamos el juego encontrado al juego para luego guardarlo
+            juego = juegosRepositorio.findById(idJuego).get();
+
+            if (respuestaEmpleado.isPresent()) {
+
+                Empleados empleado = respuestaEmpleado.get();
+                empleado.setJuego(juego);
+                empleadoRepositorio.save(empleado);
+            }
+
+        } else {
+            throw new MiException("No se pudo cambiar el juego del empleado");
+        }
+
+    }
+
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    public void validarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, String password2, 
+    public void validarEmpleado(Long legajoDni, String nombreUsuario, String email, String password, String password2,
             Integer edad, String idJuego) throws MiException {
 
         if (nombreUsuario.isEmpty() || nombreUsuario == null) {
@@ -196,15 +225,12 @@ public class EmpleadosServicio {
             throw new MiException("el legajo ingresadas deben ser iguales");
         }
 
-//        if (turnos == null) {
-//            throw new MiException("Debe tener un turno asignado");
-//        }
         if (idJuego.isEmpty() || idJuego == null) {
             throw new MiException("Debe tener un juego asignado");
         }
     }
-    
-    public void validarEmpleado1(String nombreUsuario, String email, String password, String password2, 
+
+    public void validarEmpleado1(String nombreUsuario, String email, String password, String password2,
             Integer edad, String idJuego) throws MiException {
 
         if (nombreUsuario.isEmpty() || nombreUsuario == null) {
@@ -222,11 +248,7 @@ public class EmpleadosServicio {
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
-        
 
-//        if (turnos == null) {
-//            throw new MiException("Debe tener un turno asignado");
-//        }
         if (idJuego.isEmpty() || idJuego == null) {
             throw new MiException("Debe tener un juego asignado");
         }

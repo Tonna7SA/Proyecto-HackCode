@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modificar Empleados</title>
+    <title>Cambiar Juego</title>
     <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/registro.css">
@@ -19,64 +19,22 @@
     <nav th:replace="/fragments/navbar :: nav"></nav>
     <div class="contenedorregistro">
 
-        <form class="form" th:action="@{/empleados/modificar/__${empleados.legajoDni}__}" method="POST"
-            enctype="Multipart/form-data">
-
-
-            <span class="signup">Modificar empleado</span>
-            <input hidden type="number" name="legajoDni" placeholder="Ingrese Legajo/DNI del empleado"
-                class="form--input">
-
-            <label class="palabrainput" style="font-size: 12px;" for="name">Nombre y Apellido</label>
-            <input type="text" th:value="${empleados.nombreUsuario}" name="Ingrese nombre y apellido del empleado"
-                class="form--input" placeholder="Nombre de usuario">
-
-            <label class="palabrainput" style="font-size: 12px;" for="name">Correo electrónico</label>
-            <input type="email" name="email" th:value="${empleados.email}" placeholder="Ingrese el email"
-                class="form--input">
-
-            <label class="palabrainput" style="font-size: 12px;" for="name">Ingrese contraseña</label>
-            <input type="password" name="password" th:value="${empleados.password}" class="form--input">
-
-            <label class="palabrainput" style="font-size: 12px;" for="name">Repita contraseña</label>
-            <input type="password" name="password2" placeholder="Confirmar Contraseña" class="form--input">
-
-
+        <form class="form" th:action="@{/empleados/modificarJuego/__${empleados.legajoDni}__}" method="POST">
+            <span class="signup">Modificar Juego</span>
+            <input hidden type="number" name="legajoDni" class="form--input">
+            <input type="text" name="nombreUsuario" th:value="${empleados.nombreUsuario}" class="form--input" readonly>
 
             <label class="palabrainput" style="font-size: 12px;" for="name">Selecciones juego a asignar</label>
             <div>
                 <select class="form--input" style="width: 385px; height: 40px;" name="idJuego">
                     <option th:value="${empleados.juego.id}">Seleccionar Juego</option>
-                    <option th:each="juego : ${juegos}" th:value="${juego.id}" th:text="${juego.nombreDelJuego}">
+                    <option th:each="juegos : ${juegos}" th:value="${juegos.id}" th:text="${juegos.nombreDelJuego}">
                     </option>
-
                 </select>
             </div>
-            <label class="form--input" style="border: 0px solid transparent; text-align: justify;
-            margin: -10px 0px 0px -10px; gap:0; font-size: 14px;">Fecha de nacimiento</label>
-            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onchange="calcularEdad()"
-                class="form--input">
-            <label for="edad"></label>
-            <span><input type="text" id="edad" name="edad" th:value="${empleados.edad}" readonly class="form--input1">
-                Años</span>
-
-            <div class="subirimagen">
-                <span class="subirimagen-title">Cargá de imagen</span>
-                <p class="subirimagen-paragraph">
-                    Solo formato .jpg
-                </p>
-                <label for="file-input" class="drop-container">
-                    <div id="image-preview-container">
-                        <img style="width: 150px; border-radius: 20px;" id="image-preview"
-                            src="https://img.freepik.com/vector-premium/avatar-hombre-imagen-perfil-web-masculina-generica_53562-18550.jpg?w=2000"
-                            alt="Vista previa de la imagen">
-                    </div>
-
-                    <input type="file" name="archivo" accept="image/*" required="" id="file-input">
-                </label>
-            </div>
+            
             <button id="btnModal" class="form--submit">
-                Registrar
+                Modificar
             </button>
 
 

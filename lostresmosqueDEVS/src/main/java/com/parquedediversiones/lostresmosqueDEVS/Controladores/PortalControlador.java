@@ -32,9 +32,10 @@ public class PortalControlador {
 
     @GetMapping("/")
     public String bienvenidos() {
-
+        
         return "bienvenidos.html";
     }
+    
     @GetMapping("/index")
     public String index() {
 
@@ -131,8 +132,7 @@ public class PortalControlador {
         return "usuarios_list.html";
     }
     //llevamos al usuario a la vista de modificacion en caso de ser admin o empleado
-    @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
-    @GetMapping("/perfil/{legajoDni}")
+    @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
 
         Usuarios usuarios = (Usuarios) session.getAttribute("usuariosession");
@@ -145,14 +145,13 @@ public class PortalControlador {
 
     //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
 
-    @PreAuthorize("hasAnyRole('ROLE_EMP', 'ROLE_ADM')")
-    @PostMapping("/perfil/{legajoDni}")
-    public String modificarUsuario (MultipartFile archivo, @PathVariable Long legajoDni, @RequestParam (required = false) String nombreUsuario,
-            @RequestParam String email, @RequestParam (required = false) String password, @RequestParam (required = false) String password2, ModelMap modelo, RedirectAttributes redirectAttributes) {
+    @PostMapping("/perfil")
+    public String modificarUsuario (@RequestParam Long legajoDni, @RequestParam (required = false) String nombreUsuario,
+            @RequestParam String email, ModelMap modelo, RedirectAttributes redirectAttributes) {
 
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            usuarioServicio.actualizar(legajoDni, nombreUsuario, email, password, password2, archivo);
+            usuarioServicio.actualizar(legajoDni, nombreUsuario, email);
 
             redirectAttributes.addFlashAttribute("exito", "El usuario fue actualizado correctamente!");
 
@@ -167,5 +166,60 @@ public class PortalControlador {
             return "usuarios_modificar.html";
         }
     }
+    
+    @GetMapping("/foto")
+    public String foto(ModelMap modelo, HttpSession session) {
+
+        Usuarios usuarios = (Usuarios) session.getAttribute("usuariosession");
+        modelo.put("usuarios", usuarios);
+
+        return "foto_modificar.html";
+    }
+    
+
+
+    //Llevamos al usuario con los datos y lo traido del GetMapping a realizar la modificacion del get en caso de ser admin o empleado y tener la autorizacion
+
+    @PostMapping("/foto")
+    public String modificarfoto (MultipartFile archivo, @RequestParam Long legajoDni, ModelMap modelo, RedirectAttributes redirectAttributes) {
+
+        // Metodo try and catch para asegurarnos de captar errores 
+        try {
+            usuarioServicio.actualizarfoto(legajoDni, archivo);
+
+            redirectAttributes.addFlashAttribute("exito", "El usuario fue actualizado correctamente!");
+
+            return "redirect:/";
+
+        } catch (MiException ex) {
+
+            modelo.put("error", ex.getMessage());
+
+            return "foto_modificar.html";
+        }
+    }
+
+    @GetMapping("/password")
+    public String pass(ModelMap modelo,HttpSession session) {
+
+        Usuarios usuarios = (Usuarios) session.getAttribute("usuariosession");
+        modelo.put("usuarios", usuarios);
+
+        return "pass_modificar.html";
+    }
+    
+    @PostMapping("/password/clave")
+    public String modificarpassword (@RequestParam String claveActual, @RequestParam Long legajoDni, @RequestParam String clave,
+            @RequestParam String clave2, ModelMap model) {
+        try {
+            usuarioServicio.cambiarClave(claveActual, legajoDni, clave, clave2);
+            model.put("exito", "La contraseña ha sido actualizada correctamente.");
+            return "pass_modificar.html";
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            return "pass_modificar.html";
+        }
+    }
 }
+    
 

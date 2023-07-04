@@ -1,13 +1,14 @@
 .contenedorCentro {
 display: grid;
 place-items: center;
-margin: 30px;
+margin: 3px;
 margin-top: 10000;
-margin-bottom: 100px;
+margin-bottom: 100px; 
 }
 
 table {
 font-family: sans-serif;
+ 
 }
 table th,
 table td {

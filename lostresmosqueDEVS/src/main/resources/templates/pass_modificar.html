@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modificacion Empleados</title>
+    <title>Cambiar Pass</title>
     <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/CSS/style.css">
     <link rel="stylesheet" href="/CSS/registro.css">
@@ -20,16 +20,17 @@
 
     <div class="contenedorregistro">
 
-        <form class="form" th:action="@{/perfil}" method="POST" enctype="multipart/form-data">
-            <span class="signup">Modificacion Usuario</span>
-            <input hidden th:value="${session.usuariosession.legajoDni}" name="legajoDni">
-                <input type="text" name="nombreUsuario" th:value="${session.usuariosession.nombreUsuario}"
-                placeholder="Ingrese nombre y apellido del empleado" class="form--input">
-            <input type="email" name="email" th:value="${session.usuariosession.email}" placeholder="Ingrese el email"
-                class="form--input">
+        <form class="form" th:action="@{/password/clave}" method="POST" enctype="multipart/form-data">
+            <span class="signup">Modificar Password</span>
+            <input hidden th:value= "${session.usuariosession.legajoDni}" name="legajoDni">
+            <input type="password" id="claveActual" name="claveActual" placeholder="Contraseña Actual" class="form--input"/>
+            <input type="password" name="clave" placeholder="Nueva Contraseña" class="form--input">
+            <input type="password" name="clave2" placeholder="Confirmar Nueva Contraseña" class="form--input">
             <button id="btnModal" class="form--submit">
-                Modificar
+                Modificar Contraseña
             </button>
+
+
 
             <div id="modal" class="modal">
                 <div class="modal-content">

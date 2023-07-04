@@ -2,14 +2,14 @@ package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Juegos;
-import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Rol;
-import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Turno;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EmpleadosServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.JuegosServicio;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +34,8 @@ public class EmpleadosControlador {
     private JuegosServicio juegoServicio;
     @Autowired
     private EmpleadosServicio empleadoServicio;
+    @Autowired
+    private EmpleadosRepositorio empleadoRepositorio;
 
     // Vista para registrarte como empleado 
     @GetMapping("/registrar")
@@ -77,6 +79,17 @@ public class EmpleadosControlador {
         }
         return "redirect:../listar";
     }
+     
+    @GetMapping("/modificarTurno/{legajoDni}")
+    public String cambiarTurno(@PathVariable Long legajoDni , RedirectAttributes redirectAttributes)throws Exception {
+        try {
+            empleadoServicio.cambiarTurno(legajoDni);
+            redirectAttributes.addFlashAttribute("success", "El usuario con DNI=" + legajoDni + " ha sido modificado correctamente!");
+        } catch (MiException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:../listar";
+    }
 
     @GetMapping("/modificarEstado/{legajoDni}")
     public String cambiarEstado(@PathVariable Long legajoDni, RedirectAttributes redirectAttributes) throws Exception {
@@ -88,57 +101,80 @@ public class EmpleadosControlador {
         }
         return "redirect:../listar";
     }
+     
+    @GetMapping("/modificarJuego/{legajoDni}")
+    public String modificarJuego(@PathVariable Long legajoDni , ModelMap modelo)throws Exception {
+        
+        List<Juegos> juegos = juegoServicio.listarJuegos();
+        modelo.addAttribute("juegos", juegos);
+        modelo.put("empleados", empleadoServicio.getOne(legajoDni));
+        return "Empleado_cambiarjuego.html";
+    }
+
+    @PostMapping("/modificarJuego/{legajoDni}")
+    public String modificarJuego(@PathVariable Long legajoDni, @RequestParam String idJuego, RedirectAttributes redirectAttributes, ModelMap modelo) throws MiException, Exception {
+        try {
+            List<Juegos> juegos = juegoServicio.listarJuegos();
+            modelo.addAttribute("juegos", juegos);
+                        
+            empleadoServicio.cambiarJuego(legajoDni, idJuego);
+            redirectAttributes.addFlashAttribute("success", "El usuario con DNI=" + legajoDni + " ha sido modificado correctamente!");
+        
+        } catch (MiException e) {
+            
+            List<Juegos> juegos = juegoServicio.listarJuegos();
+            modelo.addAttribute("juegos", juegos);
+            
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "Empleado_cambiarjuego.html";
+        }
+        return "redirect:../listar";
+    }
+    
+    
 
 //Llamamos al servicio empleado para listar los empleados.
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        
-        List<Empleados> empleados = empleadoServicio.listarEmpleados();
-        modelo.put("empleados", empleados);
-        System.out.println("sale del listar");
+    public String listar(ModelMap modelo, @Param("keyword")Long keyword) {
+        try{
+        List<Empleados> empleados = new ArrayList<>();
+        if(keyword==null){
+            empleadoRepositorio.findAll().forEach(empleados::add);
+        }else{
+            empleadoRepositorio.DniDevuelveId(keyword).forEach(empleados::add);
+            modelo.addAttribute("keyword", keyword);
+        }
+        modelo.addAttribute("empleados", empleados );
+        }catch(Exception e){
+        modelo.addAttribute("error", e.getMessage());
+        }
         return "empleados_list.html";
     }
     
 // Luego de pasar los datos por parametro llamamos al servicio empleado para pasar los datos al PostMapping y hacer uso del metodo modificar
     @GetMapping("/modificar/{legajoDni}")
     public String modificar(@PathVariable Long legajoDni, ModelMap modelo, MultipartFile archivo) {
-        //List<Juegos> juegos = juegoServicio.listarJuegos();
-         
-         List<Juegos> juegos = juegoServicio.listarJuegos();
-                
-        modelo.addAttribute("juegos", juegos);
         
-
         modelo.put("empleados", empleadoServicio.getOne(legajoDni));
-
-      
-        //modelo.addAttribute("juegos", juegos);
 
         return "empleados_modificar.html";
     }
 // Luego de pasar los datos por parametro llamamos al servicio empleado y lo utilizamos  para modificar un empleado
     @PostMapping("/modificar/{legajoDni}")
-    public String modificarEmpleado(@PathVariable Long legajoDni, @RequestParam(required = false) String nombreUsuario, @RequestParam String email, 
-            @RequestParam String password, @RequestParam Integer edad, 
-            @RequestParam String idJuego, ModelMap modelo, MultipartFile archivo) {
+    public String modificarEmpleado(@PathVariable Long legajoDni, @RequestParam String nombreUsuario, @RequestParam String email, 
+            @RequestParam String password, @RequestParam String password2, @RequestParam Integer edad, ModelMap modelo, MultipartFile archivo) throws MiException{
         // Metodo try and catch para asegurarnos de captar errores 
         System.out.println("entro en el post");
 
         try {
-            
-            List<Juegos> juegos = juegoServicio.listarJuegos();
-                
-            modelo.addAttribute("juegos", juegos);
 
-           empleadoServicio.modificarEmpleado(archivo, legajoDni, nombreUsuario, email, password, password, edad, email);
+           empleadoServicio.modificarEmpleado(archivo, legajoDni, nombreUsuario, email, password, password2, edad);
           
             return "redirect:../listar";
 
         } catch (MiException ex) {
-            List<Juegos> juegos = juegoServicio.listarJuegos();
 
-            modelo.addAttribute("juegos", juegos);
             modelo.put("error", ex.getMessage());
             
             return "empleados_modificar.html";

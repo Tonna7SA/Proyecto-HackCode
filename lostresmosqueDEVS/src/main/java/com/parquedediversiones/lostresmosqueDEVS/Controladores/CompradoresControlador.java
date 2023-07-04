@@ -5,7 +5,6 @@ import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.CompradoresRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.CompradoresServicio;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -62,16 +61,6 @@ public class CompradoresControlador {
 
     }
     
-//  @GetMapping("/listar")
-//    public String listar(ModelMap modelo) {
-//        
-//        List<Compradores> compradores = compradorServicio.listarCompradores();
-//        modelo.put("compradores", compradores);
-//        System.out.println("sale del listar");
-//        return "comprador_list.html";
-//    }
-    //Llamamos al servicio comprador para listar los compradores.
-     
     @GetMapping("/listar")
     public String listar(ModelMap modelo, @Param("keyword")Long keyword) {
         try{
@@ -84,7 +73,6 @@ public class CompradoresControlador {
         }
         modelo.addAttribute("compradores",compradores );
         }catch(Exception e){
-        System.out.println("sale del listar");
         modelo.addAttribute("error", e.getMessage());
         }
         return "comprador_list.html";
@@ -110,19 +98,18 @@ public class CompradoresControlador {
     }
     // Luego de pasar los datos por parametro llamamos al servicio comprador y lo utilizamos  para modificar un comprador
     @PostMapping("/modificar/{id}")
-    public String modificarComprador(@PathVariable String id, @RequestParam(required = false) String nombreApellido, @RequestParam Long dni,
-            Boolean activo, @RequestParam String email, ModelMap modelo) {
+    public String modificarComprador(@PathVariable String id, @RequestParam String nombreApellido, @RequestParam Long dni,
+           @RequestParam String email, @RequestParam Integer edad, ModelMap modelo) throws MiException{
         // Metodo try and catch para asegurarnos de captar errores 
         try {
 
-            compradorServicio.modificarComprador(id, nombreApellido, dni, activo, email);
-
+            compradorServicio.modificarComprador(id, nombreApellido, dni, email, edad);
             return "redirect:../listar";
 
         } catch (MiException ex) {
-
+            System.out.println("prueba");
             modelo.put("Error", ex.getMessage());
-
+            
             return "comprador_modificar.html";
         }
 
@@ -144,20 +131,5 @@ public class CompradoresControlador {
         }
 
     }
-    //Llamamos al servicio comprador con los datos del GetMapping para eliminar efectivamente un comprador 
-//    @PostMapping("/eliminar/{id}")
-//    public String eliminarComprador(@PathVariable String id, ModelMap modelo) {
-//         // Metodo try and catch para asegurarnos de captar errores 
-//        try {
-//            compradorServicio.eliminarComprador(id);
-//            modelo.put("Exito", "Se elimino el comprador exitosamente");
-//
-//            return "redirect:../listar";
-//        } catch (MiException ex) {
-//            modelo.put("Error", ex.getMessage());
-//            return "redirect:../listar";
-//        }
-//
-//    }
 
 }

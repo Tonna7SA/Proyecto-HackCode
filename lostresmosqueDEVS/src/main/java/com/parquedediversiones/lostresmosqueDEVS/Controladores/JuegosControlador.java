@@ -3,10 +3,13 @@ package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Juegos;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.JuegosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EmpleadosServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.JuegosServicio;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +34,10 @@ public class JuegosControlador {
     private JuegosServicio juegoServicio;
     @Autowired
     private EmpleadosServicio empleadoServicio;
- // Vista para registrar un juego 
+    @Autowired
+    private JuegosRepositorio juegosRepositorio;
+ 
+// Vista para registrar un juego 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
@@ -64,10 +70,19 @@ public class JuegosControlador {
     }
      //Llamamos al servicio juego para listar los juegos
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        List<Juegos> juegos = juegoServicio.listarJuegos();
-        modelo.put("juegos", juegos);
-
+    public String listar(ModelMap modelo, @Param("keyword")String keyword) throws MiException{
+        try{
+        List<Juegos> juegos = new ArrayList<>();
+        if(keyword==null){
+            juegosRepositorio.findAll().forEach(juegos::add);
+        }else{
+            juegosRepositorio.findByNombreDelJuegoContainingIgnoreCase(keyword).forEach(juegos::add);
+            modelo.addAttribute("keyword", keyword);
+        }
+        modelo.addAttribute("juegos", juegos);
+        }catch(Exception e){
+        modelo.addAttribute("error", e.getMessage());
+        }
         return "juegos_list.html";
     }
      // Luego de pasar los datos por parametro llamamos al servicio juego para pasar los datos al PostMapping y hacer uso del metodo modificar
@@ -75,31 +90,22 @@ public class JuegosControlador {
     public String modificar(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("juegos", juegoServicio.getOne(id));
-
-        List<Empleados> empleados = empleadoServicio.listarEmpleados();
-
-        modelo.addAttribute("empleados", empleados);
-
         return "juegos_modificar.html";
     }
-     // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para modificar un juego
+
+    // Luego de pasar los datos por parametro llamamos al servicio juego y lo utilizamos  para modificar un juego
     @PostMapping("/modificar/{id}")
-    public String modificarJuego(MultipartFile archivo, @PathVariable String id, @RequestParam(required = false) String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
-            @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, ModelMap modelo) {
+    public String modificarJuego(@RequestParam(required = false) MultipartFile archivo, @RequestParam(required = false) String id, @RequestParam(required = false) String nombreDelJuego, @RequestParam Integer capacidadMaxima, 
+            @RequestParam String tipoDeJuego, @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, ModelMap modelo) {
         // Metodo try and catch para asegurarnos de captar errores 
         try {
-            List<Empleados> empleados = empleadoServicio.listarEmpleados();
-
-            modelo.addAttribute("empleados", empleados);
-
-            juegoServicio.crearJuego(archivo, nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
+           
+            juegoServicio.modificarJuego(archivo, id, nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
 
             return "redirect:../listar";
 
         } catch (MiException ex) {
-            List<Empleados> empleados = empleadoServicio.listarEmpleados();
-
-            modelo.addAttribute("empleados", empleados);
+            
             modelo.put("Error", ex.getMessage());
             return "juegos_modificar.html";
         }

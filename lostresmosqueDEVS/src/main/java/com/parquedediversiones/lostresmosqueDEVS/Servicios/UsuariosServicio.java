@@ -1,4 +1,3 @@
-
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Imagen;
@@ -30,145 +29,218 @@ import org.springframework.web.multipart.MultipartFile;
  */
 /**/
 @Service
-public class UsuariosServicio implements UserDetailsService{
+public class UsuariosServicio implements UserDetailsService {
     //Servicio para comtrolar el AMBL de usuarios
-@Autowired
+
+    @Autowired
     private UsuariosRepositorio usuarioRepositorio;
-@Autowired
+    @Autowired
     private ImagenServicio imagenServicio;
-    
-     //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //Creamos un metodo para crear un juego pasandole los parametros necesarios para eso 
     @Transactional
-    public void registrar(Long legajoDni, String nombreUsuario, String email, String password, String password2, MultipartFile archivo) throws MiException{
-         //LLamamos al metodo validar para evitar errores
+    public void registrar(Long legajoDni, String nombreUsuario, String email, String password, String password2, MultipartFile archivo) throws MiException {
+        //LLamamos al metodo validar para evitar errores
         validar(legajoDni, nombreUsuario, email, password, password2);
-        
+
         Usuarios usuario = new Usuarios();
-        
+
         usuario.setLegajoDni(legajoDni);
         usuario.setNombreUsuario(nombreUsuario);
         usuario.setEmail(email);
-        
+
         Imagen imagen = imagenServicio.guardar(archivo);
 
         usuario.setImagen(imagen);
-        
+
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-        
+
         usuario.setRoles(Rol.ADM);
-        
-         //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
+
+        //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
         usuarioRepositorio.save(usuario);
-    
-}
-    
-       //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso
-       @Transactional
-    public void actualizar(Long legajoDni, String nombreUsuario, String email, String password, String password2, MultipartFile archivo) throws MiException{
-         //LLamamos al metodo validar para evitar errores
-        validar(legajoDni, nombreUsuario, email, password, password2);
-         //Usamos un optional para asegurarnos que el usuario este presente 
+
+    }
+
+    //Creamos un metodo para modificar una entrada pasandole los parametros necesarios para eso
+    @Transactional
+    public void actualizar(Long legajoDni, String nombreUsuario, String email) throws MiException {
+        //LLamamos al metodo validar para evitar errores
+        validarDatos(legajoDni, nombreUsuario, email);
+        //Usamos un optional para asegurarnos que el usuario este presente 
         Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
-        
-        if (respuesta.isPresent()){
-            
-             Usuarios usuario = respuesta.get();
-             usuario.setNombreUsuario(nombreUsuario);
-             usuario.setEmail(email);
-             
-             
-             String idImagen = null;
-             if(usuario.getImagen() !=null){
-                   idImagen = usuario.getImagen().getId();
-             }
-             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-             usuario.setImagen(imagen);
-             usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-             //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
-             usuarioRepositorio.save(usuario);
-            
-        }
-        
-}
-    //Metodo para validar que los datos necesarios sean correctos y esten presentes
-    private void validar(Long legajoDni, String nombreUsuario, String email, String password, String password2) throws MiException{
 
-if(nombreUsuario.isEmpty() || nombreUsuario == null){
-    throw new MiException("El nombre no puede ser nulo o estar vacío");
-}
-
-if(email.isEmpty() || email == null){
-    throw new MiException("El email no puede ser nulo o estar vacío");
-}
-
-if(password.isEmpty() || password == null || password.length() <=5){
-    throw new MiException("El password no puede ser nulo, estar vacío o tener menos de 5 dígitos");
-}
-
-if(!password.equals(password2)){
-    throw new MiException("Las contraseñas ingresadas deben ser iguales");
-}
-if(legajoDni == null){
-    throw new MiException("el legajo ingresadas deben ser iguales");
-}
-        
-    }
-//Creamos un metodo para el logeo de los usuarios
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-     Usuarios usuario = usuarioRepositorio.buscarPorEmail(email);
-     
-     if(usuario != null){
-         
-         List<GrantedAuthority> permisos = new ArrayList();
-         
-         GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRoles().toString());
-         
-         permisos.add(p);
-         
-         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-         
-         HttpSession session = attr.getRequest().getSession(true);
-         
-         session.setAttribute("usuariosession", usuario);
-         
-         return new User(usuario.getEmail(), usuario.getPassword(), permisos);
-         
-     }else{
-         return null;
-     }
-     
-    }
-     //Usamos el repositorio usuario para buscar uno
-    public Usuarios getone(Long legajoDni){
-        return  usuarioRepositorio.getOne(legajoDni);
-        
-    }
-    
-      //Usamos el repositorio usuario para eliminar uno luego de buscarlo 
-      public void eliminarUsuario(Long legajoDni) throws MiException{
-
-        Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
-        
         if (respuesta.isPresent()) {
 
             Usuarios usuario = respuesta.get();
-            
+            usuario.setNombreUsuario(nombreUsuario);
+            usuario.setEmail(email);
+
+//            String idImagen = null;
+//            if (usuario.getImagen() != null) {
+//                idImagen = usuario.getImagen().getId();
+//            }
+//            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+//            usuario.setImagen(imagen);
+//            usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+            //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
+            usuarioRepositorio.save(usuario);
+
+        }
+
+    }
+    @Transactional
+    public void actualizarfoto(Long legajoDni, MultipartFile archivo) throws MiException {
+
+        Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
+
+        if (respuesta.isPresent()) {
+
+            Usuarios usuario = respuesta.get();
+        
+            String idImagen = null;
+
+            if (usuario.getImagen() != null) {
+                idImagen = usuario.getImagen().getId();
+            }
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            usuario.setImagen(imagen);
+//            usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+            //Usamos el repositorio usuario para guardar el usuario y registrarlo correctamente
+            usuarioRepositorio.save(usuario);
+
+        }
+
+    }
+    //Metodo para validar que los datos necesarios sean correctos y esten presentes
+
+    private void validar(Long legajoDni, String nombreUsuario, String email, String password, String password2) throws MiException {
+
+        if (nombreUsuario.isEmpty() || nombreUsuario == null) {
+            throw new MiException("El nombre no puede ser nulo o estar vacío");
+        }
+
+        if (email.isEmpty() || email == null) {
+            throw new MiException("El email no puede ser nulo o estar vacío");
+        }
+
+        if (password.isEmpty() || password == null || password.length() <= 5) {
+            throw new MiException("El password no puede ser nulo, estar vacío o tener menos de 5 dígitos");
+        }
+
+        if (!password.equals(password2)) {
+            throw new MiException("Las contraseñas ingresadas deben ser iguales");
+        }
+        if (legajoDni == null) {
+            throw new MiException("el legajo ingresadas deben ser iguales");
+        }
+
+    }
+
+    private void validarDatos(Long legajoDni, String nombreUsuario, String email) throws MiException {
+
+        if (nombreUsuario.isEmpty() || nombreUsuario == null) {
+            throw new MiException("El nombre no puede ser nulo o estar vacío");
+        }
+
+        if (email.isEmpty() || email == null) {
+            throw new MiException("El email no puede ser nulo o estar vacío");
+        }
+        if (legajoDni == null) {
+            throw new MiException("el legajo ingresadas deben ser iguales");
+        }
+
+    }
+//Creamos un metodo para el logeo de los usuarios
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Usuarios usuario = usuarioRepositorio.buscarPorEmail(email);
+
+        if (usuario != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRoles().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("usuariosession", usuario);
+
+            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+
+        } else {
+            return null;
+        }
+
+    }
+    
+    @Transactional
+    public void cambiarClave(String claveActual, Long legajoDni, String clave, String clave2) throws MiException {
+
+        Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
+
+        if (respuesta.isPresent()) {
+
+            if (clave.isEmpty() || clave == null || clave.length() <= 5) {
+                throw new MiException("La contraseña no puede ser vacía y debe contener más de 5 caracteres.");
+            }
+
+            if (!clave.equals(clave)) {
+                throw new MiException("Las contraseñás no coinciden.");
+            }
+
+            Usuarios usuario = respuesta.get();
+
+            String encodedPassword = usuario.getPassword();
+
+            if (bCryptPasswordEncoder.matches(claveActual, encodedPassword)) {
+                usuario.setPassword(new BCryptPasswordEncoder().encode(clave));
+
+                usuarioRepositorio.save(usuario);
+            } else {
+                throw new MiException("Las contraseñás actual no es correcta.");
+            }
+
+        }
+
+    }
+    //Usamos el repositorio usuario para buscar uno
+
+    public Usuarios getone(Long legajoDni) {
+        return usuarioRepositorio.getOne(legajoDni);
+
+    }
+
+    //Usamos el repositorio usuario para eliminar uno luego de buscarlo 
+    public void eliminarUsuario(Long legajoDni) throws MiException {
+
+        Optional<Usuarios> respuesta = usuarioRepositorio.findById(legajoDni);
+
+        if (respuesta.isPresent()) {
+
+            Usuarios usuario = respuesta.get();
+
             usuarioRepositorio.delete(usuario);
 
         }
     }
-        //Usamos el repositorio usuario para buscar los registros y hacer una lista
-       public List<Usuarios> listarUsuarios() {
+    //Usamos el repositorio usuario para buscar los registros y hacer una lista
+
+    public List<Usuarios> listarUsuarios() {
 
         List<Usuarios> usuario = new ArrayList();
 
         usuario = usuarioRepositorio.buscarPorRol();
-        
+
         return usuario;
     }
-    
-    
-
 
 }
