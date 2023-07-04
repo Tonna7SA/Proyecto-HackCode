@@ -67,8 +67,8 @@
             
             <li><a th:if="${session.usuariosession == null}" th:href="@{/login}">Logueate</a></li>
             <li><a th:href="@{/}">Inicio</a></li>
-            <img  th:if="${session.usuariosession != null}" th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" 
-                  alt="Imagen de perfil" class="rounded-circle img-fluid" style="width: 40px; height: 40px;
-                 align-content: center; margin-right: 15px;">
+            <li><img th:if="${session.usuariosession != null}" th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" 
+                alt="Imagen de perfil" class="fotito" ></li>
+            
         </ul>
     </nav>

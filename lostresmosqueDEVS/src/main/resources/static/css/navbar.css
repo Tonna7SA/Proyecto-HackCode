@@ -198,3 +198,10 @@ li > a:only-child::after {
 a {
     color: white; /* Cambia el color aquí */
 }
+
+.fotito{
+    width: 50px;
+    margin: 5px 15px 0 0;
+    vertical-align: middle;
+    border-radius: 10px;
+}

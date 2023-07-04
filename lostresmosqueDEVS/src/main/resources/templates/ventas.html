@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org%22%3E/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compradores</title>
+    <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <link rel="stylesheet" href="/CSS/tablas.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+
+</head>
+
+<body>
+
+    <nav th:replace="/fragments/navbar :: nav"> </nav>
+
+    
+
+    <div class="content">
+        <div class="cintaCard shadowCinta">
+            <div class="ribbon">
+                <div class="ribbon-stitches-top"></div>
+                <div class="ribbon-content">
+                    <span>Listado de compradores</span>
+                </div>
+                <div class="ribbon-stitches-bottom"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+
+        <div class="container-fluid" style="max-width: 1500px; margin: 0 auto;">
+
+            <div class="my-3">
+                <form th:action="@{/compradores/listar}">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-6 mt-2">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-search"></i>
+                                <input id="keyword" type="search" name="keyword" th:value="${keyword}"
+                                    class="form--input" style="width: 150px; height: 40px;
+                                background-color: #343945; color: white; border-radius: 10px; text-align: center"
+                                    placeholder="Ingrese dni">
+                                <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
+                                    border-radius: 10px"><b>Buscar</b></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="contenedorCentro">
+
+        <table class="zigzag">
+            <thead>
+                <tr>
+                    <th class="header">Nombre y Apellido</th>
+                    <th class="header">Dni</th>
+                    <th class="header">Edad</th>
+                    <th class="header">Email</th>
+                    <th class="header">Vender entrada</th>
+                </tr>
+            </thead>
+            <tbody th:each="compradores : ${compradores}">
+                <tr>
+                    <td th:text="${compradores.nombreApellido}"></td>
+                    <td th:text="${compradores.dni}"></td>
+                    <td th:text="${compradores.edad}"></td>
+                    <td th:text="${compradores.email}"></td>
+                    <td>
+                        <button class="btnVender" th:if="${compradores.activo == true}">
+                            <a>Venta</a>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="content">
+        <div class="cintaCard shadowCinta">
+            <div class="ribbon">
+                <div class="ribbon-stitches-top"></div>
+                <div class="ribbon-content">
+                    <span>Lista de entradas a vender</span>
+                </div>
+                <div class="ribbon-stitches-bottom"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenedorCentro">
+        <table class="zigzag">
+            <thead>
+                <tr>
+                    <th class="header">Nombre y Apellido</th>
+                    <th class="header">Dni</th>
+                    <th class="header">Edad</th>
+                    <th class="header">Email</th>
+                    <th class="header">Vender entrada</th>
+                </tr>
+            </thead>
+            <tbody th:each="compradores : ${compradores}">
+                <tr>
+                    <td th:text="${compradores.nombreApellido}"></td>
+                    <td th:text="${compradores.dni}"></td>
+                    <td th:text="${compradores.edad}"></td>
+                    <td th:text="${compradores.email}"></td>
+                    <td>
+                        <button class="btnVender" th:if="${compradores.activo == true}">
+                            <a>Venta</a>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="contenedor">
+
+        <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28 " preserveAspectRatio="none">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 
+                                                              58-18 88-18s
+                                                              58 18 88 18 
+                                                              58-18 88-18 
+                                                              58 18 88 18
+                                                              v44h-352z" />
+            </defs>
+            <g class="parallax1">
+                <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
+            </g>
+            <g class="parallax2">
+                <use xlink:href="#gentle-wave" x="50" y="0" fill="#4579e2" />
+            </g>
+            <g class="parallax3">
+                <use xlink:href="#gentle-wave" x="50" y="9" fill="#3461c1" />
+            </g>
+            <g class="parallax4">
+                <use xlink:href="#gentle-wave" x="50" y="6" fill="#fff" />
+            </g>
+        </svg>
+
+
+    </div>
+
+    <script src="/JS/carrusel.js"></script>
+
+</body>
+
+</html>
