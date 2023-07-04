@@ -95,7 +95,6 @@
                     <th class="header">Imagen</th>
                     <th class="header">Email</th>
                     <th class="header">Rol</th>
-                    <th class="header">Modificar</th>
                 </tr>
             </thead>
             <tbody th:each="usuarios : ${usuarios}">
@@ -109,11 +108,6 @@
                     </td>
                     <td th:text="${usuarios.email}"></td>
                     <td th:text="${usuarios.roles}"></td>
-                    <td>
-                        <button class="btnModificar">
-                            <a th:href="@{/perfil/__${usuarios.legajoDni}__}">Modificar</a>
-                        </button>
-                    </td>
                 </tr>
 
             </tbody>

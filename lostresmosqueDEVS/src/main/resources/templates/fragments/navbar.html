@@ -4,7 +4,6 @@
         <label for="drop" class="toggle">Menu</label>
         <input type="checkbox" id="drop" />
         <ul class="menu">
-
             <li>
                 <label for="drop-1" class="toggle">Compradores +</label>
                 <a th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ADM', 'SUP', 'EMP')">Compradores</a>
@@ -21,7 +20,6 @@
                 <input type="checkbox" id="drop-2" />
                 <ul>
                     <li><a th:href="@{/empleados/registrar}">Registrar</a></li>
-                    <li><a th:href="@{/empleados/modificar}">Modificar</a></li>
                     <li><a th:href="@{/empleados/listar}">Listar</a></li>
                 </ul>
             </li>
@@ -32,7 +30,6 @@
                 <input type="checkbox" id="drop-2" />
                 <ul>
                     <li><a th:href="@{/juegos/registrar}">Registrar</a></li>
-                    <li><a th:href="@{/juegos/modificar}">Modificar</a></li>
                     <li><a th:href="@{/juegos/listar}">Listar</a></li>
                 </ul>
             </li>
@@ -42,7 +39,6 @@
                 <a th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ADM', 'SUP')">Usuarios</a>
                 <input type="checkbox" id="drop-2" />
                 <ul><li><a th:href="@{/registrar}">Registar</a></li>
-                <li><a th:href="@{/modificar}">Modificar</a></li>
                     <li><a th:href="@{/listar}">Listar</a></li>
                 </ul>
             </li>
@@ -62,13 +58,17 @@
                 <a th:if="${session.usuariosession != null}">Perfil</a>
                 <input type="checkbox" id="drop-2" />
                 <ul>
-                    <li><a href="#">Editar Mi Perfil</a></li>
+                    <li><a th:href="@{/perfil}">Editar Datos</a></li>
+                    <li><a th:href="@{/password}">Cambiar Pass</a></li>
+                    <li><a th:href="@{/foto}">Cambiar Foto</a></li>
                     <li><a href="/logout">Cerrar Sesión</a></li>
                 </ul>
             </li>
             
             <li><a th:if="${session.usuariosession == null}" th:href="@{/login}">Logueate</a></li>
             <li><a th:href="@{/}">Inicio</a></li>
-
+            <img  th:if="${session.usuariosession != null}" th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" 
+                  alt="Imagen de perfil" class="rounded-circle img-fluid" style="width: 40px; height: 40px;
+                 align-content: center; margin-right: 15px;">
         </ul>
     </nav>

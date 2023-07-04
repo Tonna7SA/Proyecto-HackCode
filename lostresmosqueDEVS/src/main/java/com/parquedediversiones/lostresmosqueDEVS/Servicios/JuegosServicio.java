@@ -30,7 +30,6 @@ public class JuegosServicio {
         //LLamamos al metodo validar para evitar errores
        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
-        //Empleados empleado= empleadoRepositorio.findById(legajoDni).get();
         Juegos juego = new Juegos();
         
         juego.setNombreDelJuego(nombreDelJuego);
@@ -54,17 +53,8 @@ public class JuegosServicio {
         validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
          //Usamos un optional para asegurarnos que el juego este presente 
         Optional<Juegos> respuestaJuego = juegosRepositorio.findById(id);
-        //Usamos un optional para asegurarnos que el empleado este presente 
-        //Optional<Empleados> respuestaEmpleado = empleadoRepositorio.findById(legajoDni);
-        //Empleados empleado= new Empleados();
-        //if (respuestaEmpleado.isPresent()) {
-            //Asignamos el empleado encontrado al empleado para luego guardarlo
-         //   empleado=empleadoRepositorio.findById(legajoDni).get();
-        //}
-        
         
         if (respuestaJuego.isPresent()) {
-
             Juegos juego = respuestaJuego.get();
 
         juego.setNombreDelJuego(nombreDelJuego);
@@ -72,15 +62,18 @@ public class JuegosServicio {
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
         juego.setPrecioDelJuego(precioDelJuego);
+
         String idImagen = null;
              if(juego.getImagen() !=null){
                    idImagen = juego.getImagen().getId();
+                    Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                    juego.setImagen(imagen);
+             }else{
+                 
              }
-             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-             juego.setImagen(imagen);
-        //juego.setEmpleado((List<Empleados>) empleado);
-        //Usamos el repositorio juego para guardar el juego y registrarlo correctamente
-        juegosRepositorio.save(juego);
+             
+
+             juegosRepositorio.save(juego);
 
         }
     }

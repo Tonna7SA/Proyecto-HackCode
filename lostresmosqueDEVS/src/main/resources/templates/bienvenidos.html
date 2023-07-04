@@ -303,6 +303,14 @@ $(document).ready(function() {
   }, 7000)
 });
 </script>
+<script>
+    if (sessionStorage.getItem("loaded") == null) {
+    sessionStorage.setItem("loaded", "true");
+    setTimeout(function() {
+        window.location.href = "/index.html";
+    }, 7000);
+}
+</script>
 
 </body>
 

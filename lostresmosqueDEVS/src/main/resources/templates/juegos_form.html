@@ -25,23 +25,15 @@
         <form class="form"  th:action="@{/juegos/registro/}" method="POST" enctype="multipart/form-data">
             <span class="signup">Alta de atracción</span>
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del juego</label>
-            <input type="text" name="nombreDelJuego" th:value="nombreDelJuego"required placeholder="Nombre del juego" class="form--input">
+            <input type="text" name="nombreDelJuego" placeholder="Nombre del juego" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Capacidad máxima</label>
-            <input type="number" name="capacidadMaxima" th:value="capacidadMaxima" required placeholder="Capacidad máxima" class="form--input">
+            <input type="number" name="capacidadMaxima" required placeholder="Capacidad máxima" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Tipo de juego</label>
-            <input type="text" name="tipoDeJuego" th:value="tipoDeJuego" required placeholder="Tipo de juego" class="form--input">
-            <label class="palabrainput" style="font-size: 12px;" for="tipo-juego">Tipo de atracción</label>
-            <select name="tipo-juego" id="tipo-juego" class="form--input" style="width: 385px; height: 40px;" required>
-                <option value="">Seleccione un tipo de juego</option>
-                <option value="tranquilos">Juegos de adrenalina</option>
-                <option value="ruidosos">Juegos Familiares</option>
-                <option value="para-niños">Juegos Infantiles</option>
-                <option value="para-niños">Shows</option>
-            </select>
+            <input type="text" name="tipoDeJuego" required placeholder="Tipo de juego" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Cantidad de empleados</label>
-            <input type="number" name="cantEmpleados" th:value="cantEmpleados" required placeholder="Cantidad de empleados" class="form--input">
+            <input type="number" name="cantEmpleados" required placeholder="Cantidad de empleados" class="form--input">
             <label class="palabrainput" style="font-size: 12px;" for="name">Precio del juego</label>
-            <input type="text" name="precioDelJuego" th:value="precioDelJuego" required placeholder="Precio del juego" class="form--input">
+            <input type="text" name="precioDelJuego" required placeholder="Precio del juego" class="form--input">
             <div class="subirimagen">
                 <span class="subirimagen-title">Cargá imagen del juego</span>
                 <p class="subirimagen-paragraph">

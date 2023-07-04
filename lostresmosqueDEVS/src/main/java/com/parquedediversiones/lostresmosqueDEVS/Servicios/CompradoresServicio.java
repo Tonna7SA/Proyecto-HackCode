@@ -45,7 +45,7 @@ public class CompradoresServicio {
         }
     }
     //Creamos un metodo para modificar un comprador pasandole los parametros necesarios para eso 
-    public void modificarComprador(String id, String nombreApellido, Long dni, Boolean activo, String email) throws MiException {
+    public void modificarComprador(String id, String nombreApellido, Long dni, String email, Integer edad) throws MiException {
         //LLamamos al metodo validar para evitar errores
         validarComprador(nombreApellido, dni, email);
          //Usamos un optional para asegurarnos que el comprador este presente 
@@ -56,7 +56,7 @@ public class CompradoresServicio {
 
             comprador.setNombreApellido(nombreApellido);
             comprador.setDni(dni);
-            comprador.setActivo(true);
+            comprador.setEdad(edad);
             comprador.setEmail(email);
              //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
             compradorRepositorio.save(comprador);
@@ -108,13 +108,13 @@ public class CompradoresServicio {
     //Metodo para validar que los datos necesarios sean correctos y esten presentes
     private void validarComprador(String nombreApellido, Long dni, String email) throws MiException {
 
-        if (nombreApellido.isEmpty() || nombreApellido == null) {
+        if (nombreApellido.isEmpty() || nombreApellido.length()<4) {
             throw new MiException("Debe ingresar un nombre");
         }
         if (dni == null || dni == 0 || dni < 5000000) {
             throw new MiException("Debe ingresar un dni");
         }
-        if (email.isEmpty() || email == null) {
+        if (email.isEmpty()) {
             throw new MiException("Debe ingresar un email");
         }
 

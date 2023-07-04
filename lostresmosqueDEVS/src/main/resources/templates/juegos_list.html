@@ -69,31 +69,33 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-
-    <div class="my-3">
-        <form th:action="@{/Juegos}">
-            <div class="d-flex justify-content-center">
-                <div class="col-md-6 mt-2">
-                    <div class="d-flex align-items-center">
-                        <i class="fa fa-search"></i>
-                        <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form-control ms-3"
-                               placeholder="Ingrese dni">
-                        <button type="submit" class="btn btn-secondary ms-3">Buscar</button>
+<div class="content">
+        <div class="container-fluid" style="max-width: 1500px; margin: 0 auto;">
+            <div class="my-3">
+                <form th:action="@{/juegos/listar}">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-6 mt-2">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-search"></i>
+                                <input id="keyword" type="search" name="keyword" th:value="${keyword}"
+                                    class="form--input" style="width: 150px; height: 40px;
+                                background-color: #343945; color: white; border-radius: 10px; text-align: center"
+                                    placeholder="Ingrese el Juego">
+                                <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
+                                    border-radius: 10px"><b>Buscar</b></button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 
-</div>
 
     <div class="contenedorCentro">
-
         <table class="zigzag">
             <thead>
                 <tr>
-                    <th class="header">Id</th>
                     <th class="header">Nombre del Juego</th>
                     <th class="header">Imagen</th>
                     <th class="header">Capacidad Max.</th>
@@ -107,8 +109,7 @@
             </thead>
             <tbody th:each="juegos : ${juegos}">
                 <tr>
-                    <th scope="row" th:text="${juegos.id}"></th>
-                    <td th:text="${juegos.nombreDelJuego}"></td>
+                    <th th:text="${juegos.nombreDelJuego}"></th>
                     <td>
                     <div class=" col-md-7 ">
               <img th:src="@{/imagen/juegos/__${juegos.id}__}" class="float-left ml-1" style="max-width:100px">
@@ -131,14 +132,11 @@
                         </button>
                     </td>
                 </tr>
-
             </tbody>
-
     </div>
 
 
     <div class="contenedor">
-
         <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28 " preserveAspectRatio="none">
             <defs>
