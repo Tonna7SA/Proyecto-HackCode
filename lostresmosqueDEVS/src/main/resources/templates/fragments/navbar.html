@@ -65,10 +65,16 @@
                 </ul>
             </li>
             
-            <li><a th:if="${session.usuariosession == null}" th:href="@{/login}">Logueate</a></li>
-            <li><a th:href="@{/}">Inicio</a></li>
-            <li><img th:if="${session.usuariosession != null}" th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" 
-                alt="Imagen de perfil" class="fotito" ></li>
+            <li>
+                <a th:if="${session.usuariosession == null}" th:href="@{/login}">Logueate</a>
+            </li>
+            <li>
+                <a th:href="@{/}">Inicio</a>
+            </li>
+            <li>
+                <img th:if="${session.usuariosession != null}" th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" 
+                alt="Imagen de perfil" class="fotito" >
+            </li>
             
         </ul>
     </nav>
