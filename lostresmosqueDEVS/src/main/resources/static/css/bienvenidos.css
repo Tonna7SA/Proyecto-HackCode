@@ -1,14 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
-/**
-* get random number.
-* @param {number} min - min number.
-* @param {number} max - max number.
-*/
 
-/*
-* variable
-*/
 html,
 body {
   width: 100vw;
@@ -37,9 +29,6 @@ body {
   font-size: 1.6rem;
 }
 
-/*
-* background
-*/
 .background {
   position: absolute;
   top: 0;

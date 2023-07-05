@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Acme|Anton|Cabin+Sketch|Covered+By+Your+Grace|Homemade+Apple|Lalezar|Lato:100,300,300i,700,900|Raleway:200,300,300i,400,600,700|Special+Elite|VT323");
 
-/* Whole thing */
+
 .wrapper {
   width: 500px;
   height: 650px;
@@ -14,7 +14,6 @@
   box-shadow: -4px 12px 0px -6px rgba(0, 0, 0, 0.1);
 }
 
-/* hair right */
 .wrapper:after {
   content: "";
   position: absolute;
@@ -27,7 +26,6 @@
   border-top: 20px solid #d5f7f6;
 }
 
-/* hair left */
 .wrapper:before {
   content: "";
   position: absolute;
@@ -40,7 +38,6 @@
   border-top: 20px solid #d5f7f6;
 }
 
-/* monster body */
 .Body {
   position: absolute;
   z-index: 1;
@@ -52,7 +49,6 @@
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
 
-/* eyeline left */
 .Body:before {
   content: "";
   width: 35px;
@@ -65,7 +61,6 @@
   transform: rotate(30deg);
 }
 
-/* eyeline right */
 .Body:after {
   content: "";
   width: 35px;
@@ -78,7 +73,6 @@
   transform: rotate(-30deg);
 }
 
-/*Left Eye holder*/
 .LeftEye,
 .LeftEyeLeft {
   width: 30px;
@@ -94,7 +88,6 @@
   overflow: hidden;
 }
 
-/* left eyeball */
 .LeftEye:after {
   content: "";
   width: 20px;
@@ -111,7 +104,6 @@
   -webkit-animation: RightEyeRight 1s forwards;
 }
 
-/* left eye animation */
 .LeftEyeLeft:after {
   content: "";
   width: 20px;
@@ -128,7 +120,6 @@
   -webkit-animation: RightEyeLeft 1s forwards;
 }
 
-/* right eye holder */
 .RightEye,
 .RightEyeRight {
   width: 30px;
@@ -144,7 +135,6 @@
   overflow: hidden;
 }
 
-/* right eyeball */
 .RightEye:after {
   content: "";
   width: 20px;
@@ -160,7 +150,7 @@
   animation: RightEyeLeft 1s forwards;
   -webkit-animation: RightEyeLeft 1s forwards;
 }
-/* right animation */
+
 .RightEyeRight:after {
   content: "";
   width: 20px;
@@ -177,7 +167,6 @@
   -webkit-animation: RightEyeRight 1s forwards;
 }
 
-/* right eye shadow */
 .EyeShadows {
   width: 35px;
   height: 27px;
@@ -193,7 +182,6 @@
   transform: rotate(-50deg);
 }
 
-/* left eye shadow */
 .EyeShadows:after {
   content: "";
   width: 35px;
@@ -211,7 +199,6 @@
   opacity: 1;
 }
 
-/* right cheek shadow */
 .MouthShadows {
   width: 15px;
   height: 20px;
@@ -227,7 +214,6 @@
   transform: rotate(-50deg);
 }
 
-/* left cheek shadow */
 .MouthShadows:after {
   content: "";
   width: 15px;
@@ -245,7 +231,6 @@
   opacity: 1;
 }
 
-/* mouth holder */
 .Mouth {
   width: 50px;
   height: 20px;
@@ -260,7 +245,6 @@
   overflow: hidden;
 }
 
-/* right tooth*/
 .Mouth:before {
   content: "";
   left: 30px;
@@ -272,7 +256,6 @@
   transform: rotate(0deg);
 }
 
-/* theet holder */
 .Theet {
   width: 50px;
   height: 20px;
@@ -286,7 +269,6 @@
   overflow: hidden;
 }
 
-/* mid tooth*/
 .Theet:after {
   content: "";
   left: 20px;
@@ -298,7 +280,6 @@
   transform: rotate(0deg);
 }
 
-/* left tooth*/
 .Theet:before {
   content: "";
   left: 10px;
@@ -310,7 +291,6 @@
   transform: rotate(0deg);
 }
 
-/* right hand holder */
 .RightHand {
   width: 100px;
   height: 200px;
@@ -325,7 +305,6 @@
   border-radius: 50%/80px 100px 0 0;
 }
 
-/* right finger */
 .RightHand:before {
   right: -3px;
   top: 30px;
@@ -340,7 +319,7 @@
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
-/* left finger */
+
 .RightHand:after {
   right: 4px;
   top: 33px;
@@ -356,7 +335,6 @@
   border-radius: 50%;
 }
 
-/* left hand holder */
 .LeftHand {
   width: 100px;
   height: 200px;
@@ -371,7 +349,6 @@
   border-radius: 50%/80px 100px 0 0;
 }
 
-/* right finger */
 .LeftHand:before {
   left: 0px;
   top: 33px;
@@ -386,7 +363,7 @@
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
-/* left finger */
+
 .LeftHand:after {
   left: -7px;
   top: 32px;
@@ -402,7 +379,6 @@
   border-radius: 50%;
 }
 
-/* horns holder */
 .Horns {
   width: 150px;
   height: 90px;
@@ -418,7 +394,6 @@
   z-index: 0;
 }
 
-/* horns dots left I */
 .Horns:after {
   right: 5px;
   top: 30px;
@@ -431,7 +406,7 @@
   border-radius: 50%;
   opacity: 0.5;
 }
-/* horns dots left II */
+
 .Horns:before {
   right: 15px;
   top: 22px;
@@ -445,8 +420,7 @@
   opacity: 0.5;
 }
 
-/* horns dots right holder */
-HornsExtras {
+.HornsExtras {
   width: 150px;
   height: 90px;
   border-radius: 50%;
@@ -459,7 +433,6 @@ HornsExtras {
   z-index: 1;
 }
 
-/* horns dots right I */
 .HornsExtras:after {
   left: 9px;
   top: 29px;
@@ -473,7 +446,6 @@ HornsExtras {
   opacity: 0.5;
 }
 
-/* horns dots right II */
 .HornsExtras:before {
   left: 1px;
   top: 37px;
@@ -487,7 +459,6 @@ HornsExtras {
   opacity: 0.5;
 }
 
-/* body lines I */
 .BodyTexture {
   width: 500px;
   height: 100px;
@@ -501,7 +472,6 @@ HornsExtras {
   opacity: 0.3;
 }
 
-/* body lines II */
 .BodyTexture:before {
   content: "";
   width: 500px;
@@ -515,7 +485,6 @@ HornsExtras {
   transform: rotate(-2deg);
 }
 
-/* body lines III */
 .BodyTexture:after {
   content: "";
   width: 500px;
@@ -529,7 +498,6 @@ HornsExtras {
   transform: rotate(-2deg);
 }
 
-/* txt holder*/
 .TextHolder {
   position: absolute;
   bottom: 0;
@@ -538,7 +506,6 @@ HornsExtras {
   bottom: 80px;
 }
 
-/* txt holder green border */
 .TextHolder:after {
   content: "";
   position: absolute;
@@ -550,7 +517,6 @@ HornsExtras {
   border: solid #54bc9b 2px;
 }
 
-/* txt holder white background */
 .TextHolder:before {
   content: "";
   position: absolute;
@@ -560,7 +526,6 @@ HornsExtras {
   background-color: #fff;
 }
 
-/* actual txts holder */
 .Texts {
   position: relative;
   z-index: 2;
@@ -576,7 +541,7 @@ HornsExtras {
   font-size: 30px;
   line-height: 40px;
 }
-/* problems here */
+
 span {
   white-space: nowrap;
   font-size: 40px;
@@ -647,8 +612,6 @@ span:after {
   -webkit-animation: color_change 0.1s infinite alternate,
     opacity 1s infinite alternate;
 }
-
-/* animations */
 
 @-webkit-keyframes opacity {
   from {
