@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org%22%3E/">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Compradores</title>
+    <title>Listado Juegos</title>
     <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/CSS/style.css">
     <link rel="stylesheet" href="/CSS/tablas.css">
@@ -15,11 +15,11 @@
 </head>
 
 <body>
-
-    <nav th:replace="/fragments/navbar :: nav"> </nav>
+    
+    <nav th:replace="/fragments/navbar :: nav"  > </nav>
 
     <div class="content">
-        <div class="cardExito" th:if="${success != null}" th:text="${success}">
+        <div class="cardExito">
             <div class="headerExito">
                 <div class="imageCheck">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -32,7 +32,7 @@
                     </svg>
                 </div>
                 <div class="actions">
-                    <button type="button" class="history" >Éxito al
+                    <button type="button" class="history" th:if="${success != null}" th:text="${success}">Éxito al
                         eliminar</button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="content">
-        <div class="cardEliminar" th:if="${error != null}" th:text="${error}">
+        <div class="cardEliminar">
             <div class="headerEliminar">
                 <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                         fill="none">
@@ -50,7 +50,7 @@
                     </svg></div>
 
                 <div class="actions">
-                    <button class="desactivate" type="button" >Error al
+                    <button class="desactivate" type="button" th:if="${error != null}" th:text="${error}">Error al
                         eliminar</button>
                 </div>
             </div>
@@ -62,18 +62,17 @@
             <div class="ribbon">
                 <div class="ribbon-stitches-top"></div>
                 <div class="ribbon-content">
-                    <span>Listado de compradores</span>
+                    <span>Listado de Juegos</span>
                 </div>
                 <div class="ribbon-stitches-bottom"></div>
             </div>
         </div>
     </div>
-    <div class="content">
 
+<div class="content">
         <div class="container-fluid" style="max-width: 1500px; margin: 0 auto;">
-
             <div class="my-3">
-                <form th:action="@{/compradores/listar}">
+                <form th:action="@{/ventas/listar}">
                     <div class="d-flex justify-content-center">
                         <div class="col-md-6 mt-2">
                             <div class="d-flex align-items-center">
@@ -81,7 +80,7 @@
                                 <input id="keyword" type="search" name="keyword" th:value="${keyword}"
                                     class="form--input" style="width: 150px; height: 40px;
                                 background-color: #343945; color: white; border-radius: 10px; text-align: center"
-                                    placeholder="Ingrese dni">
+                                    placeholder="">
                                 <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
                                     border-radius: 10px"><b>Buscar</b></button>
                             </div>
@@ -91,72 +90,53 @@
             </div>
         </div>
     </div>
-    <div class="contenedorCentro">
 
+
+    <div class="contenedorCentro">
         <table class="zigzag">
             <thead>
                 <tr>
-                    <th class="header">Nombre y Apellido</th>
-                    <th class="header">Dni</th>
-                    <th class="header">Edad</th>
-                    <th class="header">Fecha de Alta</th>
-                    <th class="header">Estado</th>
-                    <th class="header">Email</th>
-                    <th class="header" sec:authorize="hasAnyRole('ADM')">Modificar</th>
-                    <th class="header" sec:authorize="hasAnyRole('ADM')">Cambiar Estado</th>
-                    <th class="header" sec:authorize="hasAnyRole('ADM')">Eliminar</th>
-                    <th class="header">Vender entrada</th>
+                    <th class="header">Nombre del Juego</th>
+                    <th class="header">Tipo de Juego</th>
+                    <th class="header">Precio del Juego</th>
+                    <th class="header">Nombre del Comprador</th>
+                    <th class="header">Dni del Comprador</th>
+                    <th class="header">Email del Comprador</th>
+                    <th class="header">Nombre del Vendedor</th>
+                    <th class="header">Legajo del Vendedor</th>
+                    <th class="header">Total Venta</th>
+                    <th class="header">Fecha de Venta</th>
                 </tr>
+                 
             </thead>
-            <tbody th:each="compradores : ${compradores}">
+            <tbody th:each="ventas : ${ventas}">
                 <tr>
-                    <!--                    <th scope="row" th:text="${compradores.id}"></th>-->
-                    <td th:text="${compradores.nombreApellido}"></td>
-                    <td th:text="${compradores.dni}"></td>
-                    <td th:text="${compradores.edad}"></td>
-                    <td th:text="${compradores.fechaDeAlta}"></td>
-                    <td th:text="${compradores.activo  ? 'Activo' : 'Inactivo'}"></td>
-                    <td th:text="${compradores.email}"></td>
-                    <td sec:authorize="hasAnyRole('ADM')">
-                        <button class="btnModificar">
-                            <a th:href="@{/compradores/modificar/__${compradores.id}__}">Modificar</a>
-                        </button>
-
-                    </td>
-                    <td sec:authorize="hasAnyRole('ADM')">
-                        <button class="btnCambiar">
-                            <a th:href="@{/compradores/modificarEstado/__${compradores.id}__}">Cambiar </a>
-                        </button>
-                    </td>
-                    <td sec:authorize="hasAnyRole('ADM')">
-                        <button class="btnEliminar">
-                            <a th:href="@{/compradores/eliminar/__${compradores.id}__}">Eliminar
-                            </a>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btnVender" th:if="${compradores.activo == true}">
-                            <a th:href="@{/ventas/registrar/__${compradores.id}__}" >Venta</a>
-                        </button>
-                    </td>
+                    <th th:text="${ventas.nombreJuego}"></th>
+                    <td th:text="${ventas.tipoJuego}"></td>
+                    <td th:text="${ventas.precioJuego}"></td>
+                    <td th:text="${ventas.nombreComprador}"></td>
+                    <td th:text="${ventas.dniComprador}"></td>
+                    <td th:text="${ventas.emailComprador}"></td>
+                    <td th:text="${ventas.nombreVendedor}"></td>
+                    <td th:text="${ventas.legajoVendedor}"></td>
+                    <td th:text="${ventas.totalVenta}"></td>
+                    <td th:text="${ventas.fechaVenta}"></td>
+                    
                 </tr>
-
             </tbody>
-        </table>
     </div>
 
 
     <div class="contenedor">
-
         <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28 " preserveAspectRatio="none">
             <defs>
                 <path id="gentle-wave" d="M-160 44c30 0 
-                                                              58-18 88-18s
-                                                              58 18 88 18 
-                                                              58-18 88-18 
-                                                              58 18 88 18
-                                                              v44h-352z" />
+    58-18 88-18s
+    58 18 88 18 
+    58-18 88-18 
+    58 18 88 18
+    v44h-352z" />
             </defs>
             <g class="parallax1">
                 <use xlink:href="#gentle-wave" x="50" y="3" fill="#f461c1" />
@@ -174,7 +154,9 @@
 
 
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
     <script src="/JS/carrusel.js"></script>
 
 </body>
