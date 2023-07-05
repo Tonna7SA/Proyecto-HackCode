@@ -4,6 +4,13 @@ place-items: center;
 margin: 3px;
 margin-top: 10000;
 margin-bottom: 100px; 
+
+}
+
+@media all and (width <= 935px) {
+  .contenedorCentro {
+    overflow-x: scroll;
+  }
 }
 
 table {
