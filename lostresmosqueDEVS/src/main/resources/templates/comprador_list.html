@@ -84,6 +84,8 @@
                                     placeholder="Ingrese dni">
                                 <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
                                     border-radius: 10px"><b>Buscar</b></button>
+                                    <button onclick="limpiar()" class="form--input" style="width: 100px; height: 40px; background-color: #54bc9b; color: white; 
+                                    border-radius: 10px"><b>Limpiar</b></button>
                             </div>
                         </div>
                     </div>
@@ -176,7 +178,11 @@
     </div>
 
     <script src="/JS/carrusel.js"></script>
-
+    <script>
+    function limpiar() {
+    document.getElementById("keyword").value = "";
+    }
+    </script>
 </body>
 
 </html>

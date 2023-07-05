@@ -4,10 +4,13 @@ package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.UsuariosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EmpleadosServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.UsuariosServicio;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,21 +34,30 @@ public class AdminControlador {
     UsuariosServicio usuariosServicio;
      @Autowired
     EmpleadosServicio empleadosServicio;
-    //Panel de vista del Administrador
+ @Autowired
+ UsuariosRepositorio usuarioRepositorio;
+
+//Panel de vista del Administrador
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
         return "panel.html";
     }
     // LLamamos al servicio usuario para poder listar usuarios
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        
-        List<Usuarios> usuarios = usuariosServicio.listarUsuarios();
-        modelo.put("usuarios", usuarios);
-        List<Empleados> empleados = empleadosServicio.listarEmpleados();
-        modelo.put("empleados", empleados);
-
-        return "listar_usuario.html";
+    public String listar(ModelMap modelo, @Param("keyword")Long keyword) {
+        try{
+        List<Usuarios> usuarios = new ArrayList<>();
+        if(keyword==null){
+            usuarioRepositorio.buscarPorRol().forEach(usuarios::add);
+        }else{
+            usuarioRepositorio.DniDevuelveId(keyword).forEach(usuarios::add);
+            modelo.addAttribute("keyword", keyword);
+        }
+        modelo.addAttribute("usuarios", usuarios );
+        }catch(Exception e){
+        modelo.addAttribute("error", e.getMessage());
+        }
+        return "usuarios_list.html";
     }
     // LLamamos al servicio usuario para poder eliminar usuarios
     @GetMapping("/eliminar/{id}")

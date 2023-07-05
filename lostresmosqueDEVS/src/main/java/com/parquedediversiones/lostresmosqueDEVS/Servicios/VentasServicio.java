@@ -57,8 +57,10 @@ public class VentasServicio {
         venta.setNombreVendedor(nombreVendedor);
         venta.setLegajoVendedor(legajoVendedor);
         venta.setTotalVenta(totalVenta);
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        venta.setFechaVenta(date);
+
         
-        venta.setFechaVenta(new Date());
         
         ventaRepositorio.save(venta);
 

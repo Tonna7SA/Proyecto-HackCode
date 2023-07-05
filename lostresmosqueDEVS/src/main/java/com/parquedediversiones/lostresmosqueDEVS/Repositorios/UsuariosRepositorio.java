@@ -24,5 +24,8 @@ public interface UsuariosRepositorio extends JpaRepository<Usuarios, Long> {
     
     @Query(value = "select * from usuarios where roles like\"ADM\"", nativeQuery = true)
     public List<Usuarios> buscarPorRol();
+    
+    @Query(value = "select * from usuarios where legajo_dni like :dni% and dtype like \"usuarios\"", nativeQuery = true)
+    public List<Usuarios> DniDevuelveId(@Param("dni") Long dni);
 
 }
