@@ -19,8 +19,8 @@
     <nav th:replace="/fragments/navbar :: nav"  > </nav>
 
     <div class="content">
-        <div class="cardExito">
-            <div class="headerExito">
+        <div class="cardExito" th:if="${success != null}" th:text="${success}">
+            <div class="headerExito" >
                 <div class="imageCheck">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -32,7 +32,7 @@
                     </svg>
                 </div>
                 <div class="actions">
-                    <button type="button" class="history" th:if="${success != null}" th:text="${success}">Éxito al
+                    <button type="button" class="history">Éxito al
                         eliminar</button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="content">
-        <div class="cardEliminar">
+        <div class="cardEliminar" th:if="${error != null}" th:text="${error}">
             <div class="headerEliminar">
                 <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                         fill="none">
@@ -50,7 +50,7 @@
                     </svg></div>
 
                 <div class="actions">
-                    <button class="desactivate" type="button" th:if="${error != null}" th:text="${error}">Error al
+                    <button class="desactivate" type="button" >Error al
                         eliminar</button>
                 </div>
             </div>
