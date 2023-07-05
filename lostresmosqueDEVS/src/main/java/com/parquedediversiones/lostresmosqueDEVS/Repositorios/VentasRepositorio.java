@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VentasRepositorio extends JpaRepository <Ventas, String>{
     
-    @Query(value = "select * from ventas where fecha like :dni%", nativeQuery = true)
-    public List<Ventas> DniDevuelveId(@Param("dni") Long dni);
-    
+    @Query(value = "SELECT * FROM ventas WHERE fecha_venta = STR_TO_DATE(:fechaVenta, '%Y-%m-%d')", nativeQuery = true)
+    public List<Ventas> DniDevuelvePorFecha(@Param("fechaVenta") String fechaVenta);
+   
 }

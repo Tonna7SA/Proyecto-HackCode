@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado Juegos</title>
+    <title>Listado de Ventas</title>
     <link rel="shortcut icon" href="/IMG/Mosqueteros.ico" type="image/x-icon">
     <link rel="stylesheet" href="/CSS/style.css">
     <link rel="stylesheet" href="/CSS/tablas.css">
@@ -19,8 +19,8 @@
     <nav th:replace="/fragments/navbar :: nav"  > </nav>
 
     <div class="content">
-        <div class="cardExito">
-            <div class="headerExito">
+        <div class="cardExito" th:if="${success != null}" th:text="${success}">
+            <div class="headerExito" >
                 <div class="imageCheck">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -32,7 +32,7 @@
                     </svg>
                 </div>
                 <div class="actions">
-                    <button type="button" class="history" th:if="${success != null}" th:text="${success}">Éxito al
+                    <button type="button" class="history">Éxito al
                         eliminar</button>
                 </div>
             </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="content">
-        <div class="cardEliminar">
+        <div class="cardEliminar" th:if="${error != null}" th:text="${error}">
             <div class="headerEliminar">
                 <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                         fill="none">
@@ -50,7 +50,7 @@
                     </svg></div>
 
                 <div class="actions">
-                    <button class="desactivate" type="button" th:if="${error != null}" th:text="${error}">Error al
+                    <button class="desactivate" type="button" >Error al
                         eliminar</button>
                 </div>
             </div>
@@ -62,7 +62,7 @@
             <div class="ribbon">
                 <div class="ribbon-stitches-top"></div>
                 <div class="ribbon-content">
-                    <span>Listado de Juegos</span>
+                    <span>Listado de Ventas</span>
                 </div>
                 <div class="ribbon-stitches-bottom"></div>
             </div>
@@ -77,12 +77,14 @@
                         <div class="col-md-6 mt-2">
                             <div class="d-flex align-items-center">
                                 <i class="fa fa-search"></i>
-                                <input id="keyword" type="search" name="keyword" th:value="${keyword}"
+                                <input id="keyword" type="date" name="keyword" th:value="${keyword}"
                                     class="form--input" style="width: 150px; height: 40px;
                                 background-color: #343945; color: white; border-radius: 10px; text-align: center"
-                                    placeholder="">
+                                    placeholder="Ingrese fecha">
                                 <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
                                     border-radius: 10px"><b>Buscar</b></button>
+                                    <button onclick="limpiar()" class="form--input" style="width: 100px; height: 40px; background-color: #54bc9b; color: white; 
+                                    border-radius: 10px"><b>Limpiar</b></button>
                             </div>
                         </div>
                     </div>
@@ -90,6 +92,8 @@
             </div>
         </div>
     </div>
+
+    
 
 
     <div class="contenedorCentro">
@@ -124,6 +128,7 @@
                     
                 </tr>
             </tbody>
+        </table>
     </div>
 
 
@@ -158,7 +163,11 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
     <script src="/JS/carrusel.js"></script>
-
+    <script>
+    function limpiar() {
+    document.getElementById("keyword").value = "";
+    }
+    </script>
 </body>
 
 </html>

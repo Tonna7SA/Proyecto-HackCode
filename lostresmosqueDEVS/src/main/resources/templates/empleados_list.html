@@ -84,6 +84,8 @@
                                     placeholder="Ingrese dni">
                                 <button type="submit" class="form--input" style="width: 100px; height: 40px; background-color: blueviolet; color: white; 
                                     border-radius: 10px"><b>Buscar</b></button>
+                                    <button onclick="limpiar()" class="form--input" style="width: 100px; height: 40px; background-color: #54bc9b; color: white; 
+                                    border-radius: 10px"><b>Limpiar</b></button>
                             </div>
                         </div>
                     </div>
@@ -213,6 +215,11 @@
         crossorigin="anonymous"></script>
     <script src="/JS/carrusel.js"></script>
     <script src="/js/modal.js"></script>
+    <script>
+    function limpiar() {
+    document.getElementById("keyword").value = "";
+    }
+    </script>
 </body>
 
 </html>

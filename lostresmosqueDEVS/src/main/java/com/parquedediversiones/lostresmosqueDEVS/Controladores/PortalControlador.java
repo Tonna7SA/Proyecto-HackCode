@@ -2,10 +2,13 @@ package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.UsuariosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.UsuariosServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +32,9 @@ public class PortalControlador {
 
     @Autowired
     private UsuariosServicio usuarioServicio;
+    
+    @Autowired
+    private UsuariosRepositorio usuarioRepositorio;
 
     @GetMapping("/")
     public String bienvenidos() {
@@ -124,14 +130,25 @@ public class PortalControlador {
         return "inicio.html";
     }
   //Llamamos al servicio usuario para listar
-    @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        List<Usuarios> usuarios = usuarioServicio.listarUsuarios();
-        modelo.put("usuarios", usuarios);
-
+   @GetMapping("/listar")
+    public String listar(ModelMap modelo, @Param("keyword")Long keyword) {
+        try{
+        List<Usuarios> usuarios = new ArrayList<>();
+        if(keyword==null){
+            usuarioRepositorio.buscarPorRol().forEach(usuarios::add);
+        }else{
+            usuarioRepositorio.DniDevuelveId(keyword).forEach(usuarios::add);
+            modelo.addAttribute("keyword", keyword);
+        }
+        modelo.addAttribute("usuarios", usuarios );
+        }catch(Exception e){
+        modelo.addAttribute("error", e.getMessage());
+        }
         return "usuarios_list.html";
     }
-    //llevamos al usuario a la vista de modificacion en caso de ser admin o empleado
+    
+
+//llevamos al usuario a la vista de modificacion en caso de ser admin o empleado
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
 

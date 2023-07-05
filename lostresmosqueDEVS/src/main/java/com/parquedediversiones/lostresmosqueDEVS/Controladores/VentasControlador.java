@@ -13,16 +13,19 @@ import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Ventas;
 
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
+import com.parquedediversiones.lostresmosqueDEVS.Repositorios.VentasRepositorio;
 
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.CompradoresServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EmpleadosServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EntradasServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.VentasServicio;
+import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,6 +53,9 @@ public class VentasControlador {
     private EntradasServicio entradaServicio;
     @Autowired
     private VentasServicio ventaServicio;
+    @Autowired
+    private VentasRepositorio ventaRepositorio;
+    
      // Vista para registrar una venta
     @GetMapping("/registrar/{id}")
     public String registrar(@PathVariable String id, ModelMap modelo, HttpSession session) {
@@ -86,11 +92,28 @@ public class VentasControlador {
         
     }
      //Llamamos al servicio venta para listar las ventas
+//    @GetMapping("/listar")
+//    public String listar(ModelMap modelo) {
+//        List<Ventas> ventas = ventaServicio.listarVentas();
+//        modelo.put("ventas", ventas);
+//        
+//        return "ventas_list.html";
+//    }
+    
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        List<Ventas> ventas = ventaServicio.listarVentas();
-        modelo.put("ventas", ventas);
-        
+    public String listar(ModelMap modelo, @Param("keyword")String keyword) {
+        try{
+        List<Ventas> ventas = new ArrayList<>();
+        if(keyword==null || keyword==""){
+            ventaRepositorio.findAll().forEach(ventas::add);
+        }else{
+            ventaRepositorio.DniDevuelvePorFecha(keyword).forEach(ventas::add);
+            modelo.addAttribute("keyword", keyword);
+        }
+        modelo.addAttribute("ventas", ventas );
+        }catch(Exception e){
+        modelo.addAttribute("error", e.getMessage());
+        }
         return "ventas_list.html";
     }
     
