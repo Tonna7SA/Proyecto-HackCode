@@ -25,9 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Service
 public class UsuariosServicio implements UserDetailsService {
     //Servicio para comtrolar el AMBL de usuarios
@@ -49,7 +50,18 @@ public class UsuariosServicio implements UserDetailsService {
         Usuarios usuario = new Usuarios();
 
         usuario.setLegajoDni(legajoDni);
-        usuario.setNombreUsuario(nombreUsuario);
+        // Cambiamos la forma de ingreso del nombre del Usuario
+        String nombreCompleto = nombreUsuario;
+        String[] palabras = nombreCompleto.split(" ");
+        String nombreNuevo = "";
+        for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+        }
+        usuario.setNombreUsuario(nombreNuevo);
+
+        email = email.toLowerCase();
         usuario.setEmail(email);
 
         Imagen imagen = imagenServicio.guardar(archivo);
@@ -76,7 +88,18 @@ public class UsuariosServicio implements UserDetailsService {
         if (respuesta.isPresent()) {
 
             Usuarios usuario = respuesta.get();
-            usuario.setNombreUsuario(nombreUsuario);
+            // Cambiamos la forma de ingreso del nombre del Usuario
+            String nombreCompleto = nombreUsuario;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+                String primeraLetra = palabra.substring(0, 1).toUpperCase();
+                String restoPalabra = palabra.substring(1).toLowerCase();
+                nombreNuevo += primeraLetra + restoPalabra + " ";
+            }
+            usuario.setNombreUsuario(nombreNuevo);
+
+            email = email.toLowerCase();
             usuario.setEmail(email);
 
 //            String idImagen = null;
@@ -92,6 +115,7 @@ public class UsuariosServicio implements UserDetailsService {
         }
 
     }
+
     @Transactional
     public void actualizarfoto(Long legajoDni, MultipartFile archivo) throws MiException {
 
@@ -100,7 +124,7 @@ public class UsuariosServicio implements UserDetailsService {
         if (respuesta.isPresent()) {
 
             Usuarios usuario = respuesta.get();
-        
+
             String idImagen = null;
 
             if (usuario.getImagen() != null) {
@@ -181,7 +205,7 @@ public class UsuariosServicio implements UserDetailsService {
         }
 
     }
-    
+
     @Transactional
     public void cambiarClave(String claveActual, Long legajoDni, String clave, String clave2) throws MiException {
 

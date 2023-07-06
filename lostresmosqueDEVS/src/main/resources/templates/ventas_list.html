@@ -101,30 +101,28 @@
             <thead>
                 <tr>
                     <th class="header">Nombre del Juego</th>
+                    <th class="header">Fecha de Venta</th>
                     <th class="header">Tipo de Juego</th>
-                    <th class="header">Precio del Juego</th>
                     <th class="header">Nombre del Comprador</th>
                     <th class="header">Dni del Comprador</th>
                     <th class="header">Email del Comprador</th>
                     <th class="header">Nombre del Vendedor</th>
                     <th class="header">Legajo del Vendedor</th>
                     <th class="header">Total Venta</th>
-                    <th class="header">Fecha de Venta</th>
                 </tr>
                  
             </thead>
             <tbody th:each="ventas : ${ventas}">
                 <tr>
                     <th th:text="${ventas.nombreJuego}"></th>
+                    <td th:text="${ventas.fechaVenta}"></td>
                     <td th:text="${ventas.tipoJuego}"></td>
-                    <td th:text="${ventas.precioJuego}"></td>
                     <td th:text="${ventas.nombreComprador}"></td>
                     <td th:text="${ventas.dniComprador}"></td>
                     <td th:text="${ventas.emailComprador}"></td>
                     <td th:text="${ventas.nombreVendedor}"></td>
                     <td th:text="${ventas.legajoVendedor}"></td>
-                    <td th:text="${ventas.totalVenta}"></td>
-                    <td th:text="${ventas.fechaVenta}"></td>
+                    <td th:text="${'$ ' + ventas.totalVenta +',00'}"></td>
                     
                 </tr>
             </tbody>

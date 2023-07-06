@@ -1,14 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
-
-import ch.qos.logback.classic.pattern.Util;
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Compradores;
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Entradas;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Ventas;
 
@@ -19,17 +9,15 @@ import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EntradasRepositori
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.VentasRepositorio;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Pergo
+ * @author Los3MosqueDEVS
  */
+/**/
 
 @Service
 public class VentasServicio {
@@ -56,7 +44,7 @@ public class VentasServicio {
         venta.setEmailComprador(emailComprador);
         venta.setNombreVendedor(nombreVendedor);
         venta.setLegajoVendedor(legajoVendedor);
-        venta.setTotalVenta(totalVenta);
+        venta.setTotalVenta(precioJuego);
         java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
         venta.setFechaVenta(date);
 

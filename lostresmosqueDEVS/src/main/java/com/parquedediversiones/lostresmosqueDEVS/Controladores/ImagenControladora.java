@@ -1,4 +1,3 @@
-
 package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
@@ -19,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Controller
 @RequestMapping("/imagen")
 public class ImagenControladora {

@@ -19,9 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 // Controladora para los compradores y sus acciones
 @Controller
 @RequestMapping("/compradores")

@@ -1,45 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Compradores;
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Entradas;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Usuarios;
-
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Ventas;
-
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.VentasRepositorio;
-
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.CompradoresServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EmpleadosServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.EntradasServicio;
 import com.parquedediversiones.lostresmosqueDEVS.Servicios.VentasServicio;
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author Pergo
+ * @author Los3MosqueDEVS
  */
+/**/
+
 // Controladora para las ventas y sus acciones
 @Controller
 @RequestMapping("/ventas")

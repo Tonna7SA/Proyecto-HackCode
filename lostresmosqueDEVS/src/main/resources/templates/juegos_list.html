@@ -121,7 +121,7 @@
                     <td th:text="${juegos.tipoDeJuego}"></td>
                     <td th:text="${juegos.cantEmpleados}"></td>
                     <td th:text="${juegos.fechaDeAlta}"></td>
-                    <td th:text="${juegos.precioDelJuego}"></td>
+                    <td th:text="${'$ '+ juegos.precioDelJuego +',00'}"></td>
                     <td>
                         <button class="btnModificar">
                             <a th:href="@{/juegos/modificar/__${juegos.id}__}">Modificar</a>

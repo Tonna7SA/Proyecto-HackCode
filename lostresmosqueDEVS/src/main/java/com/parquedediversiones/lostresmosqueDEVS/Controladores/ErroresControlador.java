@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.parquedediversiones.lostresmosqueDEVS.Controladores;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
- * @author Pergo
+ * @author Los3MosqueDEVS
  */
+/**/
+
 @Controller
 public class ErroresControlador implements ErrorController {
 

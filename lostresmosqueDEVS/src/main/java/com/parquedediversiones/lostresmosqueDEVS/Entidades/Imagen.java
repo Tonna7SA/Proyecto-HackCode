@@ -1,11 +1,4 @@
-
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
-
-/**
- *
- * @author Tonna/SA FR34K
- */
-/**/
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -20,6 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+
+/**
+ *
+ * @author Los3MosqueDEVS
+ */
+/**/
 
 @Entity
 @Getter

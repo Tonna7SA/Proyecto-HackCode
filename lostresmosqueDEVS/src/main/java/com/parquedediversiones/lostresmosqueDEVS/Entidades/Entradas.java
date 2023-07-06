@@ -1,4 +1,3 @@
-
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
 
 import java.util.Date;
@@ -18,9 +17,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Entity
 @Getter
 @Setter

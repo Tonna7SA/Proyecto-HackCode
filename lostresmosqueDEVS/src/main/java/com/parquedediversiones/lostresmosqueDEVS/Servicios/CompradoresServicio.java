@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Service
 public class CompradoresServicio {
     //Servicio para comtrolar el AMBL de compradores
@@ -27,14 +28,23 @@ public class CompradoresServicio {
         if(compradorRepositorio.buscarPorDni(dni)==null){
         
         validarComprador(nombreApellido, dni, email);
-
         Compradores comprador = new Compradores();
-
-        comprador.setNombreApellido(nombreApellido);
+        
+        // Cambiamos la forma de ingreso del nombre y apellido
+            String nombreCompleto = nombreApellido;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+}
+        comprador.setNombreApellido(nombreNuevo);
         comprador.setDni(dni);
         comprador.setEdad(edad);
         comprador.setFechaDeAlta(new Date());
         comprador.setActivo(true);
+        email=email.toLowerCase();
         comprador.setEmail(email);
         //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
         compradorRepositorio.save(comprador);
@@ -53,10 +63,19 @@ public class CompradoresServicio {
         if (respuesta.isPresent()) {
 
             Compradores comprador = respuesta.get();
-
-            comprador.setNombreApellido(nombreApellido);
+// Cambiamos la forma de ingreso del nombre y apellido
+            String nombreCompleto = nombreApellido;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+}
+        comprador.setNombreApellido(nombreNuevo);
             comprador.setDni(dni);
             comprador.setEdad(edad);
+            email=email.toLowerCase();
             comprador.setEmail(email);
              //Usamos el repositorio comprador para guardar el comprador y registrarlo correctamente
             compradorRepositorio.save(comprador);

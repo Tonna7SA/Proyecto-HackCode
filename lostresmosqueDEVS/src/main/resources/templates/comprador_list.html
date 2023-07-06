@@ -107,7 +107,7 @@
                     <th class="header" sec:authorize="hasAnyRole('ADM')">Modificar</th>
                     <th class="header" sec:authorize="hasAnyRole('ADM')">Cambiar Estado</th>
                     <th class="header" sec:authorize="hasAnyRole('ADM')">Eliminar</th>
-                    <th class="header">Vender entrada</th>
+                    <th sec:authorize="hasAnyRole('EMP')" class="header">Vender entrada</th>
                 </tr>
             </thead>
             <tbody th:each="compradores : ${compradores}">
@@ -136,7 +136,7 @@
                             </a>
                         </button>
                     </td>
-                    <td>
+                    <td sec:authorize="hasAnyRole('EMP')">
                         <button class="btnVender" th:if="${compradores.activo == true}">
                             <a th:href="@{/ventas/registrar/__${compradores.id}__}" >Venta</a>
                         </button>

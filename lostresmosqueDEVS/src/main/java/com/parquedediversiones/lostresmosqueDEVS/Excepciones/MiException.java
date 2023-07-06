@@ -2,9 +2,10 @@ package com.parquedediversiones.lostresmosqueDEVS.Excepciones;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 public class MiException extends Exception {
 
     public MiException(String msg) {

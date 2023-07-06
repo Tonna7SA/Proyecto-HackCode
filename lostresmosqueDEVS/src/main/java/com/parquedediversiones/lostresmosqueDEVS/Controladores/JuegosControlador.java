@@ -22,9 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 // Controladora para los juegos y sus acciones
 @Controller
 @RequestMapping("/juegos")
@@ -42,7 +43,7 @@ public class JuegosControlador {
     public String registrar(ModelMap modelo) {
         List<Empleados> empleados = empleadoServicio.listarEmpleados();
         modelo.addAttribute("empleados", empleados);
-
+        System.out.println("sale del get");
         return "juegos_form.html";
 
     }
@@ -51,17 +52,18 @@ public class JuegosControlador {
     public String registro(MultipartFile archivo, @RequestParam String nombreDelJuego, @RequestParam Integer capacidadMaxima, @RequestParam String tipoDeJuego,
             @RequestParam Integer cantEmpleados, @RequestParam Integer precioDelJuego, ModelMap modelo) throws MiException {
         // Metodo try and catch para asegurarnos de captar errores 
+        System.out.println("hola");
         try {
             juegoServicio.crearJuego(archivo, nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
             modelo.put("Exito", "El juego se registro exitosamente");
-
+System.out.println("chau");
         } catch (MiException ex) {
 
             List<Empleados> empleados = empleadoServicio.listarEmpleados();
             modelo.addAttribute("empleados", empleados);
 
             modelo.put("Error", ex.getMessage());
-
+System.out.println("prueba");
             return "juegos_form.html";
 
         }

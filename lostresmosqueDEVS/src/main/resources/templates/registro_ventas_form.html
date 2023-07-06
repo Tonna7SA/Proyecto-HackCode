@@ -27,27 +27,28 @@
                 <span class="signup">Registro de Ventas</span>
             
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del Juego</label>
-            <input type="text" name="nombreJuego" placeholder="Nombre del juego" class="form--input" th:value="${session.usuariosession.Juego.nombreDelJuego}">
+            <input type="text" name="nombreJuego" placeholder="Nombre del juego" class="form--input" th:value="${session.usuariosession.Juego.nombreDelJuego}" readonly>
             <label class="palabrainput" style="font-size: 12px;" for="name">Tipo de Juego</label>
-            <input type="text" name="tipoJuego" placeholder="Tipo de Juego" class="form--input" th:value="${session.usuariosession.Juego.tipoDeJuego}">
+            <input type="text" name="tipoJuego" placeholder="Tipo de Juego" class="form--input" th:value="${session.usuariosession.Juego.tipoDeJuego}" readonly>
             <label class="palabrainput" style="font-size: 12px;" for="name">Precio Del Juego</label>
-            <input type="text" name="precioJuego" placeholder="Precio del Juego" class="form--input" th:value="${session.usuariosession.Juego.precioDelJuego}">
+            <input hidden type="text" name="precioJuego" placeholder="Precio del Juego" class="form--input" th:value="${session.usuariosession.Juego.precioDelJuego}">
+            <input type="text" name="" placeholder="Precio del Juego" class="form--input" th:value="${'$ '+session.usuariosession.Juego.precioDelJuego+',00'}" readonly>
             
                 <span class="signup">Datos Comprador</span>
             
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del Comprador</label>
-            <input type="text" name="nombreComprador" required placeholder="Nombre y Apellido" class="form--input" th:value="${compradores.nombreApellido}">
+            <input type="text" name="nombreComprador" required placeholder="Nombre y Apellido" class="form--input" th:value="${compradores.nombreApellido}" readonly>
             <label class="palabrainput" style="font-size: 12px;" for="name">Dni</label>
-            <input type="text" name="dniComprador" required placeholder="dni" class="form--input" th:value="${compradores.dni}">
+            <input type="text" name="dniComprador" required placeholder="dni" class="form--input" th:value="${compradores.dni}" readonly>
             <label class="palabrainput" style="font-size: 12px;" for="name">email</label>
-            <input type="text" name="emailComprador" required placeholder="Correo Electronico" class="form--input" th:value="${compradores.email}">
+            <input type="text" name="emailComprador" required placeholder="Correo Electronico" class="form--input" th:value="${compradores.email}" readonly>
             
                 <span class="signup">Datos Vendedor</span>
            
             <label class="palabrainput" style="font-size: 12px;" for="name">Nombre del Vendedor</label>
-            <input type="text" name="nombreVendedor" required placeholder="Nombre del Vendedor" class="form--input" th:value="${session.usuariosession.nombreUsuario}">
+            <input type="text" name="nombreVendedor" required placeholder="Nombre del Vendedor" class="form--input" th:value="${session.usuariosession.nombreUsuario}" readonly>
             <label class="palabrainput" style="font-size: 12px;" for="name">Legajo</label>
-            <input type="text" name="legajoVendedor" required placeholder="Legajo Dni" class="form--input" th:value="${session.usuariosession.legajoDni}">
+            <input type="text" name="legajoVendedor" required placeholder="Legajo Dni" class="form--input" th:value="${session.usuariosession.legajoDni}" readonly>
                 
                 <button class="form--submit">
                 Vender

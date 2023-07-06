@@ -45,10 +45,9 @@
 
             <li>
                 <label for="drop-2" class="toggle">Ventas +</label>
-                <a th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ADM', 'SUP', 'EMP')">Ventas</a>
+                <a th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('ADM', 'SUP')">Ventas</a>
                 <input type="checkbox" id="drop-2" />
                 <ul>
-                    <li><a th:href="@{/ventas/registrar}">Realizar Venta</a></li>
                     <li><a th:href="@{/ventas/listar}">Listar Ventas</a></li>
                 </ul>
             </li>
@@ -68,8 +67,8 @@
             <li>
                 <a th:if="${session.usuariosession == null}" th:href="@{/login}">Logueate</a>
             </li>
-            <li>
-                <a th:href="@{/index}">Inicio</a>
+            <li th:if="${session.usuariosession != null}">
+                <a href="/index">Inicio</a>
             </li>
             <li>
                 <img th:if="${session.usuariosession != null}" th:src="@{/imagen/__${session.usuariosession.legajoDni}__}" 

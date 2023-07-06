@@ -1,4 +1,3 @@
-
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Imagen;
@@ -11,9 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Service
 public class ImagenServicio {
 

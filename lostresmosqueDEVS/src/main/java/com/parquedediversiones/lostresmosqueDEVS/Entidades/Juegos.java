@@ -1,11 +1,9 @@
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,9 +17,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Entity
 @Getter
 @Setter

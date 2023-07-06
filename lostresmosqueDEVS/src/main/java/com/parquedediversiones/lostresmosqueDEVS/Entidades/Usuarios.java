@@ -1,4 +1,3 @@
-
 package com.parquedediversiones.lostresmosqueDEVS.Entidades;
 
 import com.parquedediversiones.lostresmosqueDEVS.Enumeraciones.Rol;
@@ -16,9 +15,10 @@ import lombok.ToString;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Entity
 @Getter
 @Setter

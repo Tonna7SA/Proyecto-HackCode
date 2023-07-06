@@ -9,7 +9,6 @@ import com.parquedediversiones.lostresmosqueDEVS.Repositorios.CompradoresReposit
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EmpleadosRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.EntradasRepositorio;
 import com.parquedediversiones.lostresmosqueDEVS.Repositorios.JuegosRepositorio;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +19,10 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Tonna/SA FR34K
+ * @author Los3MosqueDEVS
  */
 /**/
+
 @Service
 public class EntradasServicio {
     //Servicio para comtrolar el AMBL de entradas

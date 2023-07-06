@@ -1,6 +1,5 @@
 package com.parquedediversiones.lostresmosqueDEVS.Servicios;
 
-import com.parquedediversiones.lostresmosqueDEVS.Entidades.Empleados;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Imagen;
 import com.parquedediversiones.lostresmosqueDEVS.Entidades.Juegos;
 import com.parquedediversiones.lostresmosqueDEVS.Excepciones.MiException;
@@ -15,6 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ *
+ * @author Los3MosqueDEVS
+ */
+/**/
 
 @Service
 public class JuegosServicio {
@@ -32,8 +36,16 @@ public class JuegosServicio {
        validarJuego(nombreDelJuego, capacidadMaxima, tipoDeJuego, cantEmpleados, precioDelJuego);
         //Usamos el empleado repositorio para buscar que haya uno presente por la relacion entre estos
         Juegos juego = new Juegos();
-        
-        juego.setNombreDelJuego(nombreDelJuego);
+        // Cambiamos la forma de ingreso del nombre del juego
+            String nombreCompleto = nombreDelJuego;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+}
+        juego.setNombreDelJuego(nombreNuevo);
         juego.setFechaDeAlta(new Date());
         juego.setCapacidadMaxima(capacidadMaxima);
         juego.setTipoDeJuego(tipoDeJuego);
@@ -60,7 +72,16 @@ public class JuegosServicio {
         if (respuestaJuego.isPresent()) {
             Juegos juego = respuestaJuego.get();
 
-        juego.setNombreDelJuego(nombreDelJuego);
+        // Cambiamos la forma de ingreso del nombre del juego
+            String nombreCompleto = nombreDelJuego;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+}
+        juego.setNombreDelJuego(nombreNuevo);
         juego.setCapacidadMaxima(capacidadMaxima);
         juego.setTipoDeJuego(tipoDeJuego);
         juego.setCantEmpleados(cantEmpleados);
@@ -113,7 +134,7 @@ public class JuegosServicio {
         if (nombreDelJuego.isEmpty() || nombreDelJuego == null || nombreDelJuego.length() < 3) {
             throw new MiException("Debe ingresar un nombre");
         }
-        if (capacidadMaxima == null || capacidadMaxima < 10) {
+        if (capacidadMaxima == null || capacidadMaxima < 1) {
             throw new MiException("Debe ingresar una capacidad");
         }
         if (tipoDeJuego.isEmpty() || tipoDeJuego == null ) {

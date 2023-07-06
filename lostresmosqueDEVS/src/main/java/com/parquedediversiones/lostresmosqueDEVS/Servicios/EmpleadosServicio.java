@@ -20,6 +20,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ *
+ * @author Los3MosqueDEVS
+ */
+/**/
+
 @Service
 public class EmpleadosServicio {
 
@@ -42,7 +48,17 @@ public class EmpleadosServicio {
         Juegos juego = juegosRepositorio.findById(idJuego).get();
         Empleados empleado = new Empleados();
         empleado.setLegajoDni(legajoDni);
-        empleado.setNombreUsuario(nombreUsuario);
+        // Cambiamos la forma de ingreso del nombre y apellido
+            String nombreCompleto = nombreUsuario;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+            }
+            empleado.setNombreUsuario(nombreNuevo);
+        email=email.toLowerCase();
         empleado.setEmail(email);
         empleado.setActivo(true);
         empleado.setEdad(edad);
@@ -72,8 +88,19 @@ public class EmpleadosServicio {
             Empleados empleado = respuestaEmpleado.get();
 
             empleado.setEdad(edad);
+            email=email.toLowerCase();
             empleado.setEmail(email);
-            empleado.setNombreUsuario(nombreUsuario);
+            // Cambiamos la forma de ingreso del nombre y apellido
+            
+            String nombreCompleto = nombreUsuario;
+            String[] palabras = nombreCompleto.split(" ");
+            String nombreNuevo = "";
+            for (String palabra : palabras) {
+            String primeraLetra = palabra.substring(0, 1).toUpperCase();
+            String restoPalabra = palabra.substring(1).toLowerCase();
+            nombreNuevo += primeraLetra + restoPalabra + " ";
+            }
+            empleado.setNombreUsuario(nombreNuevo);
             empleado.setPassword(new BCryptPasswordEncoder().encode(password));
             String idImagen = null;
             if (empleado.getImagen() != null) {
